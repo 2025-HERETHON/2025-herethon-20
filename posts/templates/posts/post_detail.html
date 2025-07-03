@@ -1,10 +1,52 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ post.title }} - 게시글 상세</title>
+    <link rel="stylesheet" href="{% static 'posts/css/posts.css' %}">
 </head>
 <body>
+    <div class="post-detail-container">
+        <div class="post-detail-header">
+            <h1>{{ post.title }}</h1>
+            <div class="post-meta">
+                <span>익명 ({{ author_age }}세)</span> {# 익명과 나이 표시 #}
+                <span>{{ post.created_at|date:"Y.m.d H:i" }}</span> {# 작성 일자 및 시간 표시 #}
+            </div>
+        </div>
 
+        <div class="post-content">
+            {{ post.content }} {# 본문 전체 표시 #}
+        </div>
+
+        <div class="comments-section">
+            <h2>댓글</h2>
+            {% if comments %}
+                <ul class="comment-list">
+                    {% for comment in comments %}
+                        <li class="comment-item">
+                            <div class="comment-meta">
+                                <span>익명</span> {# 댓글 작성자도 익명으로 표시 #}
+                                <span>{{ comment.created_at|date:"Y.m.d H:i" }}</span>
+                            </div>
+                            <p class="comment-content">{{ comment.content }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-comments">아직 댓글이 없습니다.</p>
+            {% endif %}
+
+            <div class="comment-form">
+                <form method="POST">
+                    {% csrf_token %} {# 보안을 위한 CSRF 토큰 #}
+                    <textarea name="comment_content" placeholder="댓글을 입력하세요." required></textarea>
+                    <button type="submit">댓글 작성</button>
+                </form>
+            </div>
+        </div>
+        <a href="{% url 'posts:post_list' %}" class="back-link">목록으로 돌아가기</a>
+    </div>
 </body>
 </html>
