@@ -10,7 +10,7 @@ class Category(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        if not self.slug:
+        if not self.slug or not self.pk:
             self.slug = awesome_slugify(
                 self.name,
                 to_lower=True,
@@ -19,6 +19,7 @@ class Category(models.Model):
                 word_boundary=True
             )
         super().save(*args, **kwargs)
+
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

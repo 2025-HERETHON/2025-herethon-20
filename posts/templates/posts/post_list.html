@@ -17,9 +17,11 @@
 
     <ul>
         {% for post in posts %}
-            <li>
-                <h2>{{ post.title }}</h2>
-                <p>{{ post.content|truncatechars:100 }}</p> <!-- 본문 한줄만 표시 -->
+            <li class="post-item">
+                <a href="{% url 'posts:post_detail' post.id %}" class="post-title-link">
+                    <h3 class="post-title">{{ post.title }}</h3>
+                </a>
+                <p class="post-content-preview">{{ post.content|truncatechars:100 }}</p> <!--본문 미리보기-->
             </li>
         {% endfor %}
     </ul>
