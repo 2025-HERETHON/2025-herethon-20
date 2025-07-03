@@ -1,29 +1,17 @@
 from django.db import models
-from slugify import slugify as awesome_slugify
 from users.models import User
 
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        if not self.slug or not self.pk:
-            self.slug = awesome_slugify(
-                self.name,
-                to_lower=True,
-                max_length=100,
-                separator='-',
-                word_boundary=True
-            )
-        super().save(*args, **kwargs)
-
+CATEGORY_CHOICES = [
+    ('기타', '기타'),
+    ('성적자기결정권', '성적자기결정권'),
+    ('여성질환', '여성질환'),
+    ('피임/임신', '피임/임신'),
+    ('생리', '생리'),
+]
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
     title = models.CharField(max_length=100)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
