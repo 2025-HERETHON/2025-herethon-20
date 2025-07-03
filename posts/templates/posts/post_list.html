@@ -1,10 +1,28 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'posts/css/posts.css' %}">
 </head>
 <body>
+
+    <div>
+        <a href="{% url 'posts:post_list' %}">전체</a> <!-- 이 부분 클릭하면 질문글 전부 보임 -->
+
+        {% for category in categories %}
+            <!-- 카테고리 항목들 띄우는 부분, 클릭하면 해당 카테고리 글만 보임 -->
+            <a href="{% url 'posts:post_list_by_category' category.slug %}">{{ category.name }}</a>
+        {% endfor %}
+    </div>
+
+    <ul>
+        {% for post in posts %}
+            <li>
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.content|truncatechars:100 }}</p> <!-- 본문 한줄만 표시 -->
+            </li>
+        {% endfor %}
+    </ul>
 
 </body>
 </html>
