@@ -7,11 +7,12 @@
 <body>
     <h2>주제별 게시판</h2>
     <div>
-        <a href="{% url 'posts:post_list' %}">전체</a> <!-- 이 부분 클릭하면 질문글 전부 보임 -->
+        <a href="{% url 'posts:post_list' %}">전체</a>
 
         {% for category in categories %}
-            <!-- 카테고리 항목들 띄우는 부분, 클릭하면 해당 카테고리 글만 보임 -->
-            <a href="{% url 'posts:post_list_by_category' category.slug %}">{{ category.name }}</a>
+            <a href="{% url 'posts:post_list_by_category' category.slug %}">
+                {{ category.name }}
+            </a>
         {% endfor %}
     </div>
 
