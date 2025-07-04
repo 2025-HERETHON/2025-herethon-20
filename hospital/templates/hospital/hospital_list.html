@@ -1,20 +1,93 @@
-<!-- templates/hospital/hospital_list.html -->
+<!-- {% load static %} ← 나중에 Django 연동 시 추가 -->
+
 <!DOCTYPE html>
-<html>
-<head>
-  <title>병원 리스트</title>
-</head>
-<body>
-  <h1>병원 목록</h1>
-  {% for hospital in hospitals %}
-    <div style="margin-bottom: 20px;">
-      <strong>{{ hospital.name }}</strong><br>
-      주소: {{ hospital.address }}<br>
-      전화번호: {{ hospital.tel|default:"-" }}<br>
-      여성 전문의: {{ hospital.is_female_doctor|yesno:"있음,없음" }}<br>
-    </div>
-  {% empty %}
-    <p>해당 지역의 병원이 없습니다.</p>
-  {% endfor %}
-</body>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 템플릿 태그로 변경 -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../static/hospital/css/hospital_list.css"
+    />
+    <title>안심 병원 리스트</title>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <header>
+      <h2>안심 병원 추천</h2>
+      <!-- 지역 선택: 지역 리스트 전달받아 for문으로 드롭다운 구성 -->
+    </header>
+
+    <!-- 카테고리 선택 -->
+    <nav class="filters">
+      <button>별점순</button>
+      <button>10대 친화</button>
+      <button>여성전문의</button>
+    </nav>
+
+    <!-- 병원 리스트 -->
+    <main class="hospital-list">
+      <h1>병원 목록</h1>
+      {% for hospital in hospitals %}
+        <div style="margin-bottom: 20px;">
+          <strong>{{ hospital.name }}</strong><br>
+          주소: {{ hospital.address }}<br>
+          전화번호: {{ hospital.tel|default:"-" }}<br>
+          여성 전문의: {{ hospital.is_female_doctor|yesno:"있음,없음" }}<br>
+        </div>
+      {% empty %}
+        <p>해당 지역의 병원이 없습니다.</p>
+      {% endfor %}
+    </main>
+
+    <!-- 하단 네비게이션 -->
+    <!-- {% static %} 태그로 변경 -->
+    <footer class="bottom-nav">
+      <a href="">
+        <img
+          src="../../static/hospital/images/qna_unselected.svg"
+          alt="Q&A"
+          id="bottom-icon-qna"
+        />
+        <span>Q&A</span>
+      </a>
+      <a href="">
+        <img
+          src="../../static/hospital/images/hospital_selected.svg"
+          alt="병원추천"
+          id="bottom-icon-hospital"
+        />
+        <span>안심병원추천</span>
+      </a>
+      <a href="">
+        <img
+          src="../../static/hospital/images/home_unselected.svg"
+          alt="홈"
+          id="bottom-icon-home"
+        />
+        <span>홈</span>
+      </a>
+      <a href="">
+        <img
+          src="../../static/hospital/images/reserve_unselected.svg"
+          alt="상담예약"
+          id="bottom-icon-reserve"
+        />
+        <span>간편상담예약</span>
+      </a>
+      <a href="#">
+        <img
+          src="../../static/hospital/images/profile_unselected.svg"
+          alt="마이페이지"
+          id="bottom-icon-mypage"
+        />
+        <span>마이페이지</span>
+      </a>
+    </footer>
+
+    <!-- {% static %} 태그로 변경 -->
+    <script src="../../static/hospital/js/hospital_list.js"></script>
+  </body>
 </html>
