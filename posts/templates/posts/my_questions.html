@@ -1,10 +1,43 @@
+{% load static %}
+{% load humanize %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내가 작성한 글</title>
 </head>
 <body>
+    <div class="container">
+        <a href="{% url 'posts:post_list' %}" class="back-to-list-btn"><</a>
+        <h1>내 질문/답변</h1>
 
+        <div class="tab-menu">
+            <a href="{% url 'posts:my_questions' %}" class="{% if active_tab == 'questions' %}active{% endif %}">내가 작성한 글</a>
+            <a href="{% url 'posts:my_answers' %}" class="{% if active_tab == 'answers' %}active{% endif %}">내가 댓글 단 글</a>
+        </div>
+
+        <h2>내 질문 {{ my_posts_count }}개</h2>
+        {% if my_posts %}
+            <ul class="post-list">
+                {% for post in my_posts %}
+                    <li class="post-item">
+                        <h2><a href="{% url 'posts:post_detail' post.id %}">{{ post.title }}</a></h2>
+                        <span class="time-ago">{{ post.created_at|naturaltime }}</span>
+                        <p class="post-preview">{{ post.content|truncatechars:50 }}</p>
+                        <div class="post-meta-info">
+                            <span class="comment-count">
+                                <img src="{% static 'posts/images/comment_icon.png' %}" alt="댓글">
+                                {{ post.comment_set.count }}
+                            </span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-posts">아직 작성한 게시글이 없습니다.</p>
+        {% endif %}
+    </div>
 </body>
 </html>

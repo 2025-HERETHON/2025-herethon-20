@@ -6,6 +6,12 @@
 </head>
 <body>
     <h2>주제별 게시판</h2>
+
+    <div class="header-buttons">
+        <a href="{% url 'posts:post_search' %}">검색</a>
+        <a href="{% url 'posts:my_questions' %}">내 질문</a>
+    </div>
+
     <div>
         <a href="{% url 'posts:post_list' %}">전체</a>
 

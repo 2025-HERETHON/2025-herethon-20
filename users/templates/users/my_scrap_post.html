@@ -1,0 +1,36 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>내 스크랩 게시물</title>
+</head>
+<body>
+    <div class="my-scraps-container">
+        <a href="{% url 'users:my_page' %}"><</a>
+        <h1>스크랩한 게시물</h1>
+        <p>게시물 {{ scraps_with_details|length }}개</p> {# 총 게시물 개수 표시 #}
+
+        {% if scraps_with_details %}
+            <ul class="scrap-list">
+                {% for item in scraps_with_details %}
+                    <li class="scrap-item">
+                        <h2><a href="{% url 'posts:post_detail' item.post.id %}">{{ item.post.title }}</a></h2>
+                        <span class="time-ago">{{ item.post.created_at|naturaltime }}</span> {# 작성된 후 지난 시간 #}
+                        <p class="post-preview">{{ item.post.content|truncatechars:50 }}</p> {# 본문 미리보기 (50자 제한) #}
+                        <div class="post-meta-info">
+                            <span class="comment-count">
+                                <img src="{% static 'posts/images/comment_icon.png' %}" alt="댓글"> {# 댓글 아이콘 경로 #}
+                                {{ item.comment_count }}
+                            </span> {# 댓글 개수 #}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-scraps">스크랩한 게시글이 없습니다.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

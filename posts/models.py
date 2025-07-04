@@ -20,6 +20,14 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+class Scrap(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='scraps')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='scrapped_by')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'post')
+
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

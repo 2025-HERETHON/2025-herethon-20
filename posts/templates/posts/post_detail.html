@@ -7,11 +7,17 @@
     <link rel="stylesheet" href="{% static 'posts/css/posts.css' %}">
 </head>
 <body>
+    <a href="{% url 'posts:post_list' %}" class="back-link">< 게시물 보기</a>
     <div class="post-detail-container">
         <div class="post-detail-header">
             <h1>{{ post.title }}</h1>
             <div class="post-meta">
-                <span>익명 ({{ author_age }}세)</span> {# 익명과 나이 표시 #}
+                <span>
+                    익명 ({{ author_age }}세)
+                    {% if is_author %}
+                        (나)
+                    {% endif %}
+                </span>
                 <span>{{ post.created_at|date:"Y.m.d H:i" }}</span> {# 작성 일자 및 시간 표시 #}
             </div>
         </div>
@@ -20,17 +26,94 @@
             {{ post.content }} {# 본문 전체 표시 #}
         </div>
 
+        {# 스크랩 및 공유 버튼 섹션 추가 #}
+        <div class="post-actions">
+            <!--{% if user.is_authenticated %} {# 로그인된 사용자에게만 스크랩 버튼 표시 #}-->
+            <button id="scrap-button" data-post-id="{{ post.id }}">
+                {% if is_scrapped %}
+                    스크랩 취소
+                {% else %}
+                    스크랩
+                {% endif %}
+            </button>
+            {% endif %}
+            <button onclick="copyUrl()">공유하기</button>
+        </div>
+
+        {# 스크랩 버튼 AJAX 처리 스크립트 #}
+        <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+        // 스크랩 버튼 클릭 이벤트 리스너
+        document.getElementById("scrap-button")?.addEventListener("click", function() {
+            const postId = this.dataset.postId;
+            const button = this; // 현재 클릭된 버튼 요소
+
+            fetch(`/posts/${postId}/scrap/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken, // CSRF 토큰 전송
+                    'Content-Type': 'application/json' // JSON 형식으로 요청을 보냄
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json(); // JSON 응답 파싱
+            })
+            .then(data => {
+                if (data.scrapped) {
+                    alert("스크랩 완료!");
+                    button.textContent = "스크랩 취소"; // 버튼 텍스트 업데이트
+                } else {
+                    alert("스크랩 취소됨.");
+                    button.textContent = "스크랩"; // 버튼 텍스트 업데이트
+                }
+            })
+            .catch(error => {
+                console.error('스크랩 요청 중 오류 발생:', error);
+                alert("스크랩 처리 중 오류가 발생했습니다. 로그인 상태를 확인해주세요.");
+            });
+        });
+
+        // 공유하기 기능 (클립보드에 현재 URL 복사)
+        function copyUrl() {
+            const currentUrl = window.location.href;
+            navigator.clipboard.writeText(currentUrl).then(() => {
+                alert("현재 페이지 주소가 클립보드에 복사되었습니다!");
+            }).catch(err => {
+                console.error('URL 복사 실패:', err);
+                alert("URL 복사에 실패했습니다. 직접 복사해주세요.");
+            });
+        }
+        </script>
+
         <div class="comments-section">
-            <h2>댓글</h2>
+            <h2>답변 {{ total_comment_count }}개</h2>
             {% if comments %}
                 <ul class="comment-list">
-                    {% for comment in comments %}
+                    {% for item in comments %}
                         <li class="comment-item">
                             <div class="comment-meta">
-                                <span>익명</span> {# 댓글 작성자도 익명으로 표시 #}
-                                <span>{{ comment.created_at|date:"Y.m.d H:i" }}</span>
+                                <span>{{ item.display_name }}</span>
+                                <span>{{ item.comment.created_at|date:"Y.m.d H:i" }}</span>
                             </div>
-                            <p class="comment-content">{{ comment.content }}</p>
+                            <p class="comment-content">{{ item.comment.content }}</p>
                         </li>
                     {% endfor %}
                 </ul>
@@ -46,7 +129,6 @@
                 </form>
             </div>
         </div>
-        <a href="{% url 'posts:post_list' %}" class="back-link">목록으로 돌아가기</a>
     </div>
 </body>
 </html>
