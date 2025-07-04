@@ -1,0 +1,83 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: "Pretendard-Regular";
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  margin: 1.5625rem;
+  font-size: 20px;
+}
+
+/* 지역 필터 띄우기 */
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 125px;
+  gap: 8px;
+}
+
+button {
+  width: 113px;
+  height: 28px;
+  border-style: none;
+  border-radius: 15px;
+  text-align: center;
+  background-color: #f6f4fb;
+}
+
+.bottom-nav {
+  width: 100%;
+  height: 86px;
+  position: fixed;
+  bottom: 0;
+  background: aliceblue;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  box-shadow: 0px -1px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.bottom-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: black;
+  text-decoration: none;
+  margin: 0px;
+}
+
+#bottom-icon-qna {
+  margin-bottom: 9px;
+}
+
+#bottom-icon-hospital {
+  margin-bottom: 7px;
+}
+
+#bottom-icon-home {
+  padding-bottom: 7px;
+}
+
+#bottom-icon-reserve {
+  padding-bottom: 9px;
+}
+
+#bottom-icon-mypage {
+  padding-bottom: 6px;
+}
+
+.bottom-nav span {
+  margin-bottom: 12px;
+}
