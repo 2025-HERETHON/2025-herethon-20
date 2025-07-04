@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from posts.models import Post, Comment, Scrap
 from users.models import User
 from datetime import date
+from django.db.models import Q
+from django.db.models import Count
 
 CATEGORIES = [
     {'name': '생리', 'slug': 'saengri'},
@@ -106,14 +108,39 @@ def toggle_scrap(request, post_id):
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 def post_search(request):
-    # 검색 로직 여기에 구현
-    return render(request, 'posts/post_search.html')
+    query = request.GET.get('query')
+    posts = Post.objects.all()
+    if query:
+        posts = posts.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        ).distinct()
+    context = {
+        'query': query,
+        'posts': posts,
+        'categories': CATEGORIES,
+    }
+    return render(request, 'posts/post_search.html', context)
 
 @login_required
 def my_questions(request):
     my_posts = Post.objects.filter(user=request.user).order_by('-created_at')
+    my_posts_count = my_posts.count()
 
     context = {
-        'my_posts': my_posts
+        'my_posts': my_posts,
+        'my_posts_count': my_posts_count,
+        'active_tab': 'questions',
     }
     return render(request, 'posts/my_questions.html', context)
+
+@login_required
+def my_answers(request):
+    posts_with_my_comments = Post.objects.filter(comment__user=request.user).distinct().order_by('-comment__created_at')
+    my_comments_count = Comment.objects.filter(user=request.user).count()
+
+    context = {
+        'posts_with_my_comments': posts_with_my_comments,
+        'my_comments_count': my_comments_count,
+        'active_tab': 'answers', # 현재 활성화된 탭
+    }
+    return render(request, 'posts/my_answers.html', context)
