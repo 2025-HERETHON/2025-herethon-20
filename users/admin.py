@@ -1,21 +1,9 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = (
-        'username',
-        'email',
-        'is_doctor',
-        'hospital',
-        'phone_number',
-        'date_of_birth',
-        'created_at',
-    )
+class UserAdmin(BaseUserAdmin):
+    list_display = BaseUserAdmin.list_display + ('date_of_birth', 'is_doctor', 'hospital', 'position', 'phone_number')
+    ordering = ('-date_joined',)
 
-    search_fields = ('username', 'email', 'hospital')
-
-    list_filter = (
-        'is_doctor',
-    )
-    ordering = ('-created_at',)
+admin.site.register(User, UserAdmin)
