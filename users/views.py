@@ -5,6 +5,11 @@ from posts.models import Scrap, Comment, Post
 from users.models import User
 from datetime import date
 
+# 마이페이지
+@login_required
+def my_page(request):
+    return render(request, 'users/mypage.html')
+
 @login_required
 def my_scrap_post(request):
     current_user = request.user
@@ -19,6 +24,18 @@ def my_scrap_post(request):
             'comment_count': comment_count,
         })
     return render(request, 'users/my_scrap_post.html', {'scraps_with_details': scraps_with_details})
+
+@login_required
+def notification_settings(request):
+    return render(request, 'users/notification_settings.html')
+
+@login_required
+def customer_service(request):
+    return render(request, 'users/customer_service.html')
+
+@login_required
+def user_guide(request):
+    return render(request, 'users/user_guide.html')
 
 def user_selection(request):
     if request.user.is_authenticated:

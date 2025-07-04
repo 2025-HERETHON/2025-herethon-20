@@ -4,11 +4,12 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>내 스크랩 게시글</title>
+    <title>내 스크랩 게시물</title>
 </head>
 <body>
     <div class="my-scraps-container">
-        <h1>스크랩한 게시글</h1>
+        <a href="{% url 'users:my_page' %}"><</a>
+        <h1>스크랩한 게시물</h1>
         <p>게시물 {{ scraps_with_details|length }}개</p> {# 총 게시물 개수 표시 #}
 
         {% if scraps_with_details %}
