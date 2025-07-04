@@ -26,13 +26,25 @@ h2 {
   gap: 8px;
 }
 
-button {
+.filter-btn {
   width: 113px;
   height: 28px;
   border-style: none;
   border-radius: 15px;
   text-align: center;
   background-color: #f6f4fb;
+}
+
+.filter-btn.active {
+  background: #a78bfa; /* 선택 시 배경색 */
+  color: #fff; /* 선택 시 글씨색 */
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 110px;
+  right: 31px;
+  z-index: 10;
 }
 
 .bottom-nav {
