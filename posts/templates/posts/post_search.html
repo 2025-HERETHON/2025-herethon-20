@@ -1,3 +1,5 @@
+# 'Q&A 게시판 - 검색'에 해당하는 페이지
+
 {% load static %}
 {% load humanize %}
 <!DOCTYPE html>
@@ -8,13 +10,13 @@
 </head>
 <body>
     <div class="search-container">
-        <a href="{% url 'posts:post_list' %}" class="back-to-list-btn"><</a>
-        <form action="{% url 'posts:post_search' %}" method="GET" class="search-form">
+        <a href="{% url 'posts:post_list' %}" class="back-to-list-btn"><</a> # 이전 화면(게시글 목록)으로 이동
+        <form action="{% url 'posts:post_search' %}" method="GET" class="search-form"> # 검색 키워드 입력받아서 게시글 필터링
             <input type="text" name="query" placeholder="제목 또는 내용을 검색하세요." value="{{ query|default:'' }}">
             <button type="submit">검색</button>
         </form>
 
-        <div class="search-results">
+        <div class="search-results"> # 검색 결과 표시
             {% if query %}
                 <h2>검색 결과 {{ posts.count }}개</h2>
                 {% if posts %}
