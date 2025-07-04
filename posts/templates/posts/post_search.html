@@ -1,10 +1,44 @@
+{% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>검색 페이지</title>
+    <title>게시글 검색</title>
 </head>
 <body>
-    <h1>검색 페이지</h1>
+    <div class="search-container">
+        <a href="{% url 'posts:post_list' %}" class="back-to-list-btn"><</a>
+        <form action="{% url 'posts:post_search' %}" method="GET" class="search-form">
+            <input type="text" name="query" placeholder="제목 또는 내용을 검색하세요." value="{{ query|default:'' }}">
+            <button type="submit">검색</button>
+        </form>
+
+        <div class="search-results">
+            {% if query %}
+                <h2>검색 결과 {{ posts.count }}개</h2>
+                {% if posts %}
+                    <ul class="search-list">
+                        {% for post in posts %}
+                            <li class="search-item">
+                                <h2><a href="{% url 'posts:post_detail' post.id %}">{{ post.title }}</a></h2>
+                                <span class="time-ago">{{ post.created_at|naturaltime }}</span>
+                                {# 본문 미리보기 (50자 제한) #}
+                                <p class="post-preview">{{ post.content|truncatechars:50 }}</p>
+                                <div class="post-meta-info">
+                                    <span class="comment-count">
+                                        <img src="{% static 'posts/images/comment_icon.png' %}" alt="댓글">
+                                        {{ post.comment_set.count }}
+                                    </span>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="no-results">검색된 결과가 없어요.</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>
