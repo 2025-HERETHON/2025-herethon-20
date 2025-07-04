@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 선택</title>
+</head>
+<body>
+    <div class="selection-container">
+        <div class="selection-buttons">
+            <form action="{% url 'users:login_as_user' user_type='general' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">일반 회원</button>
+            </form>
+            <form action="{% url 'users:login_as_user' user_type='doctor' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">전문의 회원</button>
+            </form>
+        </div>
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
