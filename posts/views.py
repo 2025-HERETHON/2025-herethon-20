@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from posts.models import Post, Comment, Scrap
 from users.models import User
 from datetime import date
+from django.db.models import Q
+from django.db.models import Count
 
 CATEGORIES = [
     {'name': '생리', 'slug': 'saengri'},
@@ -66,20 +68,22 @@ def post_detail(request, post_id):
     # 댓글 생성 처리 (POST 요청)
     if request.method == 'POST':
         comment_content = request.POST.get('comment_content')
-        # 임시 사용자 (DB의 첫 번째 사용자)를 가져옴 ***********
-        # request.user로 대체해야 함
-        temp_user = User.objects.first()
-        if temp_user and comment_content:
-            Comment.objects.create(post=post, user=temp_user, content=comment_content)
-            return redirect('posts:post_detail', post_id=post.id)
+        if request.user.is_authenticated:
+            if comment_content:
+                Comment.objects.create(post=post, user=request.user, content=comment_content)
+                return redirect('posts:post_detail', post_id=post.id)
+        else:
+            return redirect('users:user_selection')
 
     # 스크랩 여부 확인
     is_scrapped = False
-    # 임시 사용자 (DB의 첫 번째 사용자)를 가져옴 ***********
-    # request.user로 대체해야 함
-    temp_user = User.objects.first()
-    if temp_user:
-        is_scrapped = Scrap.objects.filter(user=temp_user, post=post).exists()
+    if request.user.is_authenticated:
+        is_scrapped = Scrap.objects.filter(user=request.user, post=post).exists()
+
+    # 현재 로그인된 사용자가 게시글 작성자인지 확인
+    is_author = False
+    if request.user.is_authenticated:
+        is_author = (request.user == post.user)
 
     context = {
         'post': post,
@@ -87,19 +91,15 @@ def post_detail(request, post_id):
         'author_age': age,
         'is_scrapped': is_scrapped,
         'total_comment_count': total_comment_count,
+        'is_author': is_author,
     }
     return render(request, 'posts/post_detail.html', context)
 
-#@login_required
+@login_required
 def toggle_scrap(request, post_id):
     if request.method == 'POST': # POST 요청만 허용
         post = get_object_or_404(Post, pk=post_id)
-        # 임시 사용자 (DB의 첫 번째 사용자)를 가져옴 ***********
-        # request.user로 대체해야 함
-        temp_user = User.objects.first()
-        if not temp_user:
-            return JsonResponse({'error': 'No user available for testing'}, status=400)
-        scrap, created = Scrap.objects.get_or_create(user=temp_user, post=post)
+        scrap, created = Scrap.objects.get_or_create(user=request.user, post=post)
         if not created:
             scrap.delete()
             return JsonResponse({'scrapped': False})
@@ -108,19 +108,39 @@ def toggle_scrap(request, post_id):
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 def post_search(request):
-    # 검색 로직 여기에 구현
-    return render(request, 'posts/post_search.html')
+    query = request.GET.get('query')
+    posts = Post.objects.all()
+    if query:
+        posts = posts.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        ).distinct()
+    context = {
+        'query': query,
+        'posts': posts,
+        'categories': CATEGORIES,
+    }
+    return render(request, 'posts/post_search.html', context)
 
-
+@login_required
 def my_questions(request):
-    # 임시 사용자 (DB의 첫 번째 사용자)를 가져옴 ***********
-    # request.user로 대체해야 함
-    temp_user = User.objects.first()
-    my_posts = []
-    if temp_user:
-        my_posts = Post.objects.filter(user=temp_user).order_by('-created_at')
+    my_posts = Post.objects.filter(user=request.user).order_by('-created_at')
+    my_posts_count = my_posts.count()
 
     context = {
-        'my_posts': my_posts
+        'my_posts': my_posts,
+        'my_posts_count': my_posts_count,
+        'active_tab': 'questions',
     }
     return render(request, 'posts/my_questions.html', context)
+
+@login_required
+def my_answers(request):
+    posts_with_my_comments = Post.objects.filter(comment__user=request.user).distinct().order_by('-comment__created_at')
+    my_comments_count = Comment.objects.filter(user=request.user).count()
+
+    context = {
+        'posts_with_my_comments': posts_with_my_comments,
+        'my_comments_count': my_comments_count,
+        'active_tab': 'answers', # 현재 활성화된 탭
+    }
+    return render(request, 'posts/my_answers.html', context)

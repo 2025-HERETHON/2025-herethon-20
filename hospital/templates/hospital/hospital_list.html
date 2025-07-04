@@ -29,8 +29,17 @@
 
     <!-- 병원 리스트 -->
     <main class="hospital-list">
-      <!-- 장고에서 hospitals 리스트 전달받아 반복 출력 -->
-      <!-- for문으로 이미지, 병원이름, 위치 띄우기 -->
+      <h1>병원 목록</h1>
+      {% for hospital in hospitals %}
+        <div style="margin-bottom: 20px;">
+          <strong>{{ hospital.name }}</strong><br>
+          주소: {{ hospital.address }}<br>
+          전화번호: {{ hospital.tel|default:"-" }}<br>
+          여성 전문의: {{ hospital.is_female_doctor|yesno:"있음,없음" }}<br>
+        </div>
+      {% empty %}
+        <p>해당 지역의 병원이 없습니다.</p>
+      {% endfor %}
     </main>
 
     <!-- 하단 네비게이션 -->
