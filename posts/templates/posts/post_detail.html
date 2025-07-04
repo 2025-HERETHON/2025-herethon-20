@@ -12,7 +12,12 @@
         <div class="post-detail-header">
             <h1>{{ post.title }}</h1>
             <div class="post-meta">
-                <span>익명 ({{ author_age }}세)</span> {# 익명과 나이 표시 #}
+                <span>
+                    익명 ({{ author_age }}세)
+                    {% if is_author %}
+                        (나)
+                    {% endif %}
+                </span>
                 <span>{{ post.created_at|date:"Y.m.d H:i" }}</span> {# 작성 일자 및 시간 표시 #}
             </div>
         </div>
@@ -20,8 +25,6 @@
         <div class="post-content">
             {{ post.content }} {# 본문 전체 표시 #}
         </div>
-
-
 
         {# 스크랩 및 공유 버튼 섹션 추가 #}
         <div class="post-actions">
@@ -99,11 +102,6 @@
             });
         }
         </script>
-
-
-
-
-
 
         <div class="comments-section">
             <h2>답변 {{ total_comment_count }}개</h2>
