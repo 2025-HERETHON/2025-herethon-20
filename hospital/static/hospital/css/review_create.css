@@ -1,0 +1,138 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Pretendard-Regular";
+}
+
+body {
+  width: 100%;
+  height: 874px;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 24px;
+  flex: 0 0 auto;
+  position: fixed;
+  padding-top: 30px;
+  padding-left: 22px;
+}
+
+header h2 {
+  padding-left: 22px;
+}
+
+main {
+  padding-top: 54px;
+}
+.rating {
+  display: flex;
+  flex-direction: column;
+}
+
+main h3 {
+  padding: 28px 0 0 40px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.stars {
+  display: flex;
+  flex-direction: row;
+  padding: 21px 0px 18px 40px;
+}
+
+.stars p {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  padding: 6px 0px;
+}
+
+.star {
+  margin-left: 14px;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 289px;
+  height: 548px;
+  gap: 37px;
+  align-self: stretch;
+  padding: 34px 27px;
+  border-radius: 15px;
+  border: 1px solid #ddd6f3;
+  background: var(--white, #fff);
+}
+
+section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+form span {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8.5px 0px;
+}
+
+form input {
+  width: 219px;
+  border-radius: 10px;
+  background: #f6f4fb;
+  padding-top: 9.5px;
+  padding-bottom: 9.5px;
+  padding-left: 16px;
+  border: none;
+}
+
+#required-text {
+  color: #a78bfa;
+}
+
+#details {
+  display: flex;
+  height: 300px;
+  width: 267px;
+  margin-top: 17px;
+  padding: 2px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  text-align: center;
+}
+
+#submit-button {
+  width: 343px;
+  height: 54px;
+  margin: 21px 30px 23px 29px;
+  padding: 15px 136px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 15px;
+  background: var(--50, rgba(167, 139, 250, 0.5));
+  color: var(--white, #fff);
+  border: none;
+}
