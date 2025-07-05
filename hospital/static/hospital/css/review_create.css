@@ -58,11 +58,7 @@ main h3 {
   font-size: 12px;
   font-style: normal;
   font-weight: 700;
-  padding: 6px 0px;
-}
-
-.star {
-  margin-left: 14px;
+  padding: 6px 14px 6px 0px;
 }
 
 .review-form {
@@ -75,7 +71,7 @@ form {
   display: flex;
   flex-direction: column;
   width: 289px;
-  height: 548px;
+  height: 528px;
   gap: 37px;
   align-self: stretch;
   padding: 34px 27px;
@@ -96,7 +92,8 @@ form span {
   padding: 8.5px 0px;
 }
 
-form input {
+form input,
+textarea {
   width: 219px;
   border-radius: 10px;
   background: #f6f4fb;
@@ -112,15 +109,22 @@ form input {
 
 #details {
   display: flex;
-  height: 300px;
-  width: 267px;
+
   margin-top: 17px;
-  padding: 2px 16px;
+  padding: 130px 35px;
   justify-content: center;
   align-items: center;
   gap: 10px;
   align-self: stretch;
   text-align: center;
+  resize: none;
+}
+
+#details::placeholder {
+  text-align: center;
+  white-space: pre-line; /* 줄바꿈 적용되게 함 */
+  margin: 0;
+  padding: 0;
 }
 
 #submit-button {
@@ -133,6 +137,8 @@ form input {
   justify-content: center;
   border-radius: 15px;
   background: var(--50, rgba(167, 139, 250, 0.5));
+  font-size: 20px;
+  font-weight: 700;
   color: var(--white, #fff);
   border: none;
 }

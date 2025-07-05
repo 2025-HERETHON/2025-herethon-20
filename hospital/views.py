@@ -76,3 +76,7 @@ class HospitalListAPIView(ListAPIView):
             queryset = queryset.order_by('-is_female_doctor')
 
         return queryset
+
+# 리뷰 작성
+def review_create(request):
+    return render(request, 'hospital/review_create.html')

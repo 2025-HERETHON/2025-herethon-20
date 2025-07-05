@@ -1,15 +1,14 @@
-<!-- {% load static %} -->
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- 탬플릿 태그로 -->
     <link
       rel="stylesheet"
       type="text/css"
-      href="../../static/hospital/css/review_create.css"
+      href="{% static '/hospital/css/review_create.css' %}"
     />
     <title>리뷰 작성</title>
   </head>
@@ -17,9 +16,8 @@
     <!-- 최상단 -->
     <header>
       <a href=" ">
-        <!-- 탬플릿 태그로 -->
         <img
-          src="../../static/hospital/images/back_icon.svg"
+          src="{% static '/hospital/images/back_icon.svg' %}"
           alt="이전으로"
           id="back-button"
         />
@@ -33,20 +31,24 @@
         <!-- 빈 별 5개 생성. 클릭 시, js로 채워진 별로 바꿔주기 -->
         <div class="stars">
           <p>별점</p>
-          <!-- 탬플릿 태그로 -->
+          <!-- 숨겨진 input: 사용자가 클릭한 별점 값 저장용 -->
+          <input type="hidden" name="rating" id="rating-value" />
+          {% for i in "12345" %}
           <img
-            src="../../static/hospital/images/star_blank.svg"
+            src="{% static 'hospital/images/star_blank.svg' %}"
             alt="별점"
             class="star"
+            data-index="{{ forloop.counter }}"
           />
-          <!--각 별에 1~5의 번호 부여-->
+          <!--각 별에 번호 1~5 부여-->
+          {% endfor %}
         </div>
       </div>
       <div class="review-form">
         <!-- 리뷰 폼 -->
         <div class="form">
           <form method="post">
-            <!-- {% csrf_token %} -->
+            {% csrf_token %}
             <!-- 담당의 -->
             <section class="review">
               <span>담당의</span>
@@ -74,11 +76,12 @@
             <section class="review">
               <div id="review-detail">
                 <span>상세 리뷰 <span id="required-text">*</span></span>
-                <input
+                <textarea
                   id="details"
                   type="text"
-                  placeholder="상세 리뷰를 입력해주세요 (최소 8자 이상)"
-                />
+                  placeholder="상세 리뷰를 입력해주세요 
+                  (최소 8자 이상)"
+                ></textarea>
               </div>
             </section>
           </form>
@@ -86,6 +89,6 @@
         <button type="submit" id="submit-button">제출하기</button>
       </div>
     </main>
-    <script src="../../static/hospital/js/signup.js"></script>
+    <script src="{% static '/hospital/js/review_create.js' %}"></script>
   </body>
 </html>
