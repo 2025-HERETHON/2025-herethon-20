@@ -13,6 +13,7 @@ def hospital_list(request):
     hospitals = Hospital.objects.all()
     if region:
         hospitals = hospitals.filter(sidoCd=region)
+
     return render(request, 'hospital/hospital_list.html', {'hospitals': hospitals})
 
 

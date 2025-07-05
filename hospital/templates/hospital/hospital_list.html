@@ -1,4 +1,4 @@
-<!-- {% load static %} ← 나중에 Django 연동 시 추가 -->
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -9,45 +9,77 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="../../static/hospital/css/hospital_list.css"
+      href="{% static '/hospital/css/hospital_list.css' %}"
     />
     <title>안심 병원 리스트</title>
   </head>
   <body>
     <!-- 헤더 -->
     <header>
-      <h2>안심 병원 추천</h2>
+      <div class="head">
+        <h2>안심 병원 추천</h2>
+        <div id="my-review">
+          <a href=" ">
+            <img
+              src="{% static '/hospital/images/my_review.svg' %}"
+              alt="내 리뷰"
+            />
+          </a>
+          <p>내 리뷰</p>
+        </div>
+      </div>
       <!-- 지역 선택: 지역 리스트 전달받아 for문으로 드롭다운 구성 -->
+
+      <!-- 카테고리 선택 -->
+      <nav class="filters">
+        <button class="filter-btn">별점순</button>
+        <button class="filter-btn">10대 친화</button>
+        <button class="filter-btn">여성전문의</button>
+      </nav>
     </header>
 
-    <!-- 카테고리 선택 -->
-    <nav class="filters">
-      <button>별점순</button>
-      <button>10대 친화</button>
-      <button>여성전문의</button>
-    </nav>
-
-    <!-- 병원 리스트 -->
+    <!-- 병원 리스트 띄우기 -->
     <main class="hospital-list">
-      <h1>병원 목록</h1>
       {% for hospital in hospitals %}
-        <div style="margin-bottom: 20px;">
-          <strong>{{ hospital.name }}</strong><br>
-          주소: {{ hospital.address }}<br>
-          전화번호: {{ hospital.tel|default:"-" }}<br>
-          여성 전문의: {{ hospital.is_female_doctor|yesno:"있음,없음" }}<br>
+      <div class="hospital-card">
+        <div class="hospital-sample-image">
+          <img
+            src="{% static '/hospital/images/hospital_image_card.svg' %}"
+            alt="병원 샘플 이미지"
+            id="hospital-image"
+          />
+
+          <div class="hospital-info">
+            <strong id="hospital-name">{{ hospital.name }}</strong>
+            <div class="hospital-address">
+              <img
+                src="{% static '/hospital/images/location_icon.svg' %}"
+                alt="위치 아이콘"
+                id="address-picture"
+              />
+              <p id="address-text">{{ hospital.address }}</p>
+            </div>
+          </div>
         </div>
+      </div>
       {% empty %}
-        <p>해당 지역의 병원이 없습니다.</p>
+      <p>병원이 없습니다.</p>
       {% endfor %}
+      <!-- 리뷰 작성 아이콘 -->
+      <a href="">
+        <img
+          src="{% static '/hospital/images/write_review.svg' %}"
+          alt="리뷰 작성"
+          class="floating-button"
+        />
+      </a>
     </main>
 
     <!-- 하단 네비게이션 -->
-    <!-- {% static %} 태그로 변경 -->
     <footer class="bottom-nav">
       <a href="">
         <img
-          src="../../static/hospital/images/qna_unselected.svg"
+          src="{% static '/hospital/images/qna_unselected.svg' %}"
           alt="Q&A"
           id="bottom-icon-qna"
         />
@@ -55,7 +87,7 @@
       </a>
       <a href="">
         <img
-          src="../../static/hospital/images/hospital_selected.svg"
+          src="{% static '/hospital/images/hospital_selected.svg' %}"
           alt="병원추천"
           id="bottom-icon-hospital"
         />
@@ -63,7 +95,7 @@
       </a>
       <a href="">
         <img
-          src="../../static/hospital/images/home_unselected.svg"
+          src="{% static '/hospital/images/home_unselected.svg' %}"
           alt="홈"
           id="bottom-icon-home"
         />
@@ -71,7 +103,7 @@
       </a>
       <a href="">
         <img
-          src="../../static/hospital/images/reserve_unselected.svg"
+          src="{% static '/hospital/images/reserve_unselected.svg' %}"
           alt="상담예약"
           id="bottom-icon-reserve"
         />
@@ -79,7 +111,7 @@
       </a>
       <a href="#">
         <img
-          src="../../static/hospital/images/profile_unselected.svg"
+          src="{% static '/hospital/images/profile_unselected.svg' %}"
           alt="마이페이지"
           id="bottom-icon-mypage"
         />
@@ -87,7 +119,6 @@
       </a>
     </footer>
 
-    <!-- {% static %} 태그로 변경 -->
-    <script src="../../static/hospital/js/hospital_list.js"></script>
+    <script src="{% static '/hospital/js/hospital_list.js' %}"></script>
   </body>
 </html>
