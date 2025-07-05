@@ -14,35 +14,57 @@
     <title>안심 병원 리스트</title>
   </head>
   <body>
+    <!-- 헤더 -->
     <header>
-      <!-- 헤더 -->
-      <h2>안심 병원 추천</h2>
+      <div class="head">
+        <h2>안심 병원 추천</h2>
+        <div id="my-review">
+          <a href=" ">
+            <img
+              src="{% static '/hospital/images/my_review.svg' %}"
+              alt="내 리뷰"
+            />
+          </a>
+          <p>내 리뷰</p>
+        </div>
+      </div>
       <!-- 지역 선택: 지역 리스트 전달받아 for문으로 드롭다운 구성 -->
+
+      <!-- 카테고리 선택 -->
+      <nav class="filters">
+        <button class="filter-btn">별점순</button>
+        <button class="filter-btn">10대 친화</button>
+        <button class="filter-btn">여성전문의</button>
+      </nav>
     </header>
 
-    <!-- 카테고리 선택 -->
-    <nav class="filters">
-      <button class="filter-btn">별점순</button>
-      <button class="filter-btn">10대 친화</button>
-      <button class="filter-btn">여성전문의</button>
-    </nav>
-      <!-- 병원 리스트 띄우기 -->
-      <main class="hospital-list">
-        {% for hospital in hospitals %}
-        <div class="hospital-card">
-          <div class="hospital-image">
-            <img src="{% static '/hospital/images/sample_hospital.svg' %}" alt="병원 샘플 이미지" />
-          </div>
+    <!-- 병원 리스트 띄우기 -->
+    <main class="hospital-list">
+      {% for hospital in hospitals %}
+      <div class="hospital-card">
+        <div class="hospital-sample-image">
+          <img
+            src="{% static '/hospital/images/hospital_image_card.svg' %}"
+            alt="병원 샘플 이미지"
+            id="hospital-image"
+          />
+
           <div class="hospital-info">
-          <p id = "name">{{ hospital.name }}</p>
-          <img src="{% static '/hospital/images/location_icon.svg' %}" alt="위치 아이콘" />
-          <p id = "address">{{ hospital.address }}</p>
+            <strong id="hospital-name">{{ hospital.name }}</strong>
+            <div class="hospital-address">
+              <img
+                src="{% static '/hospital/images/location_icon.svg' %}"
+                alt="위치 아이콘"
+                id="address-picture"
+              />
+              <p id="address-text">{{ hospital.address }}</p>
+            </div>
           </div>
         </div>
-        {% empty %}
-        <p>병원이 없습니다.</p>
-        {% endfor %}
-      </main>
+      </div>
+      {% empty %}
+      <p>병원이 없습니다.</p>
+      {% endfor %}
       <!-- 리뷰 작성 아이콘 -->
       <a href="">
         <img
