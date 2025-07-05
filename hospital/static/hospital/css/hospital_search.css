@@ -45,3 +45,11 @@ header {
   background: #f6f4fb;
   border: none;
 }
+
+.search-button {
+  background: none;
+  border: none;
+}
+main {
+  display: hidden;
+}
