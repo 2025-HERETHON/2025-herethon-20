@@ -1,0 +1,244 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Pretendard-Regular";
+}
+
+body {
+  width: 100%;
+  height: 874px;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 24px;
+  flex: 0 0 auto;
+  position: fixed;
+  padding-top: 30px;
+  padding-left: 22px;
+}
+
+header h2 {
+  padding-left: 22px;
+}
+
+main {
+  padding-top: 54px;
+}
+.rating {
+  display: flex;
+  flex-direction: column;
+}
+
+main h3 {
+  padding: 28px 0 0 40px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.stars {
+  display: flex;
+  flex-direction: row;
+  padding: 21px 0px 18px 40px;
+}
+
+.stars p {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  padding: 6px 14px 6px 0px;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 289px;
+  height: 528px;
+  gap: 37px;
+  align-self: stretch;
+  padding: 34px 27px;
+  border-radius: 15px;
+  border: 1px solid #ddd6f3;
+  background: var(--white, #fff);
+}
+
+section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+form span {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8.5px 0px;
+}
+
+form input,
+textarea,
+.custom-select {
+  width: 219px;
+  border-radius: 10px;
+  background: #f6f4fb;
+  padding-top: 9.5px;
+  padding-bottom: 9.5px;
+  padding-left: 16px;
+  border: none;
+}
+
+#required-text {
+  color: #a78bfa;
+}
+
+#details {
+  width: 289px;
+  height: 297px;
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 10px;
+  background: #f6f4fb;
+  border: none;
+  resize: none;
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  text-align: left;
+  display: block;
+  box-sizing: border-box; /* padding 포함한 크기 계산 */
+}
+
+/* placeholder 텍스트 줄바꿈 + 가운데 정렬 */
+#details::placeholder {
+  white-space: pre-line;
+  text-align: center;
+}
+
+/* placeholder만 보일 때만 임시로 가운데 정렬 */
+#details:placeholder-shown {
+  text-align: center;
+  padding-top: 130px; /* 수직 중앙 정렬 */
+}
+
+/* 입력이 시작되면 원래대로 위에서부터 입력되게 */
+#details:not(:placeholder-shown) {
+  text-align: left;
+  padding-top: 16px;
+}
+
+#error-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 13.5px;
+  background: rgba(0, 0, 0, 0.4);
+  display: none; /* JS에서 조건 */
+  width: 240px;
+  height: 40px;
+  padding: 13.5px 39.6px;
+  justify-content: center;
+  align-items: center;
+}
+
+#error-message p {
+  color: white;
+  font-size: 13.5px;
+  font-weight: 400;
+}
+#bold-error {
+  font-weight: 600;
+  font-size: 13.5px;
+}
+
+#submit-button {
+  width: 343px;
+  height: 54px;
+  margin: 21px 30px 23px 29px;
+  padding: 15px 136px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 15px;
+  background: var(--50, rgba(167, 139, 250, 0.5));
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white, #fff);
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+/* 드롭다운 */
+.custom-select-wrapper {
+  position: relative;
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+}
+
+.custom-select {
+  display: flex;
+  flex-direction: row;
+}
+
+.dropdown-icon {
+  color: #999;
+  padding-right: 16px;
+}
+
+.keyword-options {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 200px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  padding: 10px;
+}
+
+.keyword-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 0px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.keyword-options input[type="checkbox"] {
+  width: 12px;
+  height: 12px;
+}
+
+.keyword-options label:last-child {
+  border-bottom: none; /* 구분선 생기지 않게*/
+}
+
+.selected-keywords {
+  flex: 1;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden; /* 박스 넘어가면 hidden 처리*/
+  text-overflow: ellipsis; /* 넘친 텍스트 ... 처리*/
+}

@@ -1,10 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static %}
 
-</body>
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static '/hospital/css/review_create.css' %}"
+    />
+    <title>리뷰 작성</title>
+  </head>
+  <body>
+    <!-- 최상단 -->
+    <header>
+      <!-- 페이지 연결 필요 -->
+      <a href=" ">
+        <img
+          src="{% static '/hospital/images/back_icon.svg' %}"
+          alt="이전으로"
+          id="back-button"
+        />
+      </a>
+      <h2>리뷰 작성</h2>
+    </header>
+    <main>
+      <!-- 병원 이름 + 별점 띄우기 -->
+      <div class="rating">
+        <!-- 병원 이름 받아오기 -->
+        <h3><strong> 00병원 </strong></h3>
+        <!-- 빈 별 5개 생성. 클릭 시, js로 채워진 별로 바꿔주기 -->
+        <div class="stars">
+          <p>별점</p>
+          <!-- 숨겨진 input: 사용자가 클릭한 별점 값 저장용 -->
+          <input type="hidden" name="rating" id="rating-value" />
+          {% for i in "12345" %}
+          <img
+            src="{% static 'hospital/images/star_blank.svg' %}"
+            alt="별점"
+            class="star"
+            data-index="{{ forloop.counter }}"
+          />
+          <!--각 별에 번호 1~5 부여-->
+          {% endfor %}
+        </div>
+      </div>
+      <div class="review-form">
+        <!-- 리뷰 폼 -->
+        <div class="form">
+          <form method="post">
+            {% csrf_token %}
+            <!-- 담당의 -->
+            <section class="review">
+              <span>담당의</span>
+              <input
+                id="doctor"
+                type="text"
+                placeholder="담당의를 입력해주세요"
+              />
+            </section>
+            <!-- 진료질환 -->
+            <section class="review">
+              <span>진료질환</span>
+              <input
+                id="disease"
+                type="text"
+                placeholder="진료질환을 입력해주세요"
+              />
+            </section>
+            <!-- 키워드 -->
+            <section class="review">
+              <span>키워드</span>
+              <!-- 드롭다운 구현 -->
+              <div class="custom-select-wrapper">
+                <div class="custom-select" id="keywordSelect">
+                  <div class="selected-keywords" id="selectedKeywords">
+                    키워드를 선택해주세요 (복수선택 가능)
+                  </div>
+                  <div class="dropdown-icon">&#9662;</div>
+                </div>
+                <div class="keyword-options" id="keywordOptions">
+                  <label
+                    ><input type="checkbox" value="🤗 과잉진료하지 않아요" />
+                    🤗과잉진료하지 않아요</label
+                  >
+                  <label
+                    ><input
+                      type="checkbox"
+                      value="😄 10대 친화적이에요 (가격, 환경 등)"
+                    />😄 10대 친화적이에요 (가격, 환경 등)</label
+                  >
+                  <label
+                    ><input type="checkbox" value="🤩 친절해요" />
+                    🤩친절해요</label
+                  >
+                </div>
+              </div>
+              <!-- 드롭다운 구현 -->
+            </section>
+            <!-- 체크박스 내용 서버로 전송 -->
+            <input type="hidden" name="keywords" id="keywordsInput" />
+            <!-- 상세리뷰 -->
+            <section class="review">
+              <div id="review-detail">
+                <span>상세 리뷰 <span id="required-text">*</span></span>
+                <textarea
+                  id="details"
+                  type="text"
+                  placeholder="상세 리뷰를 입력해주세요
+                  (최소 8자 이상)"
+                  required
+                ></textarea>
+                <!-- 일단 display:none; 처리-->
+                <div id="error-message">
+                  <p>
+                    <span id="bold-error">제출 불가:</span> 너무 짧은 텍스트를
+                    입력했습니다.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </form>
+        </div>
+        <!-- 정상 제출 시, 다시 리뷰 작성 페이지로 redirect -->
+        <button type="submit" id="submit-button">제출하기</button>
+      </div>
+    </main>
+    <script src="{% static '/hospital/js/review_create.js' %}"></script>
+  </body>
 </html>
