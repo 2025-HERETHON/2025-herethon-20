@@ -1,10 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static %}
 
-</body>
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static '/hospital/css/hospital_detail.css' %}"
+    />
+    <title>병원 상세 정보</title>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <header>
+      <a href="{% url 'hospital_search' %}">
+        <img
+          src="{% static '/hospital/images/back_icon.svg' %}"
+          alt="이전으로"
+          class="back-button"
+        />
+      </a>
+      <h2>oo병원</h2>
+    </header>
+    <!-- 내비 탭 -->
+    <nav>
+      <div class="tab-container">
+        <div class="info">정보</div>
+        <!-- 리뷰 페이지 연결 필요 -->
+        <div class="review">
+          <a href="{% url 'hospital_reviews' %}">리뷰</a>
+        </div>
+      </div>
+    </nav>
+    <!-- 병원 정보-->
+    <main>
+      <div class="main-content">
+        <!-- 병원 이미지 -->
+        <section>
+          <img
+            src="{% static '/hospital/images/sample_hospital_img.svg' %}"
+            alt="병원 샘플 이미지"
+            id="hospital-img"
+          />
+        </section>
+        <!-- 주소 -->
+        <div class="hospital-info">
+          <section>
+            <img
+              src="{% static '/hospital/images/location_icon.svg' %}"
+              alt="위치 아이콘"
+            />
+            <p>서울특별시 서대문구 통일로 397{{ hospital.address }}</p>
+          </section>
+          <!-- 임시 지도-->
+          <section>
+            <img
+              src="{% static '/hospital/images/sample_map.svg' %}"
+              alt="샘플 지도 이미지"
+            />
+          </section>
+          <!-- 폰 번호-->
+          <section>
+            <img
+              src="{% static '/hospital/images/call_icon.svg' %}"
+              alt="전화 아이콘"
+            />
+            <p id="phone-text">02-111-111{{ hospital.tel }}</p>
+            <!-- 복사 기능 js 구현 -->
+            <a href="#" id="copy-phone">복사</a>
+          </section>
+          <!-- 영업 시간과 url에 대한 데이터 존재? -->
+          <section>
+            <img
+              src="{% static '/hospital/images/time_icon.svg' %}"
+              alt="영업시간 아이콘"
+            />
+            <p>평일 오전 9:00~오후 10:00, 일요일 휴무{{ hospital.tel }}</p>
+          </section>
+          <section>
+            <img
+              src="{% static '/hospital/images/web_icon.svg' %}"
+              alt="url 아이콘"
+            />
+            <a href="#" id="url-address">www.hospital.com</a>
+          </section>
+
+          <!-- 대표 키워드 -->
+          <section id="keyword-section">
+            <p><strong>대표 키워드</strong></p>
+            <div class="keyword-list">
+              <!-- 임시 키워드-->
+              <span class="keyword-name">생리 불순</span>
+              <span class="keyword-name">PMS</span>
+            </div>
+            <!-- 키워드 받아오기
+
+        {% for keyword in hospital.keywords %}
+        <span class="keyword-name">{{ keyword }}</span>
+        {% empty %}
+        <span>등록된 키워드 없음</span>
+        {% endfor %}-->
+          </section>
+        </div>
+      </div>
+      <!-- 리뷰 작성 버튼-->
+      <a href="{% url 'review_create' %}">
+        <img
+          src="{% static '/hospital/images/write_review.svg' %}"
+          alt="리뷰 작성"
+          class="floating-button"
+        />
+      </a>
+    </main>
+    <script src="{% static '/hospital/js/hospital_detail.js' %}"></script>
+  </body>
 </html>

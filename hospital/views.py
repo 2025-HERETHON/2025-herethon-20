@@ -84,3 +84,11 @@ def hospital_search(request):
 # 리뷰 작성 (임시)
 def review_create(request):
     return render(request, 'hospital/review_create.html')
+
+# 병원 상세 정보 (임시)
+def hospital_detail(request):
+    return render(request, 'hospital/hospital_detail.html')
+
+# 병원 리뷰 확인 페이지 (임시)
+def hospital_reviews(request):
+    return render(request, 'hospital/hospital_reviews.html')
