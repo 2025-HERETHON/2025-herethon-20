@@ -1,10 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static %}
 
-</body>
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static '/hospital/css/hospital_detail.css' %}"
+    />
+    <title>병원 상세 페이지</title>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <header>
+      <a href="{% url 'hospital_search' %}">
+        <img
+          src="{% static '/hospital/images/back_icon.svg' %}"
+          alt="이전으로"
+          class="back-button"
+        />
+      </a>
+      <h2>00병원</h2>
+    </header>
+    <!-- 내비 탭 -->
+    <nav class="tab-container">
+      <div class="info">정보</div>
+      <div class="review">리뷰</div>
+    </nav>
+    <!-- 병원 정보-->
+    <main>
+      <!-- 병원 이미지 -->
+      <section>
+        <img
+          src="{% static '/hospital/images/sample_hospital_img.svg' %}"
+          alt="병원 샘플 이미지"
+        />
+      </section>
+      <!-- 주소 -->
+      <section>
+        <img
+          src="{% static '/hospital/images/location_icon.svg' %}"
+          alt="위치 아이콘"
+        />
+        <p>{{ hospital.address }}</p>
+      </section>
+      <!-- 지도-->
+      <section></section>
+      <!-- 폰 번호-->
+      <section>
+        <img
+          src="{% static '/hospital/images/call_icon.svg' %}"
+          alt="전화 아이콘"
+        />
+        <p>{{ hospital.tel }}</p>
+        <!-- 복사 기능 js 구현 -->
+        <a href="#" id="copy-phone">복사</a>
+      </section>
+      <!-- 영업 시간과 url에 대한 데이터 존재? 
+      <section></section>
+      <section></section>-->
+
+      <!-- 대표 키워드 -->
+      <section>
+        <!-- 키워드 받아오기
+        <p>대표 키워드</p>
+        {% for keyword in hospital.keywords %}
+        <span>{{ keyword }}</span>
+        {% empty %}
+        <span>등록된 키워드 없음</span>
+        {% endfor %}-->
+      </section>
+    </main>
+
+    <!-- 리뷰 작성 버튼-->
+    <a href="{% url 'review_create' %}">
+      <img
+        src="{% static '/hospital/images/write_review.svg' %}"
+        alt="리뷰 작성"
+        class="floating-button"
+      />
+    </a>
+  </body>
 </html>
