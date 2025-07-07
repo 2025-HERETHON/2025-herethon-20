@@ -1,6 +1,6 @@
-// hospital_list.js
-
 document.addEventListener("DOMContentLoaded", function () {
+  fetchHospitals(); // 초기 접속 시, 모든 병원 뜨게
+
   const sidoNames = {
     110000: "서울특별시",
     410000: "경기도",
@@ -127,9 +127,17 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // 병원 목록 불러오기
-  function fetchHospitals(sidoCd, sgguCd, sort) {
-    let url = `/hospitals/api/hospitals/?sidoCd=${sidoCd}&sgguCd=${sgguCd}`;
-    if (sort) url += `&sort=${sort}`;
+  function fetchHospitals(sidoCd = null, sgguCd = null, sort = null) {
+    let url = `/hospitals/api/hospitals/`;
+    const params = [];
+
+    if (sidoCd) params.push(`sidoCd=${sidoCd}`);
+    if (sgguCd) params.push(`sgguCd=${sgguCd}`);
+    if (sort) params.push(`sort=${sort}`);
+
+    if (params.length > 0) {
+      url += "?" + params.join("&");
+    }
 
     fetch(url)
       .then((res) => res.json())
@@ -143,6 +151,8 @@ document.addEventListener("DOMContentLoaded", function () {
         data.forEach((hospital, idx) => {
           const card = document.createElement("div");
           card.className = "hospital-card";
+          card.dataset.id = hospital.id; // 병원 아이디 지정
+
           if (idx === data.length - 1) card.style.marginBottom = "1.5rem";
 
           card.innerHTML = `
@@ -157,6 +167,11 @@ document.addEventListener("DOMContentLoaded", function () {
               </div>
             </div>
           `;
+
+          card.addEventListener("click", () => {
+            const hospitalId = card.dataset.id;
+            window.location.href = `/hospitals/detail/${hospitalId}/`; // 상세페이지 경로
+          });
           hospitalList.appendChild(card);
         });
       })
