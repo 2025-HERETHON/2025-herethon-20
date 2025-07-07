@@ -7,6 +7,7 @@ from rest_framework.generics import ListAPIView
 from .models import Hospital
 from .serializers import HospitalSerializer
 from django.db.models import Avg, Count, Q
+from django.http import JsonResponse
 
 def hospital_list(request):
     region = request.GET.get('region')
@@ -60,11 +61,11 @@ class HospitalListAPIView(ListAPIView):
         if sggu:
             queryset = queryset.filter(sgguCd=sggu)
 
-        queryset = queryset.annotate(
-            average_rating=Avg('reviews__rating'),
-            cost_reasonable_count=Count('reviews', filter=Q(reviews__cost_reasonable=True)),
-            teen_friendly_count=Count('reviews', filter=Q(reviews__teen_friendly=True)),
-        )
+        #queryset = queryset.annotate(
+        #    average_rating=Avg('reviews__rating'),
+        #    cost_reasonable_count=Count('reviews', filter=Q(reviews__cost_reasonable=True)),
+        #    teen_friendly_count=Count('reviews', filter=Q(reviews__teen_friendly=True)),
+        #)
 
         if sort == 'rating':
             queryset = queryset.order_by('-average_rating')
@@ -92,3 +93,7 @@ def hospital_detail(request):
 # 병원 리뷰 확인 페이지 (임시)
 def hospital_reviews(request):
     return render(request, 'hospital/hospital_reviews.html')
+
+# 병원 내 리뷰 검색 페이지 (임시)
+def review_search(request):
+    return render(request, 'hospital/review_search.html')

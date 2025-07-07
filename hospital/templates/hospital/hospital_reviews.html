@@ -26,7 +26,7 @@
         <h2>oo병원</h2>
       </div>
       <!-- 병원 리뷰 검색 페이지 연결 -->
-      <a href="{% url 'hospital_search' %}">
+      <a href="{% url 'review_search' %}">
         <img
           src="{% static '/hospital/images/search_icon.svg' %}"
           alt="검색 아이콘"
@@ -42,9 +42,32 @@
         <div class="review">리뷰</div>
       </div>
     </nav>
-    <!-- 해당 병원 리뷰 카드들 띄우기-->
-    <main>
-      <div class="main-content">aaa</div>
+    <main class="review-list">
+      <!-- 해당 병원 리뷰 카드들 띄우기-->
+      <!-- for문 순회-->
+      <div class="review-card">
+        <div id="rating">
+          <strong>별점</strong>
+          <!-- 별점 이미지-->
+        </div>
+        <div id="doctor">
+          <strong>담당의</strong>
+          <p></p>
+        </div>
+        <div id="disease">
+          <strong>진료질환</strong>
+          <p></p>
+        </div>
+        <div id="contents">
+          <p></p>
+        </div>
+        <div id="keyword">
+          <p></p>
+        </div>
+      </div>
+      <!-- {% empty %}
+      <p>작성한 리뷰가 없습니다.</p>
+      {% endfor %} -->
       <!-- 리뷰 작성 버튼-->
       <a href="{% url 'review_create' %}">
         <img
