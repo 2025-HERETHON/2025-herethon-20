@@ -1,4 +1,4 @@
-# 'Q&A 게시판 - 큐앤에이 - 게시판'에 해당하는 페이지
+{# 'Q&A 게시판 - 큐앤에이 - 게시판'에 해당하는 페이지 #}
 
 {% load static %}
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
 <body>
     <h2>주제별 게시판</h2>
 
-    <div class="header-buttons"> # 검색창 또는 내 질문/답변으로 이동하는 코드
+    <div class="header-buttons"> {# 검색창 또는 내 질문/답변으로 이동하는 코드 #}
         <a href="{% url 'posts:post_search' %}">검색</a>
         <a href="{% url 'posts:my_questions' %}">내 질문</a>
     </div>
@@ -17,7 +17,7 @@
     <div>
         <a href="{% url 'posts:post_list' %}">전체</a>
 
-        {% for category in categories %} # 저장된 카테고리 종류 표시
+        {% for category in categories %} {# 저장된 카테고리 종류 표시 #}
             <a href="{% url 'posts:post_list_by_category' category.slug %}">
                 {{ category.name }}
             </a>
@@ -27,10 +27,10 @@
     <ul>
         {% for post in posts %}
             <li class="post-item">
-                <a href="{% url 'posts:post_detail' post.id %}" class="post-title-link"> # 제목 클릭하면 해당 글 상세 페이지로 이동
-                    <h3 class="post-title">{{ post.title }}</h3> # 글 제목 표시
+                <a href="{% url 'posts:post_detail' post.id %}" class="post-title-link"> {# 제목 클릭하면 해당 글 상세 페이지로 이동 #}
+                    <h3 class="post-title">{{ post.title }}</h3> {# 글 제목 표시 #}
                 </a>
-                <p class="post-content-preview">{{ post.content|truncatechars:100 }}</p> # 본문 미리보기
+                <p class="post-content-preview">{{ post.content|truncatechars:100 }}</p> {# 본문 미리보기 #}
             </li>
         {% endfor %}
     </ul>
