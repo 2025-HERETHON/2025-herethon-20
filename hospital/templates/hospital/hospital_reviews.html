@@ -16,14 +16,14 @@
     <!-- 헤더 -->
     <header>
       <div class="left-section">
-        <a href="{% url 'hospital_search' %}">
+        <a href="{% url 'hospital_list' %}">
           <img
             src="{% static '/hospital/images/back_icon.svg' %}"
             alt="이전으로"
             class="back-button"
           />
         </a>
-        <h2>oo병원</h2>
+        <h2>{{hospital.name}}</h2>
       </div>
       <!-- 병원 리뷰 검색 페이지 연결 -->
       <a href="{% url 'review_search' %}">
@@ -38,7 +38,9 @@
     <nav>
       <div class="tab-container">
         <!-- 정보 페이지 연결 필요 -->
-        <div class="info"><a href="{% url 'hospital_detail' %}">정보</a></div>
+        <div class="info">
+          <a href="{% url 'hospital_detail' hospital.id %}">정보</a>
+        </div>
         <div class="review">리뷰</div>
       </div>
     </nav>
@@ -65,9 +67,7 @@
           <p></p>
         </div>
       </div>
-      <!-- {% empty %}
-      <p>작성한 리뷰가 없습니다.</p>
-      {% endfor %} -->
+
       <!-- 리뷰 작성 버튼-->
       <a href="{% url 'review_create' %}">
         <img

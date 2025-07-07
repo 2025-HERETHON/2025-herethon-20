@@ -15,14 +15,14 @@
   <body>
     <!-- 헤더 -->
     <header>
-      <a href="{% url 'hospital_search' %}">
+      <a href="{% url 'hospital_list' %}">
         <img
           src="{% static '/hospital/images/back_icon.svg' %}"
           alt="이전으로"
           class="back-button"
         />
       </a>
-      <h2>oo병원</h2>
+      <h2>{{ hospital.name }}</h2>
     </header>
     <!-- 내비 탭 -->
     <nav>
@@ -30,7 +30,7 @@
         <div class="info">정보</div>
         <!-- 리뷰 페이지 연결 필요 -->
         <div class="review">
-          <a href="{% url 'hospital_reviews' %}">리뷰</a>
+          <a href="{% url 'hospital_reviews' hospital.id %}">리뷰</a>
         </div>
       </div>
     </nav>
@@ -52,7 +52,7 @@
               src="{% static '/hospital/images/location_icon.svg' %}"
               alt="위치 아이콘"
             />
-            <p>서울특별시 서대문구 통일로 397{{ hospital.address }}</p>
+            <p>{{ hospital.address }}</p>
           </section>
           <!-- 임시 지도-->
           <section>
@@ -67,7 +67,7 @@
               src="{% static '/hospital/images/call_icon.svg' %}"
               alt="전화 아이콘"
             />
-            <p id="phone-text">02-111-111{{ hospital.tel }}</p>
+            <p id="phone-text">{{ hospital.tel }}</p>
             <!-- 복사 기능 js 구현 -->
             <a href="#" id="copy-phone">복사</a>
           </section>
@@ -77,7 +77,7 @@
               src="{% static '/hospital/images/time_icon.svg' %}"
               alt="영업시간 아이콘"
             />
-            <p>평일 오전 9:00~오후 10:00, 일요일 휴무{{ hospital.tel }}</p>
+            <p>평일 오전 9:00~오후 10:00, 일요일 휴무</p>
           </section>
           <section>
             <img

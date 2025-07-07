@@ -1,5 +1,5 @@
 # hospital/views.py
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Hospital
 import requests
 from django.conf import settings
@@ -87,12 +87,14 @@ def review_create(request):
     return render(request, 'hospital/review_create.html')
 
 # 병원 상세 정보 (임시)
-def hospital_detail(request):
-    return render(request, 'hospital/hospital_detail.html')
+def hospital_detail(request, hospital_id):
+    hospital = get_object_or_404(Hospital, id=hospital_id)
+    return render(request, 'hospital/hospital_detail.html', {'hospital': hospital})
 
 # 병원 리뷰 확인 페이지 (임시)
-def hospital_reviews(request):
-    return render(request, 'hospital/hospital_reviews.html')
+def hospital_reviews(request, hospital_id):
+    hospital = get_object_or_404(Hospital, id=hospital_id)
+    return render(request, 'hospital/hospital_reviews.html', {'hospital': hospital})
 
 # 병원 내 리뷰 검색 페이지 (임시)
 def review_search(request):

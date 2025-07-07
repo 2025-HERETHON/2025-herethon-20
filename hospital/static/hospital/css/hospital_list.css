@@ -182,26 +182,36 @@ h2 {
 }
 
 .hospital-info {
+  width: 90%;
   position: absolute;
-  top: 9.875rem;
-  left: 1.25rem;
-  right: 1.25rem;
+  top: 163px;
+  left: 21px;
 }
 
 #hospital-name {
   font-size: 1.25rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .hospital-address {
   display: flex;
   flex-direction: row;
+  align-items: center;
   font-size: 0.75rem;
-  padding-top: 0.5625rem;
+  padding-top: 0.5rem;
 }
 
 #address-text {
-  width: 90%;
-  padding: 0.125rem 0px 0.125rem 0.625rem;
+  padding: 0.125rem 0.625rem 0.125rem 0.625rem;
+
+  /* 두 줄 말줄임 처리 */
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .floating-button {
