@@ -28,7 +28,29 @@
           <p>내 리뷰</p>
         </div>
       </div>
-      <!-- 지역 선택: 지역 리스트 전달받아 for문으로 드롭다운 구성 -->
+      <!-- 지역 드롭다운  -->
+      <form method="get">
+        <!-- 시도+시군구 선택-->
+        <div class="region-box">
+          <select name="sidoCd" id="sido-box" required>
+            <option value="" selected disabled hidden>특별시/광역시/도</option>
+            <!--임시 코드-->
+            <option value="a">a</option>
+            <option value="b">b</option>
+            <option value="c">c</option>
+            <option value="d">d</option>
+            <!-- 시도 코드 리스트 전달 받기 -->
+            <!-- {% for code, name in sido_choices %}
+            <option value="{{ code }}">{{ name }}</option>
+            {% endfor %} -->
+          </select>
+          <select name="sgguCd" id="sggu-box" required disabled>
+            <option value="" selected disabled hidden>시/군/구</option>
+            <!-- 시군구 코드 리스트 전달 받기 -->
+            <!-- JS에서 선택된 시도에 따라 여기에 시군구 옵션 동적 추가 -->
+          </select>
+        </div>
+      </form>
 
       <!-- 카테고리 선택 -->
       <nav class="filters">

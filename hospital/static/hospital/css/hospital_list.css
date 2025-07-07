@@ -23,17 +23,17 @@ body {
   top: 0;
   flex: 0 0 auto;
   width: 100%;
-  height: 153px;
+  height: 17.5%;
 }
 
 .head {
   display: flex;
   flex-direction: row;
+  padding: 1.5625rem 0px 0px 1.5625rem;
 }
 
 h2 {
   margin: 0;
-  padding: 1.5625rem 0px 0px 1.5625rem;
   font-size: 1.25rem;
 }
 
@@ -51,20 +51,45 @@ h2 {
 
 #my-review p {
   padding: 0px;
-  margin: 0px;
   font-size: 7px;
 }
+
+.region-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 29px auto 0 auto;
+  width: 83%;
+  height: 30px;
+  gap: 9px;
+}
+
+select {
+  width: 100%;
+  height: 100%;
+  color: #5e548e;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(167, 139, 250, 0.5);
+  border-radius: 20px;
+  text-align: center; /* 가운데 정렬 */
+}
+
 .filters {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin: 125px 27px 25px 28px;
+  margin: 21px auto 25px auto;
+  width: 86%;
+  height: 28px;
   gap: 8px;
 }
 
 .filter-btn {
-  width: 113px;
-  height: 28px;
+  width: 100%;
+  height: 100%;
   border-style: none;
   border-radius: 15px;
   text-align: center;
