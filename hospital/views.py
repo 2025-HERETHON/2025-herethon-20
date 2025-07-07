@@ -80,7 +80,17 @@ class HospitalListAPIView(ListAPIView):
     
 # 병원 검색 (임시)
 def hospital_search(request):
-    return render(request, 'hospital/hospital_search.html')
+    #html에서 보낸 input의 name 속성
+    query = request.GET.get('q')
+    hospitals = []
+
+    if query:
+        hospitals = Hospital.objects.filter(name__icontains=query)
+
+    return render(request, 'hospital/hospital_search.html', {
+        'query': query,
+        'hospitals': hospitals
+    })
 
 # 리뷰 작성 (임시)
 def review_create(request):
