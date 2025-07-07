@@ -1,46 +1,169 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const filterButtons = document.querySelectorAll(".filter-btn");
+// hospital_list.js
 
+document.addEventListener("DOMContentLoaded", function () {
+  const sidoNames = {
+    110000: "서울특별시",
+    410000: "경기도",
+  };
+
+  const sgguNames = {
+    110001: "강남구",
+    110002: "강동구",
+    110003: "강북구",
+    110004: "강서구",
+    110005: "관악구",
+    110006: "광진구",
+    110007: "구로구",
+    110008: "금천구",
+    110009: "노원구",
+    110010: "도봉구",
+    110011: "동대문구",
+    110012: "동작구",
+    110013: "마포구",
+    110014: "서대문구",
+    110015: "서초구",
+    110016: "성동구",
+    110017: "성북구",
+    110018: "송파구",
+    110019: "양천구",
+    110020: "영등포구",
+    110021: "용산구",
+    110022: "은평구",
+    110023: "종로구",
+    110024: "중구",
+    110025: "중랑구",
+    410001: "수원시",
+    410002: "성남시",
+  };
+
+  const sgguData = {
+    110000: [
+      110001, 110002, 110003, 110004, 110005, 110006, 110007, 110008, 110009,
+      110010, 110011, 110012, 110013, 110014, 110015, 110016, 110017, 110018,
+      110019, 110020, 110021, 110022, 110023, 110024, 110025,
+    ],
+    410000: [410001, 410002],
+  };
+
+  const sidoToggle = document.getElementById("sido-toggle");
+  const sidoOptions = document.getElementById("sido-options");
+  const sgguToggle = document.getElementById("sggu-toggle");
+  const sgguOptions = document.getElementById("sggu-options");
+  const hospitalList = document.getElementById("hospital-list");
+  let currentSido = null;
+  let currentSggu = null;
+
+  // 시도 옵션 렌더링
+  for (const sidoCd in sgguData) {
+    const li = document.createElement("li");
+    li.textContent = sidoNames[sidoCd];
+    li.dataset.value = sidoCd;
+    sidoOptions.appendChild(li);
+  }
+
+  // 드롭다운 열기/닫기
+  sidoToggle.addEventListener("click", () => {
+    sidoOptions.style.display =
+      sidoOptions.style.display === "block" ? "none" : "block";
+    sgguOptions.style.display = "none";
+  });
+
+  sgguToggle.addEventListener("click", () => {
+    sgguOptions.style.display =
+      sgguOptions.style.display === "block" ? "none" : "block";
+    sidoOptions.style.display = "none";
+  });
+
+  // 시도 선택 시
+  sidoOptions.addEventListener("click", (e) => {
+    if (e.target.tagName !== "LI") return;
+
+    const sidoCd = e.target.dataset.value;
+    currentSido = sidoCd;
+    sidoToggle.textContent = sidoNames[sidoCd];
+    sidoOptions.style.display = "none";
+
+    sgguToggle.disabled = false;
+    sgguToggle.textContent = "시/군/구";
+    sgguOptions.innerHTML = "";
+
+    sgguData[sidoCd].forEach((sgguCd) => {
+      const li = document.createElement("li");
+      li.textContent = sgguNames[sgguCd];
+      li.dataset.value = sgguCd;
+      sgguOptions.appendChild(li);
+    });
+  });
+
+  // 시군구 선택 시
+  sgguOptions.addEventListener("click", (e) => {
+    if (e.target.tagName !== "LI") return;
+
+    const sgguCd = e.target.dataset.value;
+    currentSggu = sgguCd;
+    sgguToggle.textContent = sgguNames[sgguCd];
+    sgguOptions.style.display = "none";
+
+    fetchHospitals(currentSido, currentSggu);
+  });
+
+  // 필터 버튼 처리
+  const filterButtons = document.querySelectorAll(".filter-btn");
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", function () {
       filterButtons.forEach((b) => b.classList.remove("active"));
       this.classList.add("active");
+
+      const text = this.textContent;
+      let sortParam = null;
+      if (text.includes("여성")) sortParam = "female";
+      else if (text.includes("별점")) sortParam = "rating";
+      else if (text.includes("10대")) sortParam = "teen";
+
+      if (currentSido && currentSggu) {
+        fetchHospitals(currentSido, currentSggu, sortParam);
+      }
     });
   });
-});
 
-// 문서가 완전히 로드된 후에 실행 (DOMContentLoaded 이벤트 사용)
-document.addEventListener("DOMContentLoaded", function () {
-  // 시도(select) 요소와 시군구(select) 요소를 각각 변수에 저장
-  const sidoSelect = document.getElementById("sido-box");
-  const sgguSelect = document.getElementById("sggu-box");
+  // 병원 목록 불러오기
+  function fetchHospitals(sidoCd, sgguCd, sort) {
+    let url = `/hospitals/api/hospitals/?sidoCd=${sidoCd}&sgguCd=${sgguCd}`;
+    if (sort) url += `&sort=${sort}`;
 
-  // 시도별 시군구 리스트 (임시 데이터)
-  const sgguData = {
-    a: ["ㄱ", "ㄴ"],
-    b: ["ㄷ", "ㄹ"],
-    c: ["ㅁ", "ㅂ"],
-    d: ["ㅅ", "ㅇ"],
-  };
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        hospitalList.innerHTML = "";
+        if (data.length === 0) {
+          hospitalList.innerHTML = "<p>병원이 없습니다.</p>";
+          return;
+        }
 
-  // 시도 선택 시 실행되는 이벤트 핸들러
-  sidoSelect.addEventListener("change", function () {
-    const selectedSido = this.value; // 사용자가 선택한 시도 코드
-    const relatedSgguList = sgguData[selectedSido] || []; // 해당 시도의 시군구 목록 불러오기
+        data.forEach((hospital, idx) => {
+          const card = document.createElement("div");
+          card.className = "hospital-card";
+          if (idx === data.length - 1) card.style.marginBottom = "1.5rem";
 
-    // 시군구 드롭다운 초기화 (기본 안내 옵션만 남기고 지움)
-    sgguSelect.innerHTML =
-      '<option value="" selected disabled hidden>시/군/구</option>';
-
-    // 시군구 드롭다운 활성화 (처음엔 disabled 상태이므로 enable로 변경)
-    sgguSelect.disabled = false;
-
-    // 시군구 목록을 기반으로 option 태그를 생성해 드롭다운에 추가
-    relatedSgguList.forEach((name) => {
-      const option = document.createElement("option"); // <option> 태그 생성
-      option.value = name; // value 설정
-      option.textContent = name; // 사용자에게 보이는 텍스트
-      sgguSelect.appendChild(option); // <select>에 option 추가
-    });
-  });
+          card.innerHTML = `
+            <div class="hospital-sample-image">
+              <img src="/static/hospital/images/hospital_image_card.svg" alt="병원 샘플 이미지" id="hospital-image"/>
+              <div class="hospital-info">
+                <strong id="hospital-name">${hospital.name}</strong>
+                <div class="hospital-address">
+                  <img src="/static/hospital/images/location_icon.svg" alt="위치 아이콘" id="address-picture" />
+                  <p id="address-text">${hospital.address}</p>
+                </div>
+              </div>
+            </div>
+          `;
+          hospitalList.appendChild(card);
+        });
+      })
+      .catch((err) => {
+        hospitalList.innerHTML =
+          "<p>병원 데이터를 불러오는 데 실패했습니다.</p>";
+        console.error("병원 목록 API 오류:", err);
+      });
+  }
 });
