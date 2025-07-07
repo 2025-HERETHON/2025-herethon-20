@@ -92,3 +92,7 @@ def hospital_detail(request):
 # 병원 리뷰 확인 페이지 (임시)
 def hospital_reviews(request):
     return render(request, 'hospital/hospital_reviews.html')
+
+# 병원 내 리뷰 검색 페이지 (임시)
+def review_search(request):
+    return render(request, 'hospital/review_search.html')
