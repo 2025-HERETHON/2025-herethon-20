@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static %}
 
-</body>
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static '/hospital/css/my_reviews.css' %}"
+    />
+    <title>내 리뷰</title>
+  </head>
+  <body>
+    <!-- 최상단 -->
+    <header>
+      <!-- 페이지 연결 필요 -->
+      <a href="{% url 'hospital_list' %}">
+        <img
+          src="{% static '/hospital/images/back_icon.svg' %}"
+          alt="이전으로"
+          id="back-button"
+        />
+      </a>
+      <h2>내 리뷰</h2>
+    </header>
+    <!-- 내 리뷰 띄우기 -->
+    <main class="review-list">
+      <!-- for문 순회-->
+      <div class="review-card">
+        <div id="rating">
+          <strong>별점</strong>
+          <!-- 별점 이미지-->
+        </div>
+        <div id="doctor">
+          <strong>담당의</strong>
+          <p></p>
+        </div>
+        <div id="disease">
+          <strong>진료질환</strong>
+          <p></p>
+        </div>
+        <div id="contents">
+          <p></p>
+        </div>
+        <div id="keyword">
+          <p></p>
+        </div>
+      </div>
+      {% empty %}
+      <p>작성한 리뷰가 없습니다.</p>
+      {% endfor %}
+    </main>
+  </body>
 </html>
