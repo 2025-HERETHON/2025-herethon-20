@@ -50,20 +50,24 @@
     <!-- 병원 검색 결과: hidden이었다가 검색버튼 누르면 결과 나오게 -->
     <main>
       {% if query %}
-      <section class="search-result">
-        <p class="result-count">검색 결과 {{ hospitals|length }}개</p>
+      <div class="result">
+        <p class="result-count">
+          검색 결과 <span id="bold-count">{{ hospitals|length }}</span></strong>개
+        </p>
 
         {% for hospital in hospitals %}
         <div class="result-item">
-          <a href="{% url 'hospital_detail' hospital.id %}">
-            <p class="hospital-name"><strong>{{ hospital.name }}</strong></p>
-            <p class="hospital-address">{{ hospital.address }}</p>
+          <div id="result-text">
+          <a href="{% url 'hospital_detail' hospital.id %}"> 
+              <p class="hospital-name"><strong>{{ hospital.name }}</strong></p>
+              <p class="hospital-address">{{ hospital.address }}</p>
+            </div>
           </a>
         </div>
         {% empty %}
         <p class="no-result">검색 결과가 없습니다.</p>
         {% endfor %}
-      </section>
+      </div>
       {% endif %}
     </main>
     <script src="{% static '/hospital/js/hospital_search.js' %}"></script>
