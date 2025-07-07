@@ -168,9 +168,10 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
           `;
 
+          // 병원 카드 클릭시, 상세 페이지로 이동
           card.addEventListener("click", () => {
             const hospitalId = card.dataset.id;
-            window.location.href = `/hospitals/detail/${hospitalId}/`; // 상세페이지 경로
+            window.location.href = `/hospitals/hospital_detail/${hospitalId}/`;
           });
           hospitalList.appendChild(card);
         });
