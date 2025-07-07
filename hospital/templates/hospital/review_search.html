@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static '/hospital/css/review_search.css' %}"
+    />
+    <title>리뷰 검색</title>
+  </head>
+  <body>
+    <!-- 검색창: 사용자 입력 병원을 get방식으로 전송 -->
+    <header>
+      <!-- action 연결 필요 -->
+      <form method="get" action="" class="search-container">
+        {% csrf_token %}
+        <!-- 이전으로 버튼 누르면 병원 리뷰 페이지로-->
+        <a href="{% url 'hospital_reviews' %}">
+          <img
+            src="{% static '/hospital/images/back_icon.svg' %}"
+            alt="이전으로"
+            class="back-button"
+          />
+        </a>
+        <!-- 검색할 리뷰 키워드 입력 받기
+         get방식으로 보낼 파라미터명: q-->
+        <!-- placeholder에 병원명 추가 -->
+        <input
+          type="text"
+          name="q"
+          class="search-box"
+          placeholder="00병원 내 리뷰를 검색하세요"
+        />
+        <!-- 검색 버튼 누르면 폼 제출 (get 요청 전송)
+          하단에 해당 병원목록 보이게-->
+        <button type="submit" class="search-button">
+          <img
+            src="{% static '/hospital/images/search_icon.svg' %}"
+            alt="검색 버튼"
+          />
+        </button>
+      </form>
+    </header>
+    <!-- 병원 검색 결과: hidden이었다가 검색버튼 누르면 결과 나오게 -->
+    <main>
+      <!-- view에서 받아오면 작성 예정-->
+    </main>
+    <script src="{% static '/hospital/js/review_search.js' %}"></script>
+  </body>
+</html>
