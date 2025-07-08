@@ -113,3 +113,7 @@ def review_search(request):
 # 간편 상담 예약 페이지 (임시)
 def hospital_reserve(request):
     return render(request, 'hospital/hospital_reserve.html')
+
+# 의사 검색 페이지 (임시)
+def hospital_reserve_search(request):
+    return render(request, 'hospital/hospital_reserve_search.html')
