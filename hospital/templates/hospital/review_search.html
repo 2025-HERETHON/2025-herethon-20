@@ -16,10 +16,14 @@
     <!-- 검색창: 사용자 입력 병원을 get방식으로 전송 -->
     <header>
       <!-- action 연결 필요 -->
-      <form method="get" action="" class="search-container">
+      <form
+        method="get"
+        action="{% url 'review_search' hospital.id %}"
+        class="search-container"
+      >
         {% csrf_token %}
         <!-- 이전으로 버튼 누르면 병원 리뷰 페이지로-->
-        <a href="{% url 'hospital_reviews' %}">
+        <a href="{% url 'hospital_reviews' hospital.id %}">
           <img
             src="{% static '/hospital/images/back_icon.svg' %}"
             alt="이전으로"
@@ -33,7 +37,7 @@
           type="text"
           name="q"
           class="search-box"
-          placeholder="00병원 내 리뷰를 검색하세요"
+          placeholder="{{ hospital.name }} 내 리뷰를 검색하세요"
         />
         <!-- 검색 버튼 누르면 폼 제출 (get 요청 전송)
           하단에 해당 병원목록 보이게-->

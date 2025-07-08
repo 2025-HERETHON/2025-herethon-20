@@ -107,5 +107,12 @@ def hospital_reviews(request, hospital_id):
     return render(request, 'hospital/hospital_reviews.html', {'hospital': hospital})
 
 # 병원 내 리뷰 검색 페이지 (임시)
-def review_search(request):
-    return render(request, 'hospital/review_search.html')
+def review_search(request, hospital_id):
+    hospital = get_object_or_404(Hospital, id=hospital_id)
+    query = request.GET.get('q')
+
+    # 필터된 리뷰 결과를 여기에 구현할 수도 있음 (지금은 생략 가능)
+    return render(request, 'hospital/review_search.html', {
+        'hospital': hospital,
+        'query': query
+    })
