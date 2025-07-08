@@ -12,4 +12,6 @@ urlpatterns = [
     path('hospital_detail/<int:hospital_id>/', views.hospital_detail, name='hospital_detail'),
     path('hospital_reviews/<int:hospital_id>/', views.hospital_reviews, name='hospital_reviews'),
     path('review/search/', views.review_search, name='review_search'),
+    path('hospital_reserve/', views.hospital_reserve, name='hospital_reserve'),
+
     ]
