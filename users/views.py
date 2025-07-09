@@ -5,7 +5,7 @@ from posts.models import Scrap, Comment, Post, Notification
 from users.models import User
 from datetime import timedelta
 from django.utils import timezone
-from django.db.models import Count, Max
+from django.db.models import Count, Max, Exists, OuterRef
 
 # 마이페이지
 @login_required
@@ -81,7 +81,7 @@ def user_logout(request):
     return redirect('users:user_selection')
 
 def user_home(request):
-    # 이번 주 핫 질문: 3일 이내에 작성된 글 중에서 댓글이 가장 많은 4개 게시글 가져오기
+    # 일반 홈 - 이번 주 핫 질문: 3일 이내에 작성된 글 중에서 댓글이 가장 많은 4개 게시글 가져오기
     three_days_ago = timezone.now() - timedelta(days=3)
     hot_questions = Post.objects.filter(
         created_at__gte=three_days_ago  # 3일 이내에 작성된 글 필터링
@@ -91,7 +91,7 @@ def user_home(request):
         '-comment_count', '-created_at'  # 댓글 수 내림차순, 그 다음 최신순으로 정렬
     )[:4]  # 상위 4개만 가져오기
 
-    # 방금 답변된 질문: 가장 최근에 댓글이 달린 질문 4개
+    # 일반 홈 - 방금 답변된 질문: 가장 최근에 댓글이 달린 질문 4개
     recently_commented_questions = Post.objects.annotate(
         latest_comment_time=Max('comment__created_at'),  # 각 포스트의 가장 최근 댓글 시간
         comment_count = Count('comment')
@@ -101,11 +101,41 @@ def user_home(request):
         '-latest_comment_time'  # 가장 최근 댓글 시간 기준으로 내림차순 정렬
     )[:4]  # 상위 4개만 가져오기
 
+    # 전문의 홈 - 방금 등록된 질문: 가장 최근에 작성된 질문 4개
+    recently_registered_questions = Post.objects.annotate(
+        comment_count=Count('comment')
+    ).order_by(
+        '-created_at'  # 생성 시간 기준으로 내림차순 정렬
+    )[:4]  # 상위 4개만 가져오기
+
+    # 전문의 홈 - 전문의 답변을 기다리고 있는 질문: 전문의 답변이 하나도 없는 질문 중에 가장 최근 작성 4개
+    doctor_comments_exist = Comment.objects.filter(
+        post=OuterRef('pk'),
+        user__is_doctor=True
+    )
+    unanswered_doctor_questions = Post.objects.annotate(
+        has_doctor_comment=Exists(doctor_comments_exist)
+    ).filter(
+        has_doctor_comment=False  # 전문의 댓글이 없는 게시글만 필터링
+    ).annotate(
+        comment_count=Count('comment')
+    ).order_by(
+        '-created_at'  # 최신순으로 정렬
+    )[:4]  # 상위 4개만 가져오기
+
     context = {
         'hot_questions': hot_questions,  # 템플릿으로 전달할 데이터
         'recently_commented_questions': recently_commented_questions,
+        'recently_registered_questions': recently_registered_questions,
+        'unanswered_doctor_questions': unanswered_doctor_questions,
     }
-    return render(request, 'home.html', context)
+
+    if request.user.is_authenticated and request.user.is_doctor:
+        # 전문의 회원
+        return render(request, 'home_doctor.html', context)
+    else:
+        # 일반 회원
+        return render(request, 'home.html', context)
 
 @login_required
 def my_notifications(request):

@@ -11,9 +11,9 @@
     </header>
 
     <section class="answered-questions-section">
-        <h2>방금 답변된 질문</h2>
+        <h2>방금 등록된 질문</h2>
         <ul class="question-list">
-        {% for post in recently_commented_questions %}
+        {% for post in recently_registered_questions %}
         <li class="question-item">
             <a href="{% url 'posts:post_detail' post.id %}">
                 <span class="title">{{ post.title }}</span>
@@ -22,15 +22,28 @@
         </li>
         {% empty %}
         <li class="question-item">
-            <span class="title">최근 댓글 달린 질문이 없습니다.</span>
+            <span class="title">최근 등록된 질문이 없습니다.</span>
         </li>
         {% endfor %}
         </ul>
     </section>
 
-    <section class="recent-reviews-section">
+    <section class="unanswered-questions-section">
         <h2>전문의 답변을 기다리고 있는 질문</h2>
-        {# 전문의 답변을 기다리고 있는 질문 #}
+        <ul class="question-list">
+        {% for post in unanswered_doctor_questions %}
+        <li class="question-item">
+            <a href="{% url 'posts:post_detail' post.id %}">
+                <span class="title">{{ post.title }}</span>
+                <span class="comment-count">💬 {{ post.comment_count }}</span>
+            </a>
+        </li>
+        {% empty %}
+        <li class="question-item">
+            <span class="title">전문의 답변을 기다리는 질문이 없습니다.</span>
+        </li>
+        {% endfor %}
+        </ul>
     </section>
 
     <section class="hot-questions-section">
