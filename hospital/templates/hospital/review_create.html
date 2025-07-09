@@ -16,7 +16,7 @@
     <!-- 최상단 -->
     <header>
       <!-- 페이지 연결 필요 -->
-      <a href="{% url 'hospital_detail' %}">
+      <a href="{% url 'hospital_detail' hospital.id %}">
         <img
           src="{% static '/hospital/images/back_icon.svg' %}"
           alt="이전으로"
@@ -29,7 +29,7 @@
       <!-- 병원 이름 + 별점 띄우기 -->
       <div class="rating">
         <!-- 병원 이름 받아오기 -->
-        <h3><strong> 00병원 </strong></h3>
+        <h3><strong> {{ hospital.name }} </strong></h3>
         <!-- 빈 별 5개 생성. 클릭 시, js로 채워진 별로 바꿔주기 -->
         <div class="stars">
           <p>별점</p>
@@ -49,7 +49,11 @@
       <div class="review-form">
         <!-- 리뷰 폼 -->
         <div class="form">
-          <form method="post">
+          <form
+            method="post"
+            id="reviewForm"
+            data-hospital-id="{{ hospital.id }}"
+          >
             {% csrf_token %}
             <!-- 담당의 -->
             <section class="review">
@@ -123,8 +127,8 @@
             </section>
           </form>
         </div>
-        <!-- 정상 제출 시, 다시 리뷰 작성 페이지로 redirect -->
-        <button type="submit" id="submit-button">제출하기</button>
+        <!-- 정상 제출 시, 병원 상세 정보로 이동 -->
+        <button type="button" id="submit-button">제출하기</button>
       </div>
     </main>
     <script src="{% static '/hospital/js/review_create.js' %}"></script>
