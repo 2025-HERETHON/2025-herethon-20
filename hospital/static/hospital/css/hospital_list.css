@@ -222,6 +222,7 @@ h2 {
 }
 
 .bottom-nav {
+  position: fixed;
   display: flex;
   flex: 0 0 auto;
   justify-content: space-evenly;

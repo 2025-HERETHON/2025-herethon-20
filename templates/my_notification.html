@@ -1,36 +1,72 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-<body>
-<header class="header">
-        <a href="{% url 'users:user_home' %}" class="back-button">&lt;</a> {# 뒤로가기 버튼, 홈으로 이동 #}
-        <div class="title">알림</div>
-        {# 모두 읽음 처리 기능 JavaScript로 구현해야 함 #}
-        <div class="mark-all-read">모두 읽음 처리</div>
-    </header>
-
-    <ul class="notification-list">
-        {% for notification in notifications %}
-        <li class="notification-item {% if not notification.is_read %}unread{% endif %}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>홈 - 알림내역</title>
+    <link
+      rel="stylesheet"
+      href="{% static 'users/css/my_notification.css' %}"
+    />
+  </head>
+  <body>
+    <div class="page-container">
+      <!-- 헤더 -->
+      <header class="header">
+        <div class="head">
+          <a href="{% url 'users:user_home' %}">
+            <img
+              src="{% static '/hospital/images/back_icon.svg' %}"
+              alt="이전으로"
+              class="back-button"
+            />
+          </a>
+          <h2>알림</h2>
+        </div>
+        <div id="read-all">모두 읽음 처리</div>
+      </header>
+      <main>
+        <!-- 알림 목록 -->
+        <ul class="notification-list">
+          {% for notification in notifications %}
+          <li
+            class="notification-item {% if not notification.is_read %}unread{% endif %}"
+            data-id="{{ notification.id }}"
+          >
             <a href="{% url 'posts:post_detail' notification.post.id %}">
-                <div class="content-wrapper">
-                    <span class="post-title">"{{ notification.post.title|truncatechars:15 }}"</span>
-                    <span class="message">{{ notification.message }}</span>
+              <div class="notification-top">
+                <div id="answer-title">
+                  <span class="post-title"
+                    >“{{ notification.post.title|truncatechars:15 }}...”</span
+                  >
+                  <span>에</span>
+                  <span class="message highlight"
+                    >{{ notification.message }}</span
+                  >
                 </div>
-                <span class="time-ago">{{ notification.created_at|timesince }} 전</span>
-                {% if notification.comment_content %}
-                <div class="comment-preview">
-                    "{{ notification.comment_content|truncatechars:30 }}" {# 댓글 내용 한줄 표시 #}
-                </div>
-                {% endif %}
+                <span class="time-ago"
+                  >{{ notification.created_at|timesince }} 전</span
+                >
+              </div>
+              {% if notification.comment_content %}
+              <div class="comment-preview">
+                “{{ notification.comment_content|truncatechars:30 }}...”
+              </div>
+              {% endif %}
             </a>
-        </li>
-        {% empty %}
-        <li class="notification-item no-notifications">
+          </li>
+          {% empty %}
+          <li class="notification-item no-notifications">
             <p>새로운 알림이 없습니다.</p>
-        </li>
-        {% endfor %}
-    </ul>
-
-    {# 알림 클릭 시 is_read 업데이트하는 JavaScript 추가해야 함 #}
-</body>
+          </li>
+          {% endfor %}
+        </ul>
+      </main>
+    </div>
+    <script
+      type="module"
+      src="{% static '/users/js/my_notification.js' %}"
+    ></script>
+  </body>
 </html>

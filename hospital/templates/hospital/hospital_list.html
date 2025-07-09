@@ -14,107 +14,108 @@
     <title>안심 병원 리스트</title>
   </head>
   <body>
-    <!-- 헤더 -->
-    <header>
-      <div class="head">
-        <h2>안심 병원 추천</h2>
-        <div id="my-review">
-          <a href="{% url 'my_reviews' %}">
-            <img
-              src="{% static '/hospital/images/my_review.svg' %}"
-              alt="내 리뷰"
-            />
-          </a>
-          <p>내 리뷰</p>
+    <div class="page-container">
+      <!-- 헤더 -->
+      <header>
+        <div class="head">
+          <h2>안심 병원 추천</h2>
+          <div id="my-review">
+            <a href="{% url 'my_reviews' %}">
+              <img
+                src="{% static '/hospital/images/my_review.svg' %}"
+                alt="내 리뷰"
+              />
+            </a>
+            <p>내 리뷰</p>
+          </div>
         </div>
-      </div>
-      <!-- 지역 드롭다운  -->
-      <div class="region-box">
-        <!-- 시도 드롭다운 -->
-        <div class="custom-select" id="sido-select">
-          <button class="select-toggle" id="sido-toggle">
-            특별시/광역시/도
-            <div class="dropdown-icon">&#9662;</div>
-          </button>
-          <ul class="select-options" id="sido-options"></ul>
+        <!-- 지역 드롭다운  -->
+        <div class="region-box">
+          <!-- 시도 드롭다운 -->
+          <div class="custom-select" id="sido-select">
+            <button class="select-toggle" id="sido-toggle">
+              특별시/광역시/도
+              <div class="dropdown-icon">&#9662;</div>
+            </button>
+            <ul class="select-options" id="sido-options"></ul>
+          </div>
+
+          <!-- 시군구 드롭다운 -->
+          <div class="custom-select" id="sggu-select">
+            <button class="select-toggle" id="sggu-toggle" disabled>
+              시/군/구
+              <div class="dropdown-icon">&#9662;</div>
+            </button>
+            <ul class="select-options" id="sggu-options"></ul>
+          </div>
         </div>
 
-        <!-- 시군구 드롭다운 -->
-        <div class="custom-select" id="sggu-select">
-          <button class="select-toggle" id="sggu-toggle" disabled>
-            시/군/구
-            <div class="dropdown-icon">&#9662;</div>
-          </button>
-          <ul class="select-options" id="sggu-options"></ul>
-        </div>
-      </div>
+        <!-- 카테고리 선택 -->
+        <nav class="filters">
+          <button class="filter-btn">별점순</button>
+          <button class="filter-btn">10대 친화</button>
+          <button class="filter-btn">여성전문의</button>
+        </nav>
+      </header>
 
-      <!-- 카테고리 선택 -->
-      <nav class="filters">
-        <button class="filter-btn">별점순</button>
-        <button class="filter-btn">10대 친화</button>
-        <button class="filter-btn">여성전문의</button>
-      </nav>
-    </header>
+      <!-- 지역 드롭다운 선택 시, 병원 리스트 띄우기 -->
+      <main class="hospital-list" id="hospital-list">
+        <!-- js로 병원 리스트 띄우기 -->
+      </main>
 
-    <!-- 지역 드롭다운 선택 시, 병원 리스트 띄우기 -->
-    <main class="hospital-list" id="hospital-list">
-      <!-- js로 병원 리스트 띄우기 -->
-    </main>
+      <!-- 리뷰 작성 아이콘 -->
+      <a href="{% url 'hospital_search' %}">
+        <img
+          src="{% static '/hospital/images/write_review.svg' %}"
+          alt="리뷰 작성"
+          class="floating-button"
+        />
+      </a>
 
-    <!-- 리뷰 작성 아이콘 -->
-    <a href="{% url 'hospital_search' %}">
-      <img
-        src="{% static '/hospital/images/write_review.svg' %}"
-        alt="리뷰 작성"
-        class="floating-button"
-      />
-    </a>
-
-    <!-- 하단 네비게이션 -->
-    <footer class="bottom-nav">
-      <a href="">
-        <img
-          src="{% static '/hospital/images/qna_unselected.svg' %}"
-          alt="Q&A"
-          id="bottom-icon-qna"
-        />
-        <span>Q&A</span>
-      </a>
-      <a href="">
-        <img
-          src="{% static '/hospital/images/hospital_selected.svg' %}"
-          alt="병원추천"
-          id="bottom-icon-hospital"
-        />
-        <span>안심병원추천</span>
-      </a>
-      <a href="{% url 'users:user_home' %}">
-        <img
-          src="{% static '/hospital/images/home_unselected.svg' %}"
-          alt="홈"
-          id="bottom-icon-home"
-        />
-        <span>홈</span>
-      </a>
-      <a href="{% url 'hospital_reserve'%}">
-        <img
-          src="{% static '/hospital/images/reserve_unselected.svg' %}"
-          alt="상담예약"
-          id="bottom-icon-reserve"
-        />
-        <span>간편상담예약</span>
-      </a>
-      <a href="{% url 'users:my_page' %}">
-        <img
-          src="{% static '/hospital/images/profile_unselected.svg' %}"
-          alt="마이페이지"
-          id="bottom-icon-mypage"
-        />
-        <span>마이페이지</span>
-      </a>
-    </footer>
-
+      <!-- 하단 네비게이션 -->
+      <footer class="bottom-nav">
+        <a href="">
+          <img
+            src="{% static '/hospital/images/qna_unselected.svg' %}"
+            alt="Q&A"
+            id="bottom-icon-qna"
+          />
+          <span>Q&A</span>
+        </a>
+        <a href="">
+          <img
+            src="{% static '/hospital/images/hospital_selected.svg' %}"
+            alt="병원추천"
+            id="bottom-icon-hospital"
+          />
+          <span>안심병원추천</span>
+        </a>
+        <a href="{% url 'users:user_home' %}">
+          <img
+            src="{% static '/hospital/images/home_unselected.svg' %}"
+            alt="홈"
+            id="bottom-icon-home"
+          />
+          <span>홈</span>
+        </a>
+        <a href="{% url 'hospital_reserve'%}">
+          <img
+            src="{% static '/hospital/images/reserve_unselected.svg' %}"
+            alt="상담예약"
+            id="bottom-icon-reserve"
+          />
+          <span>간편상담예약</span>
+        </a>
+        <a href="{% url 'users:my_page' %}">
+          <img
+            src="{% static '/hospital/images/profile_unselected.svg' %}"
+            alt="마이페이지"
+            id="bottom-icon-mypage"
+          />
+          <span>마이페이지</span>
+        </a>
+      </footer>
+    </div>
     <script src="{% static '/hospital/js/hospital_list.js' %}"></script>
   </body>
 </html>
