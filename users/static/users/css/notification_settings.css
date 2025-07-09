@@ -1,0 +1,127 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Pretendard-Regular";
+}
+
+/* 전체 배경 및 중앙 정렬 */
+html,
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+/* 전체 페이지 고정 너비 박스 */
+.page-container {
+  width: 402px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* 고정된 헤더 */
+header {
+  display: flex;
+  flex-direction: row;
+
+  position: fixed;
+  height: 78px;
+  padding: 25px 25px;
+  top: 0;
+  width: 402px;
+  z-index: 10;
+}
+
+header h2 {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding-left: 17px;
+}
+
+main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding-top: 78px;
+}
+
+.setting {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 21px 43px;
+}
+
+/* 토글 */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+/* input 숨기기 */
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* 슬라이더 기본 모양 */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+/* 슬라이더 원형 버튼 */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* ON 상태 */
+.toggle-switch input:checked + .slider {
+  background-color: #5e548e; /* 보라색 배경 */
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+/* 원형 스타일 */
+.slider.round {
+  border-radius: 34px;
+}

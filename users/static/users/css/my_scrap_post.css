@@ -1,0 +1,145 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Pretendard-Regular";
+}
+
+/* 전체 배경 및 중앙 정렬 */
+html,
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+/* 전체 페이지 고정 너비 박스 */
+.page-container {
+  width: 402px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* 고정된 헤더 */
+header {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  height: 81px;
+  padding: 25px 25px;
+  top: 0;
+  width: 402px;
+  z-index: 10;
+}
+
+header h2 {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding-left: 17px;
+}
+
+main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding-top: 81px;
+}
+
+#scrap-count {
+  padding: 18px 48px 21px 48px;
+  background-color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  border-bottom: 0.5px solid rgba(167, 139, 250, 0.5);
+}
+
+/* 게시물 목록 전체 */
+.scrap-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+}
+
+.scrap-list a {
+  text-decoration: none;
+}
+
+/* 게시물 아이템 */
+.scrap-item {
+  padding: 18px 48px;
+  border-bottom: 0.5px solid rgba(167, 139, 250, 0.5);
+  background-color: #fff;
+}
+
+.item-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+/* 제목 */
+.scrap-item h2 {
+  font-size: 14px;
+  font-weight: 700;
+  color: black;
+}
+
+/* 시간 */
+.time-ago {
+  color: #5e548e;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+/* 본문 미리보기 */
+.post-preview {
+  font-size: 13px;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.item-title h2,
+.post-preview {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 90%;
+}
+
+/* 댓글 수 및 작성 시간 */
+.comment-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* 댓글 수 */
+.comment-count {
+  color: #5e548e;
+  font-size: 8px;
+  font-weight: 400;
+  padding-left: 4px;
+}

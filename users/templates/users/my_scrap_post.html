@@ -1,36 +1,60 @@
-{% load static %}
-{% load humanize %}
+{% load static %} {% load humanize %}
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>내 스크랩 게시물</title>
-</head>
-<body>
-    <div class="my-scraps-container">
-        <a href="{% url 'users:my_page' %}"><</a>
-        <h1>스크랩한 게시물</h1>
-        <p>게시물 {{ scraps_with_details|length }}개</p> {# 총 게시물 개수 표시 #}
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>내 스크랩</title>
+    <link rel="stylesheet" href="{% static 'users/css/my_scrap_post.css' %}" />
+  </head>
+  <body>
+    <div class="page-container">
+      <!-- 헤더 -->
+      <header class="header">
+        <a href="{% url 'users:my_page' %}">
+          <img
+            src="{% static '/hospital/images/back_icon.svg' %}"
+            alt="이전으로"
+            class="back-button"
+          />
+        </a>
+        <h2>스크랩한 게시물</h2>
+      </header>
+      <main>
+        <p id="scrap-count">
+          게시물 <strong>{{ scraps_with_details|length }}</strong>개
+        </p>
         {% if scraps_with_details %}
-            <ul class="scrap-list">
-                {% for item in scraps_with_details %}
-                    <li class="scrap-item">
-                        <h2><a href="{% url 'posts:post_detail' item.post.id %}">{{ item.post.title }}</a></h2>
-                        <span class="time-ago">{{ item.post.created_at|naturaltime }}</span> {# 작성된 후 지난 시간 #}
-                        <p class="post-preview">{{ item.post.content|truncatechars:50 }}</p> {# 본문 미리보기 (50자 제한) #}
-                        <div class="post-meta-info">
-                            <span class="comment-count">
-                                <img src="{% static 'posts/images/comment_icon.png' %}" alt="댓글"> {# 댓글 아이콘 경로 #}
-                                {{ item.comment_count }}
-                            </span> {# 댓글 개수 #}
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="no-scraps">스크랩한 게시글이 없습니다.</p>
+        <ul class="scrap-list">
+          {% for item in scraps_with_details %}
+          <a href="{% url 'posts:post_detail' item.post.id %}">
+            <li class="scrap-item">
+              <div class="item-title">
+                <h2>{{ item.post.title|truncatechars:30 }}</h2>
+                <span class="time-ago"
+                  >{{ item.post.created_at|naturaltime }}</span
+                >
+              </div>
+              <p class="post-preview">
+                {{ item.post.content|truncatechars:50 }}
+              </p>
+              <div class="comment-info">
+                <img
+                  src="{% static 'users/images/comment_icon.svg' %}"
+                  alt="댓글"
+                />
+                <p class="comment-count">{{ item.comment_count }}</p>
+              </div>
+            </li>
+          </a>
+          {% endfor %}
+        </ul>
         {% endif %}
+      </main>
     </div>
-</body>
+    <script
+      type="module"
+      src="{% static '/users/js/my_scrap_post.js' %}"
+    ></script>
+  </body>
 </html>
