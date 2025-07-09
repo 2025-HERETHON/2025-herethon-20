@@ -127,3 +127,7 @@ def hospital_reserve_search(request):
 # 내 리뷰(임시)
 def my_reviews(request):
     return render(request, 'hospital/my_reviews.html')
+
+# 마이페이지(임시)
+def my_page(request):
+    return render(request, 'hospital/my_page.html')
