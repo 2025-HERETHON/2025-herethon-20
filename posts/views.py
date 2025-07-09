@@ -1,11 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from posts.models import Post, Comment, Scrap
-from users.models import User
-from datetime import date
-from django.db.models import Q
-from django.db.models import Count
+from posts.models import Post, Comment, Scrap, Notification
+from datetime import date, timedelta
+from django.db.models import Q, Count
+from django.utils import timezone
 
 CATEGORIES = [
     {'name': '생리', 'slug': 'saengri'},
@@ -71,6 +70,16 @@ def post_detail(request, post_id):
         if request.user.is_authenticated:
             if comment_content:
                 Comment.objects.create(post=post, user=request.user, content=comment_content)
+
+                #  알림 생성
+                if request.user != post.user:
+                    Notification.objects.create(
+                        user=post.user,  # 알림을 받을 사람: 게시글 작성자
+                        post=post,  # 알림의 대상 게시글
+                        message='에 새로운 답변',
+                        comment_content=comment_content,
+                        notification_type='comment_on_my_post'  # 알림 유형
+                    )
                 return redirect('posts:post_detail', post_id=post.id)
         else:
             return redirect('users:user_selection')

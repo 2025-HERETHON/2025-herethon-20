@@ -13,4 +13,7 @@ urlpatterns = [
     path('select_user/', views.user_selection, name='user_selection'),
     path('login_as/<str:user_type>/', views.login_as_user, name='login_as_user'),
     path('logout/', views.user_logout, name='logout'),
+    path('home/', views.user_home, name='user_home'),
+
+    path('notifications/', views.my_notifications, name='my_notifications'),
 ]
