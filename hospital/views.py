@@ -109,3 +109,7 @@ def hospital_reviews(request, hospital_id):
 # 병원 내 리뷰 검색 페이지 (임시)
 def review_search(request):
     return render(request, 'hospital/review_search.html')
+
+# 내 리뷰(임시)
+def my_reviews(request):
+    return render(request, 'hospital/my_reviews.html')

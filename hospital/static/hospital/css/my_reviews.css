@@ -17,19 +17,174 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 header {
   display: flex;
   flex-direction: row;
+
   width: 100%;
   height: 24px;
   flex: 0 0 auto;
-  position: fixed;
   padding-top: 30px;
+  padding-bottom: 20px;
   padding-left: 22px;
+  position: fixed; /* 상단 고정 */
+  background-color: white;
 }
 
 header h2 {
   padding-left: 22px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+/* 내 리뷰 카드*/
+/* 리뷰 카드 */
+.review-list {
+  margin: 1 1 auto;
+  padding: 84px 22px 21px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto; /* 검색 결과가 넘치면 스크롤 */
+}
+
+.review-card {
+  background-color: #f6f4fb;
+  border-radius: 15px;
+  width: 100%;
+  height: auto;
+}
+
+#review-info {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 90%;
+  margin-top: 24px;
+  margin-bottom: 15px;
+  gap: 12px;
+}
+
+#rating,
+#doctor,
+#disease,
+#contents {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.bold-info {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  min-width: 60px;
+}
+
+.normal-info {
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+#rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rating-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+#contents {
+  padding-bottom: 7px;
+}
+
+.keyword-tag {
+  display: inline-block;
+  background-color: #ffffff;
+  padding: 6px 12px;
+  margin-right: 10px;
+  margin-bottom: 8px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #000000;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 삭제 알림창 */
+.alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.alert-content {
+  background: white;
+  padding: 14.25px;
+  border-radius: 15px;
+  text-align: center;
+  width: 80%;
+  max-width: 350px;
+  line-height: 150%;
+}
+
+.alert-content p {
+  padding-top: 5.5px;
+}
+
+.alert-buttons {
+  display: flex;
+  gap: 11.25px; /* 두 버튼 사이 간격 */
+  margin-top: 37px;
+  width: 100%;
+}
+
+.alert-buttons button {
+  flex: 1; /* 각각 50% 너비로 자동 분배 */
+  border-radius: 22.5px;
+  padding: 5.25px 49.5px;
+}
+
+.yes-button {
+  background: #e35d5f;
+  color: white;
+  border: none;
+  font-size: 13.5px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.no-button {
+  background: #000000;
+  color: white;
+  border: none;
+  font-size: 13.5px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.hidden {
+  display: none;
 }
