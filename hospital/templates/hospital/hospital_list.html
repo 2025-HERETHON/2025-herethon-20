@@ -97,7 +97,7 @@
         />
         <span>홈</span>
       </a>
-      <a href="">
+      <a href="{% url 'hospital_reserve'%}">
         <img
           src="{% static '/hospital/images/reserve_unselected.svg' %}"
           alt="상담예약"
@@ -105,7 +105,7 @@
         />
         <span>간편상담예약</span>
       </a>
-      <a href="#">
+      <a href="{% url 'my_page'%}">
         <img
           src="{% static '/hospital/images/profile_unselected.svg' %}"
           alt="마이페이지"

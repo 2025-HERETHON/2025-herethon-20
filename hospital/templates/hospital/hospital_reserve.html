@@ -41,7 +41,7 @@
         />
         <span>Q&A</span>
       </a>
-      <a href="">
+      <a href="{% url 'hospital_list'%}">
         <img
           src="{% static '/hospital/images/hospital_unselected.svg' %}"
           alt="병원추천"
@@ -65,7 +65,7 @@
         />
         <span>간편상담예약</span>
       </a>
-      <a href="#">
+      <a href="{% url 'my_page'%}">
         <img
           src="{% static '/hospital/images/profile_unselected.svg' %}"
           alt="마이페이지"
