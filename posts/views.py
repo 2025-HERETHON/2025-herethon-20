@@ -153,3 +153,45 @@ def my_answers(request):
         'active_tab': 'answers', # 현재 활성화된 탭
     }
     return render(request, 'posts/my_answers.html', context)
+
+@login_required
+def create_post(request):
+    initial_category_name = '생리'
+    from_category_slug = request.GET.get('from_category_slug')
+
+    if from_category_slug:
+        for cat in CATEGORIES:
+            if cat['slug'] == from_category_slug:
+                initial_category_name = cat['name']
+                break
+
+    if request.method == 'POST':
+        category = request.POST.get('category')
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+
+        if not all([title, content]):
+            context = {
+                'error_message': '제목과 내용을 모두 입력해주세요.',
+                'categories': CATEGORIES,
+                'selected_category': category,
+                'title': title,
+                'content': content,
+            }
+            return render(request, 'posts/create_post.html', context)
+
+        # Post 객체 생성 및 저장
+        Post.objects.create(
+            user=request.user, # 현재 로그인된 사용자
+            category=category,
+            title=title,
+            content=content,
+        )
+        return redirect('posts:post_list') # 게시글 목록으로 리디렉션
+
+    else: # GET 요청일 경우 (폼 보여주기)
+        context = {
+            'categories': CATEGORIES,
+            'selected_category': initial_category_name, # 초기 선택 카테고리 설정
+        }
+        return render(request, 'posts/create_post.html', context)
