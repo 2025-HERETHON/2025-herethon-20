@@ -1,64 +1,160 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>홈 - 일반 회원</title>
+    <link rel="stylesheet" href="{% static 'users/css/home.css' %}" />
+  </head>
+  <body>
     <div class="page-container">
-
-    <header class="header">
+      <!-- 상단 로고 및 알림 -->
+      <header class="header">
         <div class="logo">(로고)</div>
-        <a href="{% url 'users:my_notifications' %}" class="notification-icon-link">
-            <div class="notification-icon">🔔</div>
+        <a
+          href="{% url 'users:my_notifications' %}"
+          class="notification-icon-link"
+        >
+          <img src="{% static 'users/images/notify_icon.svg' %}" alt="알림" />
         </a>
-    </header>
+      </header>
+      <main>
+        <!-- 성지식 큐레이션 -->
+        <section class="knowledge-section">
+          <h2>이거 알고<span class="color-text">있성?</span></h2>
+          <div class="knowledge-box">
+            <!-- 반복적으로 큐레이션 콘텐츠 삽입 -->
+            <img
+              src="{% static 'users/images/cardnews1.svg' %}"
+              alt="카드뉴스1"
+              class="knowledge-item"
+              id="cardnews1"
+            />
+            <!-- 팝업 (초기 숨김 상태) -->
+            <div id="popup" class="popup">
+              <div class="popup-content">
+                <img
+                  src="{% static 'users/images/cardnews1_popup.svg' %}"
+                  alt="팝업 이미지 1"
+                  id="popupImage"
+                />
+              </div>
+            </div>
+            <img
+              src="{% static 'users/images/cardnews2.svg' %}"
+              alt="카드뉴스2"
+              class="knowledge-item"
+            />
+            <img
+              src="{% static 'users/images/cardnews3.svg' %}"
+              alt="카드뉴스3"
+              class="knowledge-item"
+            />
+            <img
+              src="{% static 'users/images/cardnews4.svg' %}"
+              alt="카드뉴스4"
+              class="knowledge-item"
+            />
+          </div>
+        </section>
 
-    <section class="knowledge-section">
-        <h2>이거 알고있성?</h2>
-        {# 성 지식 큐레이션 #}
-    </section>
-
-    <section class="hot-questions-section">
-        <h2>이번주 HOT🔥 질문</h2>
-        <ul class="question-list">
+        <!-- 이번주 HOT 질문 -->
+        <section class="hot-questions-section">
+          <h2>이번주 <span class="color-text">HOT🔥</span> 질문</h2>
+          <ul class="question-list">
             {% for post in hot_questions %}
             <li class="question-item">
-                <a href="{% url 'posts:post_detail' post.id %}">
-                    <span class="title">{{ post.title }}</span>
-                    <span class="comment-count">💬 {{ post.comment_count }}</span>
-                </a>
+              <a href="{% url 'posts:post_detail' post.id %}">
+                <span class="title">{{ post.title }}</span>
+                <div class="comment-item">
+                  <img
+                    src="{% static 'users/images/comment_icon.svg' %}"
+                    alt="댓글 아이콘"
+                  />
+                  <span class="comment-count">{{ post.comment_count }}</span>
+                </div>
+              </a>
             </li>
             {% empty %}
-            <li class="question-item">
-                <span class="title">이번 주 HOT 질문이 없습니다.</span>
-            </li>
+            <li class="question-item">이번 주 HOT 질문이 없습니다.</li>
             {% endfor %}
-        </ul>
-    </section>
+          </ul>
+        </section>
 
-    <section class="answered-questions-section">
-        <h2>방금 답변된 질문</h2>
-        <ul class="question-list">
-        {% for post in recently_commented_questions %}
-        <li class="question-item">
-            <a href="{% url 'posts:post_detail' post.id %}">
+        <!-- 방금 답변된 질문 -->
+        <section class="answered-questions-section">
+          <h2>방금 답변된 질문</h2>
+          <ul class="question-list">
+            {% for post in recently_commented_questions %}
+            <li class="question-item">
+              <a href="{% url 'posts:post_detail' post.id %}">
                 <span class="title">{{ post.title }}</span>
-                <span class="comment-count">💬 {{ post.comment_count }}</span>
-            </a>
-        </li>
-        {% empty %}
-        <li class="question-item">
-            <span class="title">최근 댓글 달린 질문이 없습니다.</span>
-        </li>
-        {% endfor %}
-        </ul>
-    </section>
+                <div class="comment-item">
+                  <img
+                    src="{% static 'users/images/comment_icon.svg' %}"
+                    alt="댓글 아이콘"
+                  />
+                  <span class="comment-count">{{ post.comment_count }}</span>
+                </div>
+              </a>
+            </li>
+            {% empty %}
+            <li class="question-item">최근 댓글이 달린 질문이 없습니다.</li>
+            {% endfor %}
+          </ul>
+        </section>
 
-    <section class="recent-reviews-section">
-        <h2>방금 등록된 리뷰</h2>
-        {# 방금 등록 리뷰 #}
-    </section>
-
-    <footer class="footer">
-        </footer>
-
-</div>
-</body>
+        <!-- 방금 등록된 리뷰 -->
+        <section class="recent-reviews-section">
+          <h2>방금 등록된 리뷰</h2>
+          {# 방금 등록 리뷰 #}
+        </section>
+      </main>
+      <!-- 하단 네비게이션 -->
+      <footer class="bottom-nav">
+        <a href="">
+          <img
+            src="{% static '/hospital/images/qna_unselected.svg' %}"
+            alt="Q&A"
+            id="bottom-icon-qna"
+          />
+          <span>Q&A</span>
+        </a>
+        <a href="{% url 'hospital_list' %}">
+          <img
+            src="{% static '/hospital/images/hospital_unselected.svg' %}"
+            alt="병원추천"
+            id="bottom-icon-hospital"
+          />
+          <span>안심병원추천</span>
+        </a>
+        <a href="">
+          <img
+            src="{% static '/hospital/images/home_selected.svg' %}"
+            alt="홈"
+            id="bottom-icon-home"
+          />
+          <span>홈</span>
+        </a>
+        <a href="{% url 'hospital_reserve'%}">
+          <img
+            src="{% static '/hospital/images/reserve_unselected.svg' %}"
+            alt="상담예약"
+            id="bottom-icon-reserve"
+          />
+          <span>간편상담예약</span>
+        </a>
+        <a href="{% url 'users:my_page' %}">
+          <img
+            src="{% static '/hospital/images/profile_unselected.svg' %}"
+            alt="마이페이지"
+            id="bottom-icon-mypage"
+          />
+          <span>마이페이지</span>
+        </a>
+      </footer>
+    </div>
+    <script type="module" src="{% static '/users/js/home.js' %}"></script>
+  </body>
 </html>
