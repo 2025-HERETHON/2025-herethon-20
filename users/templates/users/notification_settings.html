@@ -1,17 +1,41 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>알림 설정</title>
-</head>
-<body>
-  <a href="{% url 'users:my_page' %}"><</a>
-  <h1>알림 설정</h1>
-  <p>알림 설정</p>
-  <label class="toggle-switch">
-      <input type="checkbox" name="notification_toggle" checked>
-      <span class="slider round"></span>
-  </label>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>홈 - 알림내역</title>
+    <link
+      rel="stylesheet"
+      href="{% static 'users/css/notification_settings.css' %}"
+    />
+  </head>
+  <body>
+    <div class="page-container">
+      <!-- 헤더 -->
+      <header class="header">
+        <a href="{% url 'users:my_page' %}">
+          <img
+            src="{% static '/hospital/images/back_icon.svg' %}"
+            alt="이전으로"
+            class="back-button"
+          />
+        </a>
+        <h2>알림</h2>
+      </header>
+      <main>
+        <div class="setting">
+          <p>알림 설정</p>
+          <label class="toggle-switch">
+            <input type="checkbox" name="notification_toggle" checked />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </main>
+    </div>
+    <script
+      type="module"
+      src="{% static '/users/js/notification_settings.js' %}"
+    ></script>
+  </body>
 </html>
