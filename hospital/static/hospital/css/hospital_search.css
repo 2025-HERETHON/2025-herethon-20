@@ -19,20 +19,24 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 header {
   width: 100%;
-  height: 7.78%;
+  height: 68px;
+  padding: 24px 0 20px 0;
   position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid rgba(167, 139, 250, 0.5);
+  background-color: white;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .search-container {
-  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -60,7 +64,6 @@ main {
 }
 
 .result {
-  height: 100%;
   overflow-y: auto;
 }
 
@@ -91,6 +94,7 @@ main {
   width: 100%;
   height: 10%;
   border-bottom: 1px solid rgba(167, 139, 250, 0.5);
+  padding: 16px 0;
 }
 
 #result-text {

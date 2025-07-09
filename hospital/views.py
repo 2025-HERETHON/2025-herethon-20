@@ -93,8 +93,9 @@ def hospital_search(request):
     })
 
 # 리뷰 작성 (임시)
-def review_create(request):
-    return render(request, 'hospital/review_create.html')
+def review_create(request, hospital_id):
+    hospital = get_object_or_404(Hospital, id=hospital_id)
+    return render(request, 'hospital/review_create.html', {'hospital': hospital})
 
 # 병원 상세 정보 (임시)
 def hospital_detail(request, hospital_id):
