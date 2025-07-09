@@ -38,6 +38,7 @@
           name="q"
           class="search-box"
           placeholder="{{ hospital.name }} 내 리뷰를 검색하세요"
+          value="{{ request.GET.q }}"
         />
         <!-- 검색 버튼 누르면 폼 제출 (get 요청 전송)
           하단에 해당 병원목록 보이게-->
@@ -49,10 +50,13 @@
         </button>
       </form>
     </header>
-    <!-- 병원 검색 결과: hidden이었다가 검색버튼 누르면 결과 나오게 -->
-    <main>
-      <!-- view에서 받아오면 작성 예정-->
+    <!-- 리뷰 검색 결과: hidden이었다가 검색버튼 누르면 결과 나오게 -->
+    <main class="review-list">
+      <!-- 리뷰 검색 결과 일치하면 뜨는 리뷰 카드-->
     </main>
-    <script src="{% static '/hospital/js/review_search.js' %}"></script>
+    <script
+      type="module"
+      src="{% static '/hospital/js/review_search.js' %}"
+    ></script>
   </body>
 </html>
