@@ -15,5 +15,6 @@ urlpatterns = [
     path('hospital_reserve/', views.hospital_reserve, name='hospital_reserve'),
     path('hospital_reserve_search/', views.hospital_reserve_search, name='hospital_reserve_search'),
     path('my_reviews/', views.my_reviews, name='my_reviews'),
+    path('my_page/', views.my_page, name='my_page'),
 ]
 
