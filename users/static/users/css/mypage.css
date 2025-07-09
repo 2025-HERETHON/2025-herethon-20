@@ -69,6 +69,13 @@ main {
   padding: 12px 8px 12px 20px;
 }
 
+#button-section a {
+  color: #000;
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
 /*로그아웃, 회원탈퇴*/
 .mypage-actions {
   margin-left: 9px;
