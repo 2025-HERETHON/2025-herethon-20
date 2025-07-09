@@ -26,31 +26,20 @@
       <h2>내 리뷰</h2>
     </header>
     <!-- 내 리뷰 띄우기 -->
-    <main class="review-list">
-      <!-- for문 순회-->
-      <div class="review-card">
-        <div id="rating">
-          <strong>별점</strong>
-          <!-- 별점 이미지-->
-        </div>
-        <div id="doctor">
-          <strong>담당의</strong>
-          <p></p>
-        </div>
-        <div id="disease">
-          <strong>진료질환</strong>
-          <p></p>
-        </div>
-        <div id="contents">
-          <p></p>
-        </div>
-        <div id="keyword">
-          <p></p>
+    <main class="review-list"></main>
+    <!-- 알림창 -->
+    <div id="alert" class="alert hidden">
+      <div class="alert-content">
+        <p>이 게시물을 삭제합니다. <br /><strong>계속하시겠습니까?</strong></p>
+        <div class="alert-buttons">
+          <button id="confirm-delete" class="yes-button">예</button>
+          <button id="cancel-delete" class="no-button">아니오</button>
         </div>
       </div>
-      {% empty %}
-      <p>작성한 리뷰가 없습니다.</p>
-      {% endfor %}
-    </main>
+    </div>
+    <script
+      type="module"
+      src="{% static '/hospital/js/my_reviews.js' %}"
+    ></script>
   </body>
 </html>

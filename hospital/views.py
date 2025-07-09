@@ -110,7 +110,6 @@ def hospital_reviews(request, hospital_id):
 def review_search(request, hospital_id):
     hospital = get_object_or_404(Hospital, id=hospital_id)
     query = request.GET.get('q')
-
     # 필터된 리뷰 결과를 여기에 구현할 수도 있음 (지금은 생략 가능)
     return render(request, 'hospital/review_search.html', {
         'hospital': hospital,
@@ -124,3 +123,6 @@ def hospital_reserve(request):
 def hospital_reserve_search(request):
     return render(request, 'hospital/hospital_reserve_search.html')
 
+# 내 리뷰(임시)
+def my_reviews(request):
+    return render(request, 'hospital/my_reviews.html')
