@@ -26,7 +26,7 @@
         <h2>{{hospital.name}}</h2>
       </div>
       <!-- 병원 리뷰 검색 페이지 연결 -->
-      <a href="{% url 'review_search' %}">
+      <a href="{% url 'review_search' hospital.id %}">
         <img
           src="{% static '/hospital/images/search_icon.svg' %}"
           alt="검색 아이콘"
@@ -46,37 +46,20 @@
     </nav>
     <main class="review-list">
       <!-- 해당 병원 리뷰 카드들 띄우기-->
-      <!-- for문 순회-->
-      <div class="review-card">
-        <div id="rating">
-          <strong>별점</strong>
-          <!-- 별점 이미지-->
-        </div>
-        <div id="doctor">
-          <strong>담당의</strong>
-          <p></p>
-        </div>
-        <div id="disease">
-          <strong>진료질환</strong>
-          <p></p>
-        </div>
-        <div id="contents">
-          <p></p>
-        </div>
-        <div id="keyword">
-          <p></p>
-        </div>
-      </div>
-
-      <!-- 리뷰 작성 버튼-->
-      <a href="{% url 'review_create' %}">
-        <img
-          src="{% static '/hospital/images/write_review.svg' %}"
-          alt="리뷰 작성"
-          class="floating-button"
-        />
-      </a>
     </main>
-    <script src="{% static '/hospital/js/hospital_reviews.js' %}"></script>
+
+    <!-- 리뷰 작성 버튼-->
+    <a href="{% url 'review_create' %}">
+      <img
+        src="{% static '/hospital/images/write_review.svg' %}"
+        alt="리뷰 작성"
+        class="floating-button"
+      />
+    </a>
+    <!-- 더미데이터 불러오기 -->
+    <script
+      type="module"
+      src="{% static 'hospital/js/hospital_reviews.js' %}"
+    ></script>
   </body>
 </html>

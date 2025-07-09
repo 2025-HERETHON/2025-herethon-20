@@ -30,6 +30,8 @@ header {
   align-items: center;
   border-bottom: 1px solid rgba(167, 139, 250, 0.5);
   padding-top: 4px;
+  position: fixed; /* 상단 고정 */
+  background-color: white;
 }
 
 .search-container {
@@ -58,11 +60,11 @@ main {
   padding-top: 68.66px;
   display: hidden;
   flex: 1 1 auto;
+  overflow-y: auto; /* 검색 결과가 넘치면 스크롤 */
 }
 
 .result {
   height: 100%;
-  overflow-y: auto;
 }
 
 .result-count {
@@ -84,7 +86,8 @@ main {
   line-height: normal;
 }
 
-.result-item {
+.result-item,
+.no-result {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,6 +95,11 @@ main {
   width: 100%;
   height: 10%;
   border-bottom: 1px solid rgba(167, 139, 250, 0.5);
+}
+
+.no-result {
+  border-bottom: none;
+  font-size: 14px;
 }
 
 #result-text {
