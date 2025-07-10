@@ -56,7 +56,8 @@ main {
   gap: 19px;
 }
 
-.mypage-button {
+.mypage-button,
+#my_comments {
   background-color: #f6f4fb;
   display: flex;
   flex-direction: row;
@@ -102,22 +103,24 @@ main {
 .cancel {
   color: #ff0000;
 }
+
 /* 하단 내비바 */
 .bottom-nav {
-  position: fixed;
   display: flex;
   flex-shrink: 0;
+  padding: 0 35px 0 40px;
   flex: 0 0 auto;
-  justify-content: space-evenly;
+  justify-content: space-around; /* ← 핵심 수정 */
   align-items: flex-end;
   width: 100%;
-  height: 5.375rem;
+  height: 86px;
   bottom: 0;
   box-shadow: 0px -1px 10px 0px rgba(0, 0, 0, 0.1);
   background-color: white;
 }
 
 .bottom-nav a {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -132,16 +135,8 @@ main {
   margin-bottom: 0.5625rem;
 }
 
-#bottom-icon-hospital {
-  margin-bottom: 0.4375rem;
-}
-
 #bottom-icon-home {
   padding-bottom: 0.4375rem;
-}
-
-#bottom-icon-reserve {
-  padding-bottom: 0.5625rem;
 }
 
 #bottom-icon-mypage {
