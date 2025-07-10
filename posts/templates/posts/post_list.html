@@ -1,15 +1,16 @@
-{# 'Q&A 게시판 - 큐앤에이 - 게시판'에 해당하는 페이지 #}
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <link rel="stylesheet" href="{% static 'posts/css/post_list.css' %}">
-</head>
-<body>
-    <div class="wrapper">
-        <header>
-            <div class = "T_name">주제별 게시판</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>홈 - 일반 회원</title>
+    <link rel="stylesheet" href="{% static 'posts/css/posts_list.css' %}">
+  </head>
+  <body>
+    <div class="page-container">
+      <header class="header">
+        <div class = "T_name">주제별 게시판</div>
             <div class="header-buttons"> {# 검색창 또는 내 질문/답변으로 이동하는 코드 #}
                 <a href="{% url 'posts:post_search' %}" class="icon_box">
                     <img src="{% static 'posts/img/search_img.png' %}" class="icon_img" />
@@ -21,15 +22,17 @@
                 </a>
                 
             </div> 
-        </header>
+      </header>
 
+
+    <main>
         <nav>
-            <a href="{% url 'posts:post_list' %}" class="select_menu">
+            <a href="{% url 'posts:post_list' %}" class="select_menu {% if not current_category %}active{% endif %}">
                 <span class="text-padding">전체</span>
             </a>
 
-            {% for category in categories %}  {# 저장된 카테고리 종류 표시 #}
-                <a href="{% url 'posts:post_list_by_category' category.slug %}" class="select_menu">
+            {% for category in categories %}
+                <a href="{% url 'posts:post_list_by_category' category.slug %}" class="select_menu {% if current_category.slug == category.slug %}active{% endif %}">
                     <span class="text-padding">{{ category.name }}</span>
                 </a>
             {% endfor %}
@@ -45,7 +48,7 @@
                         </a>
                         <p class="post-content-preview">{{ post.content|truncatechars:100 }}</p> {# 본문 미리보기 #}
                         <div class="chatbox">
-                            <img src="img/chat_img.png" class="chat_img">
+                            <img src="{% static 'posts/img/chat_img.png' %}" class="chat_img">
                             <div class="chat_count">0</div>
                         </div>
                     </div>
@@ -54,40 +57,64 @@
             {% endfor %}
                 {% if current_category %} {# !! 어느 게시판에서 글쓰기 진입하는지에 따라 카테고리 기본값이 달라집니다. 버튼 구현 전이라 임시로 여기에 작성해뒀습니다. !! #}
                     <a href="{% url 'posts:create_post' %}?from_category_slug={{ current_category.slug }}">
-                        <img src="img/pen_img.png" class="pen">
+                        <div class="pen">
+                            <img src="{% static 'posts/img/pen_img.png' %}" class="pen-img" />
+                        </div>
                     </a>
                 {% else %}
                     {# 전체보기 상태에서 게시글 작성 버튼 눌렀을 때 기본 선택 카테고리 '생리' #}
                     <a href="{% url 'posts:create_post' %}?from_category_slug=saengri">
-                        <img src="img/pen_img.png" class="pen">
+                        <div class="pen">
+                            <img src="{% static 'posts/img/pen_img.png' %}" class="pen-img" />
+                        </div>
                     </a>
                 {% endif %}
         </ul>
-        <div>
-            <div class="nav_box">
-                <div class="select_box">
-                    <img src="img/QnA.png" class="nav_img">
-                    <div class="select_text">Q&A</div>
-                </div>
-                <div class="select_box">
-                    <img src="img/hospital_img.png" class="nav_img">
-                    <div class="select_text">안심병원추천</div>
-                </div>
-                <div class="select_box">
-                    <img src="img/home_img.png" class="nav_img">
-                    <div class="select_text">홈</div>
-                </div>
-                <div class="select_box">
-                    <img src="img/reserve_img.png" class="nav_img">
-                    <div class="select_text">간편상담예약</div>
-                </div>
-                <div class="select_box">
-                    <img src="img/profile_img.png" class="nav_img">
-                    <div class="select_text">마이페이지</div>
-                </div>
-
-            </div>
-        </div>
+      </main>
+      <!-- 하단 네비게이션 -->
+      <footer class="bottom-nav">
+        <a href="{% url 'posts:post_list' %}">
+          <img
+            src="{% static '/hospital/images/qna_unselected.svg' %}"
+            alt="Q&A"
+            id="bottom-icon-qna"
+          />
+          <span>Q&A</span>
+        </a>
+        <a href="{% url 'hospital_list' %}">
+          <img
+            src="{% static '/hospital/images/hospital_unselected.svg' %}"
+            alt="병원추천"
+            id="bottom-icon-hospital"
+          />
+          <span>안심병원추천</span>
+        </a>
+        <a href="">
+          <img
+            src="{% static '/hospital/images/home_selected.svg' %}"
+            alt="홈"
+            id="bottom-icon-home"
+          />
+          <span>홈</span>
+        </a>
+        <a href="{% url 'hospital_reserve'%}">
+          <img
+            src="{% static '/hospital/images/reserve_unselected.svg' %}"
+            alt="상담예약"
+            id="bottom-icon-reserve"
+          />
+          <span>간편상담예약</span>
+        </a>
+        <a href="{% url 'users:my_page' %}">
+          <img
+            src="{% static '/hospital/images/profile_unselected.svg' %}"
+            alt="마이페이지"
+            id="bottom-icon-mypage"
+          />
+          <span>마이페이지</span>
+        </a>
+      </footer>
     </div>
-</body>
+    <script type="module" src="{% static '/users/js/home.js' %}"></script>
+  </body>
 </html>
