@@ -1,13 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사용가이드</title>
-</head>
-<body>
-  <a href="{% url 'users:my_page' %}"><</a>
-  <h1>사용가이드</h1>
-  <p>서비스 사용 방법 안내 페이지(추후 이미지 삽입)</p>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>사용자 가이드</title>
+    <link rel="stylesheet" href="{% static 'users/css/user_guide.css' %}" />
+  </head>
+  <body>
+    <div class="page-container">
+      <header class="header">
+        <a href="{% url 'users:my_page' %}">
+          <img
+            src="{% static '/hospital/images/back_icon.svg' %}"
+            alt="이전으로"
+            class="back-button"
+        /></a>
+        <h2>사용자 가이드</h2>
+      </header>
+      <main>
+        <p>추후 사용자 가이드 이미지 삽입 예정</p>
+      </main>
+    </div>
+  </body>
 </html>
