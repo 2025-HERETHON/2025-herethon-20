@@ -21,6 +21,7 @@
           action="{% url 'hospital_search' %}"
           class="search-container"
         >
+          {% csrf_token %}
           <!-- 이전으로 버튼 누르면 병원 리스트 페이지로-->
           <a href="{% url 'hospital_list' %}">
             <img

@@ -14,12 +14,25 @@
   box-sizing: border-box;
 }
 
+/* 전체 배경 및 중앙 정렬 */
 html,
 body {
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+/* 전체 페이지 고정 너비 박스 */
+.page-container {
+  width: 402px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
 }
 
 /* 헤더 */
@@ -90,7 +103,7 @@ main {
   display: inline-block;
   width: fit-content;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
