@@ -109,11 +109,6 @@ header {
   height: auto;
 }
 
-.result-count {
-  padding-top: 100px;
-  width: 402px;
-}
-
 #review-info {
   display: flex;
   flex-direction: column;

@@ -148,6 +148,29 @@ header h2 {
   line-height: normal;
 }
 
+/* 복사시, 창 띄우기*/
+#popup-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 13.5px;
+  background: rgba(0, 0, 0, 0.4);
+  display: none; /* JS에서 조건 */
+  width: 240px;
+  height: 50px;
+  padding: 18px;
+  justify-content: center;
+  align-items: center;
+}
+
+#popup-message p {
+  color: white;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+}
+
 /* 하단 내비바 */
 .bottom-nav {
   display: flex;
