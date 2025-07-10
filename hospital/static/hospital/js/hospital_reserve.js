@@ -40,6 +40,7 @@ const doctorData = [
 // 본격 js 코드
 document.addEventListener("DOMContentLoaded", () => {
   const listContainer = document.getElementById("doctor-list");
+  const popup = document.getElementById("popup-message");
 
   doctorData.forEach((doctor, index) => {
     const card = document.createElement("div");
@@ -75,7 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const phone = card.querySelector(".phone-text").textContent;
       navigator.clipboard.writeText(phone).then(() => {
-        alert(`전화번호가 복사되었습니다: ${phone}`);
+        // popup-message 보여주기
+        popup.style.display = "block";
+
+        // 2초 후 숨김
+        setTimeout(() => {
+          popup.style.display = "none";
+        }, 1000);
       });
     });
     listContainer.appendChild(card);
