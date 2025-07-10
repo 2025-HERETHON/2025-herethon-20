@@ -1,5 +1,7 @@
 # hospital/models.py
 from django.db import models
+from users.models import User
+#from .models import Review
 
 class Hospital(models.Model):
     yadmCd = models.CharField(max_length=20, unique=True)
@@ -13,3 +15,5 @@ class Hospital(models.Model):
 
     def __str__(self):
         return f"[{self.sidoCd}] {self.name}"
+    
+
