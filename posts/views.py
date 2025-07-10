@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from posts.models import Post, Comment, Scrap, Notification
 from datetime import date, timedelta
 from django.db.models import Q, Count
 from django.utils import timezone
+from users.models import User
 
 CATEGORIES = [
     {'name': '생리', 'slug': 'saengri'},
@@ -34,14 +35,19 @@ def post_list(request, category_slug=None):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id) # 해당 ID의 게시글 가져오기
-    comments = Comment.objects.filter(post=post).select_related('user').order_by('created_at') # 해당 게시글의 댓글 가져오기
 
-    # 해당 게시글의 전체 댓글 개수 계산
-    total_comment_count = comments.count()
+    comments_queryset = Comment.objects.filter(
+        post=post, parent_comment__isnull=True, is_deleted=False
+    ).select_related('user').order_by('created_at')
+
+    # 해당 게시글의 답변 수 계산 (답댓글 제외)
+    total_comment_count = comments_queryset.count()
 
     # 일반회원-익명/전문의회원-실명 구분
     processed_comments = []
-    for comment in comments:
+    for comment in comments_queryset:
+        replies = comment.replies.all().select_related('user').order_by('created_at')
+
         comment_author_display_name = "익명"
         if comment.user.is_doctor:
             display_parts = [comment.user.username] # 전문의인 경우 실명
@@ -54,9 +60,36 @@ def post_detail(request, post_id):
             if hospital_info:
                 comment_author_display_name += f" {hospital_info}"
 
+        is_comment_author = (request.user.is_authenticated and request.user == comment.user and not comment.is_deleted)
+
+        processed_reply_comments = [] # 답댓글
+        replies_queryset = comment.replies.filter(is_deleted=False).select_related('user').order_by('created_at')
+        for reply in replies_queryset:
+            reply_author_display_name = "익명"
+            if reply.user.is_doctor:
+                display_parts_reply = [reply.user.username]
+                if reply.user.position:
+                    display_parts_reply.append(reply.user.position)
+                hospital_info_reply = ""
+                if reply.user.hospital:
+                    hospital_info_reply = f"({reply.user.hospital})"
+                reply_author_display_name = " ".join(display_parts_reply)
+                if hospital_info_reply:
+                    reply_author_display_name += f" {hospital_info_reply}"
+
+            is_reply_author = (request.user.is_authenticated and request.user == reply.user and not reply.is_deleted)
+
+            processed_reply_comments.append({
+                'comment': reply,
+                'display_name': reply_author_display_name,
+                'is_author': is_reply_author,
+            })
+
         processed_comments.append({
             'comment': comment,
-            'display_name': comment_author_display_name
+            'display_name': comment_author_display_name,
+            'replies': processed_reply_comments,
+            'is_author': is_comment_author,
         })
 
     # 사용자 나이 계산
@@ -67,11 +100,22 @@ def post_detail(request, post_id):
     # 댓글 생성 처리 (POST 요청)
     if request.method == 'POST':
         comment_content = request.POST.get('comment_content')
+        parent_comment_id = request.POST.get('parent_comment_id')
+
         if request.user.is_authenticated:
             if comment_content:
-                Comment.objects.create(post=post, user=request.user, content=comment_content)
+                parent_comment = None
+                if parent_comment_id:
+                    parent_comment = get_object_or_404(Comment, pk=parent_comment_id, is_deleted=False)
 
-                #  알림 생성
+                new_comment = Comment.objects.create(
+                    post=post,
+                    user=request.user,
+                    content=comment_content,
+                    parent_comment=parent_comment
+                )
+
+                #  답변 알림 생성
                 if request.user != post.user:
                     Notification.objects.create(
                         user=post.user,  # 알림을 받을 사람: 게시글 작성자
@@ -79,6 +123,16 @@ def post_detail(request, post_id):
                         message='에 새로운 답변',
                         comment_content=comment_content,
                         notification_type='comment_on_my_post'  # 알림 유형
+                    )
+
+                # 답댓글 알림 생성
+                if parent_comment and request.user != parent_comment.user:
+                    Notification.objects.create(
+                        user=parent_comment.user,  # 알림을 받을 사람: 부모 댓글 작성자
+                        post=post,
+                        message='내 답변에 새로운 답댓글',
+                        comment_content=comment_content,
+                        notification_type='reply_on_my_comment'
                     )
                 return redirect('posts:post_detail', post_id=post.id)
         else:
@@ -144,8 +198,13 @@ def my_questions(request):
 
 @login_required
 def my_answers(request):
-    posts_with_my_comments = Post.objects.filter(comment__user=request.user).distinct().order_by('-comment__created_at')
-    my_comments_count = Comment.objects.filter(user=request.user).count()
+    posts_with_my_comments = Post.objects.filter(
+        Q(comment__user=request.user, comment__is_deleted=False) |
+        Q(comment__replies__user=request.user, comment__replies__is_deleted=False)
+    ).distinct()
+    posts_with_my_comments = posts_with_my_comments.order_by('-created_at')
+
+    my_comments_count = Comment.objects.filter(user=request.user, is_deleted=False).count()
 
     context = {
         'posts_with_my_comments': posts_with_my_comments,
@@ -195,3 +254,18 @@ def create_post(request):
             'selected_category': initial_category_name, # 초기 선택 카테고리 설정
         }
         return render(request, 'posts/create_post.html', context)
+
+@login_required
+def delete_comment(request, post_id, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id, post_id=post_id) # 해당 게시글의 댓글인지 확인
+
+    # 댓글 작성자만 삭제할 수 있도록 권한 확인
+    if request.user != comment.user:
+        return HttpResponse("권한이 없습니다.", status=403) # 403 Forbidden 에러 반환
+
+    # 소프트 삭제 처리
+    comment.is_deleted = True
+    comment.content = "삭제된 댓글입니다." # 내용도 변경하여 시각적으로 삭제됨을 표시
+    comment.save()
+
+    return redirect('posts:post_detail', post_id=post_id)
