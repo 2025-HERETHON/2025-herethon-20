@@ -1,0 +1,384 @@
+body{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.wrapper {
+    width: 402px;
+    height: 874px;
+    border: 1px solid black;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;            
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 16px;    
+}
+
+.back_img{
+    width: 24px;
+height: 24px;
+flex-shrink: 0;
+}
+
+.declatation_img{
+    width: 25px;
+height: 25px;
+flex-shrink: 0;
+aspect-ratio: 1/1;
+}
+
+.back{
+    display: flex;        
+    gap: 20px;           
+    align-items: center; 
+    text-decoration: none;
+    
+}
+.back-link{
+    color: black;
+text-align: center;
+font-family: "Pretendard Variable";
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.post-meta{
+    display: flex;
+    align-items: center;            
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 15px;    
+}
+
+.profile_img{
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+}
+
+.profile_text{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.time_text{
+    color: black;
+font-family: "Pretendard Variable";
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+display: flex;
+flex-direction: column;
+align-items: flex-end;
+margin-left: 140px;
+}
+
+.post-content{
+    padding: 20px;
+    padding-top: 0px;
+}
+
+.content-title{
+color: black;
+    font-family: "Pretendard Variable";
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.content{
+color: black;
+/* basic */
+font-family: "Pretendard Variable";
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+#scrap-button{
+display: flex;
+flex-direction: column;
+justify-content: center;    
+align-items: center;
+gap: 5px;
+border: 1.3px solid #a78bfa;
+border-radius: 30px;
+flex-shrink: 0;
+flex-direction: row;
+background-color: white;
+}
+
+#button_share{
+    display: flex;
+flex-direction: column;
+justify-content: center;    
+align-items: center;
+gap: 5px;
+border: 1.3px solid #a78bfa;
+border-radius: 30px;
+flex-shrink: 0;
+flex-direction: row;
+background-color: white;
+}
+.button_text{
+    color:#5E548E;
+font-family: "Pretendard Variable";
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin:10px;
+margin-right: 20px;
+    margin-left: 00px;
+
+}
+
+.img{
+    width: 20px;
+height: 20px;
+aspect-ratio: 1/1;  
+margin:10px;
+margin-right: 0px;
+    margin-left: 20px;
+
+}
+
+.post-actions{
+    display: flex;
+    justify-content: center;    
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 15px;
+}
+
+.comment-list{
+    display: flex;
+    gap:10px;
+    flex-direction: column;
+
+}
+
+.commnet-text{
+    color:#000;
+font-family: "Pretendard Variable";
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-left: 20px;
+}
+
+.comment-meta{
+    margin: 10px;
+        display: flex
+;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 150px;
+}
+.comment-item{
+    display: flex;
+    width: 329px;
+height: 148px;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.comment-title{
+        display: flex
+;
+    gap: 5px;
+    align-items: center;
+    text-decoration: none;
+
+
+
+}
+
+.comment-time{
+    color: #5E548E;
+font-family: "Pretendard Variable";
+font-size: 10px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.comment-content{
+    color:  #000;
+font-family: "Pretendard Variable";
+font-size: 11px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+padding:10px;
+margin: 10px;
+
+}
+.none{
+    color:  #5E548E;
+font-family: "Pretendard Variable";
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.declatation_comment_img{
+    width: 13px;
+height: 13px;
+aspect-ratio: 1/1;
+}
+
+.comment-item-1{
+    display: flex;
+    width: 329px;
+height: 148px;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color:  #f6f4fb;
+}
+
+.no-comments{
+    margin-left: 20px;
+text-align: center;
+font-family: "Pretendard Variable";
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: 200%; /* 32px */
+}
+
+.comment_content{
+    width: 360px;
+    margin-left: 10px;
+height: 48px;
+border: none;
+ resize: none;
+background-color: #f6f4fb;
+}
+
+textarea::placeholder {
+ color:  #5E548E;
+ padding: 15px;
+font-family: "Pretendard Variable";
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.comment_send {
+  display: flex;
+  align-items: center;
+   max-width: 500px;       /* 너비 제한 */
+  margin: 0 auto;
+  margin:10px;
+border-radius: 15px;
+background-color: #f6f4fb;         /* 가운데 정렬 */
+}
+
+.submit_btn{
+    background-color: #f6f4fb;
+    border:none;
+    border-radius: 15px;
+}
+
+.warning{
+    position: fixed;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1.3px solid black;
+    border-radius: 15px;
+    display: none;
+}
+
+.warning_textbox{
+    padding: 50px;
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.warning_text_1,.warning_text_2{
+font-family: "Pretendard Variable";
+font-size: 15px;
+font-style: normal;
+font-weight: 400;
+line-height: 150%; 
+}
+
+.warning_text_2{
+font-weight: 700;
+}
+.selection_box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.yes,.no{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    color: white;
+width: 141px;
+height: 32px;
+padding: 5.25px 40.5px;
+justify-content: center;
+align-items: center;
+gap: 7.5px;
+border: none;
+border-radius: 15px;
+}
+
+.yes{
+    background-color: #E35D5F;
+}
+.no{
+    background-color:black ;
+}
+.copy{
+position: fixed;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 5px;
+border-radius: 13.5px;
+background: rgba(0, 0, 0, 0.40);
+display: none;}
+.copy_text{
+    padding: 15px;
+    color:  #FFF;
+font-size: 13.5px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}

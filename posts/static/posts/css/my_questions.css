@@ -1,0 +1,148 @@
+body{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.wrapper {
+    width: 402px;
+    height: 874px;
+    border: 1px solid black;
+}
+
+header {
+    display: flex;
+    align-items: center;            
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 16px;
+}
+
+
+.back_img{
+    width: 24px;
+height: 24px;
+flex-shrink: 0;
+}
+
+.header_title{
+    color: black;
+text-align: center;
+font-family: "Pretendard Variable";
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+#my_comments{
+ color: gray;
+    text-decoration: none;
+font-family: "Pretendard Variable";
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-top: 10px;
+margin-bottom: 10px;
+}
+
+    #my_post{
+        color: #A78BFA;
+    text-decoration: none;
+font-family: "Pretendard Variable";
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-top: 10px;
+margin-bottom: 10px;
+border-bottom: 2px solid #A788fa;
+}
+
+
+.tab-menu{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.my_answers_title{
+    color: #000;
+font-family: "Pretendard Variable";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+padding: 30px;
+border-bottom:1px solid #A788fa;
+}
+
+.post-list{
+    list-style-type: none;
+    padding-left: 0px;
+}
+.post-title{
+        color: black;
+    font-family: "Pretendard Variable";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: 20px;
+    text-decoration: none;
+}
+
+.time-ago{
+        color: #5E548E;
+    font-family: "Pretendard Variable";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.post_header{
+        display: flex;
+    align-items: center;
+    gap: 200px;
+}
+
+.post-preview{
+    font-family: "Pretendard Variable";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: 20px;
+}
+
+.chat_img{
+    width: 16px;
+}
+
+.comment-count{
+        display: flex
+;
+    align-items: center;
+    width: 100%;
+    margin: 20px;
+    gap:10px
+}
+
+.post-item{
+    border-bottom: 1px solid #A78BFA;
+    padding-top: 10px;
+
+}
+
+.no-posts{
+        color: #5E548E;
+    text-align: center;
+    font-family: "Pretendard Variable";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 200%;
+}

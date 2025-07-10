@@ -1,4 +1,4 @@
-{# 'Q&A 게시판 - 게시글'에 해당하는 페이지(글 상세페이지) #}
+{# 'Q&A 게시판 - 큐앤에이 - 게시판'에 해당하는 페이지 #}
 
 {% load static %}
 <!DOCTYPE html>
@@ -6,128 +6,126 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ post.title }} - 게시글 상세</title>
-    <link rel="stylesheet" href="{% static 'posts/css/posts.css' %}">
+    <link rel="stylesheet" href="{% static 'posts/css/detail.css' %}">
+    <script src="{% static 'posts/js/detail.js' %}"></script>
+
 </head>
 <body>
-    <a href="{% url 'posts:post_list' %}" class="back-link">< 게시물 보기</a> {# 이전 화면(게시글 목록)으로 이동 #}
-    <div class="post-detail-container">
-        <div class="post-detail-header">
-            <h1>{{ post.title }}</h1> {# 글 제목 #}
-            <div class="post-meta">
-                <span>
-                    익명 ({{ author_age }}세) {# 작성자 이름 익명 표시, 나이 계산하여 표시 #}
-                    {% if is_author %} {# 현재 로그인된 사용자가 쓴 글일 경우 (나) 표시 #}
+    <div class="wrapper">
+        <header>
+            <a href="{% url 'posts:post_list' %}" class="back">
+                <img src="{% static 'posts/css/img/back_img.png' %}" class="back_img">
+                <div class="back-link"> 게시물 보기</div>
+            </a>
+            <img src="{% static 'posts/img/declatation_img.png'%}" class="declatation_img">
+        </header>
+        <div class="post-detail-container">
+            <div class="post-detail-header">
+                <div class="post-meta">
+                    <img src="{% static 'posts/img/profile_img.png' %}" class="profile_img">
+                    <div class="profile_text">
+                        <span>익명의</span> 
+                        <span>({{ author_age }}세) 사용자
+                        {% if is_author %} {# 현재 로그인된 사용자가 쓴 글일 경우 (나) 표시 #}
                         (나)
-                    {% endif %}
-                </span>
-                <span>{{ post.created_at|date:"Y.m.d H:i" }}</span> {# 글 작성 일자 및 시간 표시 #}
+                        {% endif %}
+                        </span>
+                    </div>
+                    <div class="time_text">
+                        <span>{{ post.created_at|date:"Y.m.d H:i" }}</span>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="post-content">
-            {{ post.content }} {# 본문 전체 표시 #}
-        </div>
+            <div class="post-content">
+                <h1 class="content-title">{{ post.title }}</h1>
+                <span class="contnet">{{post.content }} </span> 
+            </div>
 
-        {# 스크랩 및 공유 버튼 #}
-        <div class="post-actions">
-            <button id="scrap-button" data-post-id="{{ post.id }}"> {# 스크랩 버튼 #}
-                {% if is_scrapped %} {# 스크랩 누른 상태면 '스크랩 취소' 표시 #}
-                    스크랩 취소
-                {% else %} {# 스크랩 안한 상태면 '스크랩' 표시 #}
-                    스크랩
-            </button>
-            {% endif %}
-            <button onclick="copyUrl()">공유하기</button> {# 공유 버튼 클릭시 링크 복사 함수 실행 #}
-        </div>
 
-        {# 스크랩/공유 버튼 처리 스크립트, js 파일로 이동 필요 #}
-        <script>
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-        const csrftoken = getCookie('csrftoken');
 
-        // 스크랩 버튼 클릭 이벤트 리스너
-        document.getElementById("scrap-button")?.addEventListener("click", function() {
-            const postId = this.dataset.postId;
-            const button = this; // 현재 클릭된 버튼 요소
+            {# 스크랩 및 공유 버튼 섹션 추가 #}
+            <div class="post-actions">
+                {% if user.is_authenticated %} {# 로그인된 사용자에게만 스크랩 버튼 표시 #}
+                <button id="scrap-button" data-post-id="{{ post.id }}">
+                    {% if is_scrapped %}
+                        스크랩 취소
+                    {% else %}
+                        스크랩
+                    {% endif %}
+                    <img src="{% static 'posts/img/scrap_img.png' %}" class="img">
+                    <div class="button_text">스크랩</div>
+                </button>
+                {% endif %}
+                <button onclick="copyUrl()" id="button_share">
+                    <img src="{% static 'posts/img/share_img.png' %}" class="img">
+                    <div class="button_text">공유하기</div>
+                </button>
+            </div>  
 
-            fetch(`/posts/${postId}/scrap/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': csrftoken, // CSRF 토큰 전송
-                    'Content-Type': 'application/json' // JSON 형식으로 요청을 보냄
-                },
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json(); // JSON 응답 파싱
-            })
-            .then(data => {
-                if (data.scrapped) {
-                    alert("스크랩 완료!");
-                    button.textContent = "스크랩 취소"; // 버튼 텍스트 업데이트
-                } else {
-                    alert("스크랩 취소됨.");
-                    button.textContent = "스크랩"; // 버튼 텍스트 업데이트
-                }
-            })
-            .catch(error => {
-                console.error('스크랩 요청 중 오류 발생:', error);
-                alert("스크랩 처리 중 오류가 발생했습니다. 로그인 상태를 확인해주세요.");
-            });
-        });
 
-        // 공유하기 기능 (클립보드에 현재 URL 복사)
-        function copyUrl() {
-            const currentUrl = window.location.href;
-            navigator.clipboard.writeText(currentUrl).then(() => {
-                alert("현재 페이지 주소가 클립보드에 복사되었습니다!");
-            }).catch(err => {
-                console.error('URL 복사 실패:', err);
-                alert("URL 복사에 실패했습니다. 직접 복사해주세요.");
-            });
-        }
-        </script>
 
-        {# 해당 게시물에 달린 답변 표시 #}
-        <div class="comments-section">
-            <h2>답변 {{ total_comment_count }}개</h2>
-            {% if comments %}
-                <ul class="comment-list">
-                    {% for item in comments %}
-                        <li class="comment-item">
-                            <div class="comment-meta">
-                                <span>{{ item.display_name }}</span>
-                                <span>{{ item.comment.created_at|date:"Y.m.d H:i" }}</span>
-                            </div>
-                            <p class="comment-content">{{ item.comment.content }}</p>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p class="no-comments">아직 댓글이 없습니다.</p>
-            {% endif %}
 
-            <div class="comment-form"> {# 댓글 입력 영역 #}
-                <form method="POST">
-                    {% csrf_token %} {# 보안을 위한 CSRF 토큰 #}
-                    <textarea name="comment_content" placeholder="댓글을 입력하세요." required></textarea>
-                    <button type="submit">댓글 작성</button>
-                </form>
+
+
+
+            <div class="comments-section">
+                <h2 class="commnet-text">답변 {{ total_comment_count }}개</h2>
+                {% if comments %}
+                    <ul class="comment-list">
+                        {% for item in comments %}
+                            <li class="comment-item">
+                                <div class="comment-meta">
+                                    <span class="comment-title">
+                                        <div class="none">{{ item.display_name }}</div>
+                                        <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                    </span>
+                                    <span class="comment-time">{{ item.comment.created_at|date:"Y.m.d H:i" }} </span>
+                                </div>
+                                <p class="comment-content"> {{ item.comment.content }} </p>
+                            </li>
+                            <li class="comment-item-1">
+                                <div class="comment-meta">
+                                    <span class="comment-title">
+                                        <div class="none"> {{ item.display_name }}</div>
+                                        <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                    </span>
+                                    <span class="comment-time"> {{ item.comment.created_at|date:"Y.m.d H:i" }}</span>
+                                </div>
+                                <p class="comment-content"> {{ item.comment.content }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="no-comments">아직 댓글이 없습니다.</p>
+                {% endif %}
+
+                <div class="comment-form">
+                    <form method="POST">
+                        {% csrf_token %} {# 보안을 위한 CSRF 토큰 #}
+                        <div class="comment_send">
+                            <textarea name="comment_content" class="comment_content"placeholder="댓글을 입력하세요." required></textarea>
+                            <button type="submit" class="submit_btn">
+                                <img src="{% static 'posts/img/send_img.png' %}">
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="warning">
+                <div class="warning_textbox">
+                    <div class="warning_text_1">이 게시물을 신고합니다.</div>
+                    <div class="warning_text_2">계속하시겠습니까?</div>
+                </div>
+                <div class="selection_box">
+                    <button class="yes">예</button>
+                    <button class="no">아니요</button>
+                </div>
+                <div class="background_gray"></div>
+            </div>
+            <div class="copy">
+                <div class="copy_text">링크를복사했습니다.</div>
             </div>
         </div>
     </div>

@@ -8,37 +8,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내가 댓글 단 글</title>
+    <link rel="stylesheet" href="{% static 'my_answers.css'%}" />
 </head>
 <body>
-    <div class="container">
-        <a href="{% url 'posts:post_list' %}" class="back-to-list-btn"><</a> {# 'Q&A 게시판'으로 돌아가는 버튼 #}
-        <h1>내 질문/답변</h1>
+    <div class="wrapper">
+        <div class="container">
+        <header>
+            <a href="{% url 'posts:post_list' %}" class="back-to-list-btn">
+                <img src="{% static 'img/back_img.png' %}" class="back_img" alt="뒤로가기">
+            </a> {# 'Q&A 게시판'으로 돌아가는 버튼 #}
+        <span class="header_title">내 질문/답변</span>
+        </header>
 
-        <div class="tab-menu"> {# 내 질문/답변 오가는 버튼 #}
-            <a href="{% url 'posts:my_questions' %}" class="{% if active_tab == 'questions' %}active{% endif %}">내가 작성한 글</a>
-            <a href="{% url 'posts:my_answers' %}" class="{% if active_tab == 'answers' %}active{% endif %}">내가 댓글 단 글</a>
+        <div class="tab-menu"> <!--{# 내 질문/답변 오가는 버튼 #}-->
+            <a href="{% url 'posts:my_questions' %}" class="{% if active_tab == 'questions' %}active{% endif %}" id="my_post">내 질문</a>
+            <a href="{% url 'posts:my_answers' %}" class="{% if active_tab == 'answers' %}active{% endif %}" id="my_comments">내 답변</a>
         </div>
 
-        <h2>내 답변 {{ my_comments_count }}개</h2> {# 현재 로그인된 사용자가 작성한 답변 갯수 보여주는 코드(형태 바꾸면 안됨, 그대로 사용) #}
+        <h2 class="my_answers_title">내 답변 {{ my_comments_count }}개</h2> {# 현재 로그인된 사용자가 작성한 답변 갯수 보여주는 코드(형태 바꾸면 안됨, 그대로 사용) #}
         {% if posts_with_my_comments %}
             <ul class="post-list">
                 {% for post in posts_with_my_comments %} {# 사용자가 답변 단 게시물 보여주기 #}
                     <li class="post-item">
-                        <h2><a href="{% url 'posts:post_detail' post.id %}">{{ post.title }}</a></h2> {# 제목 #}
-                        <span class="time-ago">{{ post.created_at|naturaltime }}</span> {# 게시물 작성된 뒤 지난 시간 #}
+                        <div class="post_header">
+                            <a href="{% url 'posts:post_detail' post.id %}" class="post-title">{{ post.title }}</a></h2> {# 제목 #}
+                            <span class="time-ago">{{ post.created_at|naturaltime }}</span> {# 게시물 작성된 뒤 지난 시간 #}
+                        </div>
                         <p class="post-preview">{{ post.content|truncatechars:50 }}</p> {# 본문 한줄 미리보기 #}
                         <div class="post-meta-info">
                             <span class="comment-count">
-                                <img src="{% static 'posts/images/comment_icon.png' %}" alt="답변"> {# 답변 수 옆 이미지 #}
-                                {{ post.comment_set.count }} {# 해당 게시물에 달린 답변 수 표시 #}
+                                <img src="{% static 'img/chat_img.png'%}" class="chat_img" alt="답변"> {# 답변 수 옆 이미지 #}
+                                <div class="comment_count">{{post.comment_set.count }}</div> {# 해당 게시물에 달린 답변 수 표시 #}
                             </span>
                         </div>
                     </li>
                 {% endfor %}
             </ul>
         {% else %}
-            <p class="no-posts">아직 댓글을 단 게시글이 없습니다.</p> {# 사용자가 답변 단 게시물 없을 때 #}
+            <p class="no-posts">아직 댓글을 단 게시글이 없습니다.</p> <!--{# 사용자가 답변 단 게시물 없을 때 #}-->
         {% endif %}
+        </div>
     </div>
 </body>
 </html>
