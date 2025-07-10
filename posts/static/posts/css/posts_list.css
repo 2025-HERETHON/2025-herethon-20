@@ -252,6 +252,7 @@ main {
 }
 
 #bottom-icon-qna {
+  width: 40px;
   margin-bottom: 0.5625rem;
 }
 
@@ -261,6 +262,7 @@ main {
 
 #bottom-icon-home {
   padding-bottom: 0.4375rem;
+  width: 40px;
 }
 
 #bottom-icon-reserve {
