@@ -11,14 +11,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // 백엔드에 모든 알림 읽음 처리 요청
+    // 문제 부분 주석 처리
+    /*
     fetch("/users/notifications/mark_all_read/", {
       method: "POST",
       headers: {
-        "X-CSRFToken": getCSRFToken(), // CSRF 토큰 삽입
+        "X-CSRFToken": getCSRFToken(),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ action: "mark_all_read" }),
     });
+    */
   });
 
   // 개별 알림 클릭 이벤트
@@ -33,6 +36,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const notificationId = listItem.dataset.id;
 
         // 백엔드에 알림 읽음 처리 요청
+        // 문제 부분 주석 처리
+        /*
+        const notificationId = listItem.dataset.id;
         fetch(`/users/notifications/read/${notificationId}/`, {
           method: "POST",
           headers: {
@@ -41,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           body: JSON.stringify({ read: true }),
         });
+        */
       }
     });
   });
