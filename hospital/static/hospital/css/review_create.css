@@ -12,11 +12,25 @@
   font-family: "Pretendard-Regular";
 }
 
+/* 전체 배경 및 중앙 정렬 */
+html,
 body {
-  width: 100%;
-  height: 874px;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+/* 전체 페이지 고정 너비 박스 */
+.page-container {
+  width: 402px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
 }
 
 header {
@@ -82,7 +96,7 @@ form {
   padding: 34px 27px;
   border-radius: 15px;
   border: 1px solid #ddd6f3;
-  background: var(--white, #fff);
+  background: #fff;
 }
 
 section {
@@ -115,17 +129,15 @@ textarea,
 
 #details {
   width: 289px;
-  height: 297px;
+  height: 295px;
   margin-top: 14px;
   padding: 16px;
   border-radius: 10px;
   background: #f6f4fb;
   border: none;
   resize: none;
-
   font-size: 14px;
   line-height: 1.5;
-
   text-align: left;
   display: block;
   box-sizing: border-box; /* padding 포함한 크기 계산 */
@@ -177,7 +189,7 @@ textarea,
 #submit-button {
   width: 343px;
   height: 54px;
-  margin: 21px 30px 23px 29px;
+  margin: 25px 30px 23px 29px;
   padding: 15px 136px;
   display: flex;
   flex-direction: row;

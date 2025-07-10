@@ -13,27 +13,35 @@
     <title>내 리뷰</title>
   </head>
   <body>
-    <!-- 최상단 -->
-    <header>
-      <!-- 페이지 연결 필요 -->
-      <a href="{% url 'hospital_list' %}">
-        <img
-          src="{% static '/hospital/images/back_icon.svg' %}"
-          alt="이전으로"
-          id="back-button"
-        />
-      </a>
-      <h2>내 리뷰</h2>
-    </header>
-    <!-- 내 리뷰 띄우기 -->
-    <main class="review-list"></main>
-    <!-- 알림창 -->
-    <div id="alert" class="alert hidden">
-      <div class="alert-content">
-        <p>이 게시물을 삭제합니다. <br /><strong>계속하시겠습니까?</strong></p>
-        <div class="alert-buttons">
-          <button id="confirm-delete" class="yes-button">예</button>
-          <button id="cancel-delete" class="no-button">아니오</button>
+    <div class="page-container">
+      <!-- 최상단 -->
+      <header>
+        <!-- 페이지 연결 필요 -->
+        <div class="head">
+          <a href="{% url 'hospital_list' %}">
+            <img
+              src="{% static '/hospital/images/back_icon.svg' %}"
+              alt="이전으로"
+              id="back-button"
+            />
+          </a>
+        </div>
+        <h2>내 리뷰</h2>
+      </header>
+
+      <main class="review-list">
+        <!-- 내 리뷰 띄우기 -->
+      </main>
+      <!-- 알림창 -->
+      <div id="alert" class="alert hidden">
+        <div class="alert-content">
+          <p>
+            이 게시물을 삭제합니다. <br /><strong>계속하시겠습니까?</strong>
+          </p>
+          <div class="alert-buttons">
+            <button id="confirm-delete" class="yes-button">예</button>
+            <button id="cancel-delete" class="no-button">아니오</button>
+          </div>
         </div>
       </div>
     </div>

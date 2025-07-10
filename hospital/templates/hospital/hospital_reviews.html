@@ -13,49 +13,51 @@
     <title>병원 리뷰 확인</title>
   </head>
   <body>
-    <!-- 헤더 -->
-    <header>
-      <div class="left-section">
-        <a href="{% url 'hospital_list' %}">
+    <div class="page-container">
+      <!-- 헤더 -->
+      <header>
+        <div class="left-section">
+          <a href="{% url 'hospital_list' %}">
+            <img
+              src="{% static '/hospital/images/back_icon.svg' %}"
+              alt="이전으로"
+              class="back-button"
+            />
+          </a>
+          <h2>{{hospital.name}}</h2>
+        </div>
+        <!-- 병원 리뷰 검색 페이지 연결 -->
+        <a href="{% url 'review_search' hospital.id %}">
           <img
-            src="{% static '/hospital/images/back_icon.svg' %}"
-            alt="이전으로"
-            class="back-button"
+            src="{% static '/hospital/images/search_icon.svg' %}"
+            alt="검색 아이콘"
+            class="search-button"
           />
         </a>
-        <h2>{{hospital.name}}</h2>
-      </div>
-      <!-- 병원 리뷰 검색 페이지 연결 -->
-      <a href="{% url 'review_search' hospital.id %}">
+      </header>
+      <!-- 내비 탭 -->
+      <nav>
+        <div class="tab-container">
+          <!-- 정보 페이지 연결 필요 -->
+          <div class="info">
+            <a href="{% url 'hospital_detail' hospital.id %}">정보</a>
+          </div>
+          <div class="review">리뷰</div>
+        </div>
+      </nav>
+      <main class="review-list"></main>
+
+      <!-- 해당 병원 리뷰 카드들 띄우기-->
+      <!-- 리뷰 작성 버튼-->
+      <a href="{% url 'review_create' hospital.id %}">
         <img
-          src="{% static '/hospital/images/search_icon.svg' %}"
-          alt="검색 아이콘"
-          class="search-button"
+          src="{% static '/hospital/images/write_review.svg' %}"
+          alt="리뷰 작성"
+          class="floating-button"
         />
       </a>
-    </header>
-    <!-- 내비 탭 -->
-    <nav>
-      <div class="tab-container">
-        <!-- 정보 페이지 연결 필요 -->
-        <div class="info">
-          <a href="{% url 'hospital_detail' hospital.id %}">정보</a>
-        </div>
-        <div class="review">리뷰</div>
-      </div>
-    </nav>
-    <main class="review-list">
-      <!-- 해당 병원 리뷰 카드들 띄우기-->
-    </main>
+    </div>
 
-    <!-- 리뷰 작성 버튼-->
-    <a href="{% url 'review_create' hospital.id %}">
-      <img
-        src="{% static '/hospital/images/write_review.svg' %}"
-        alt="리뷰 작성"
-        class="floating-button"
-      />
-    </a>
     <!-- 더미데이터 불러오기 -->
     <script
       type="module"

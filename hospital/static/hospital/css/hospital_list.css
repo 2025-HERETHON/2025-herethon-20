@@ -11,14 +11,27 @@
   padding: 0;
   font-family: "Pretendard-Regular";
 }
-
+/* 전체 배경 및 중앙 정렬 */
+html,
 body {
-  position: fixed;
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
 }
+
+/* 전체 페이지 고정 너비 박스 */
+.page-container {
+  width: 402px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+}
+
 .header {
   top: 0;
   flex: 0 0 auto;
@@ -214,24 +227,19 @@ h2 {
   text-overflow: ellipsis;
 }
 
-.floating-button {
-  position: fixed;
-  bottom: 6.875rem;
-  right: 1.9375rem;
-  z-index: 10;
-}
-
+/* 하단 내비바 */
 .bottom-nav {
-  position: fixed;
   display: flex;
+  flex-shrink: 0;
   flex: 0 0 auto;
   justify-content: space-evenly;
   align-items: flex-end;
-  width: 100%;
+  width: 402px;
   height: 5.375rem;
   bottom: 0;
   box-shadow: 0px -1px 10px 0px rgba(0, 0, 0, 0.1);
   background-color: white;
+  position: fixed;
 }
 
 .bottom-nav a {
@@ -242,7 +250,7 @@ h2 {
   font-size: 0.75rem;
   color: black;
   text-decoration: none;
-  margin: 0p;
+  margin: 0;
 }
 
 #bottom-icon-qna {
@@ -267,4 +275,12 @@ h2 {
 
 .bottom-nav span {
   margin-bottom: 0.75rem;
+}
+
+/* 리뷰 작성*/
+.floating-button {
+  position: absolute;
+  bottom: 110px;
+  right: 31px;
+  z-index: 10;
 }

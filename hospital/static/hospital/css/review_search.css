@@ -13,43 +13,62 @@
   box-sizing: border-box;
 }
 
+/* 전체 배경 및 중앙 정렬 */
 html,
 body {
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
 }
 
-header {
-  width: 100%;
-  height: 7.78%;
-  position: fixed;
+/* 전체 페이지 고정 너비 박스 */
+.page-container {
+  width: 402px;
+  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* 검색창 */
+header {
+  width: 402px;
+  height: 68px;
   border-bottom: 1px solid rgba(167, 139, 250, 0.5);
-  padding-top: 4px;
   position: fixed; /* 상단 고정 */
   background-color: white;
 }
 
 .search-container {
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  padding: 16px 0 0 20px;
+}
+
+.head {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 90.29%;
-  height: 30px;
+  padding-right: 15px;
+}
+
+.head a {
+  padding-right: 15px;
 }
 
 .search-box {
-  width: 80%;
-  padding: 13px 23px;
-  margin: 0px 15px;
+  width: 279px;
+  height: 40px;
   border-radius: 50px;
   background: #f6f4fb;
   border: none;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 12px 20px;
 }
 
 .search-button {
@@ -62,9 +81,7 @@ header {
   padding: 100px 0 21px 27px;
   color: #000;
   font-size: 16px;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
   border-bottom: 1px solid rgba(167, 139, 250, 0.3);
 }
 
@@ -82,7 +99,7 @@ header {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  overflow-y: auto; /* 검색 결과가 넘치면 스크롤 */
+  overflow-y: auto;
 }
 
 .review-card {
@@ -90,6 +107,11 @@ header {
   border-radius: 15px;
   width: 100%;
   height: auto;
+}
+
+.result-count {
+  padding-top: 100px;
+  width: 402px;
 }
 
 #review-info {
