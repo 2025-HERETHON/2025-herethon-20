@@ -8,6 +8,7 @@ body{
     width: 402px;
     height: 874px;
     border: 1px solid black;
+    overflow-y: auto;
 }
 
 header {
