@@ -56,7 +56,8 @@ main {
   gap: 19px;
 }
 
-.mypage-button {
+.mypage-button,
+#my_comments {
   background-color: #f6f4fb;
   display: flex;
   flex-direction: row;
