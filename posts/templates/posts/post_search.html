@@ -7,39 +7,55 @@
 <head>
     <meta charset="UTF-8">
     <title>게시글 검색</title>
+    <link rel="stylesheet" href="search.css">
 </head>
 <body>
-    <div class="search-container">
-        <a href="{% url 'posts:post_list' %}" class="back-to-list-btn"><</a> {# 이전 화면(게시글 목록)으로 이동 #}
-        <form action="{% url 'posts:post_search' %}" method="GET" class="search-form"> {# 검색 키워드 입력받아서 게시글 필터링 #}
-            <input type="text" name="query" placeholder="제목 또는 내용을 검색하세요." value="{{ query|default:'' }}">
-            <button type="submit">검색</button>
-        </form>
+    <div class="wrapper">
+        <div class="search-container">
+            <header>
+                <a href="{% url 'posts:post_list' %}" class="back-to-list-btn">
+                    <img src="{% static 'img/back_img.png' %}" class="back_img">
+                </a> {# 이전 화면(게시글 목록)으로 이동 #}
+                <form action="{% url 'posts:post_search' %}" method="GET" class="search-form"> {# 검색 키워드 입력받아서 게시글 필터링 #}
+                    <input type="text" name="query" placeholder="제목 또는 내용을 검색하세요." value="{{ query|default:'' }}" class="search_text" >
+                    <button type="submit" class="btn">
+                        <img src="{% static 'posts/img/search_img.png' %}" class="search_img">
+                    </button>
+                </form>
+            </header>
 
-        <div class="search-results"> {# 검색 결과 표시 #}
-            {% if query %}
-                <h2>검색 결과 {{ posts.count }}개</h2>
+            <div class="search-results"> {# 검색 결과 표시 #}
+                {% if query %}
+                    <h2 class="search_result_num">검색 결과 {{ posts.count }}개</h2>
                 {% if posts %}
-                    <ul class="search-list">
-                        {% for post in posts %}
-                            <li class="search-item">
-                                <h2><a href="{% url 'posts:post_detail' post.id %}">{{ post.title }}</a></h2>
-                                <span class="time-ago">{{ post.created_at|naturaltime }}</span>
-                                {# 본문 미리보기 (50자 제한) #}
-                                <p class="post-preview">{{ post.content|truncatechars:50 }}</p>
-                                <div class="post-meta-info">
-                                    <span class="comment-count">
-                                        <img src="{% static 'posts/images/comment_icon.png' %}" alt="댓글">
-                                        {{ post.comment_set.count }}
-                                    </span>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="no-results">검색된 결과가 없어요.</p>
+                        <ul class="search-list">
+                            {% for post in posts %}
+                            <div style="border-top:1px solid #a78bfa;">
+                                <li class="search-item">
+                                    <div class="search_title">
+                                        <a href="{% url 'posts:post_detail' post.id %}"class="search-title">{{ post.title }}</a>
+                                        <span class="time-ago">{{ post.created_at|naturaltime }}</span>
+                                    </div>
+                                    <p class="post-preview">{{ post.content|truncatechars:50 }}{# 본문 미리보기 (50자 제한) #}</p>
+                                    <div class="post-meta-info">
+                                        <span class="comment-count">
+                                            <img src="{% static 'posts/img/chat_img.png' %}" alt="댓글" class="chat_img">
+                                            <span class="comment-count-num">{{ post.comment_set.count }}</span>
+                                        </span>
+                                    </div>
+                                </li>
+                            </div>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="no-results">
+                            <p class="no-results-text-1">검색된 결과가 없어요.</p>
+                            <p class="no-results-text-2">*철자오류가 없는지 확인하세요.</p>
+                        </div>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
+                
+            </div>
         </div>
     </div>
 </body>

@@ -1,0 +1,158 @@
+body{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.wrapper {
+    width: 402px;
+    height: 874px;
+    border: 1px solid black;
+}
+
+header {
+    display: flex;
+    align-items: center;            
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 16px;
+    border-bottom: 1px solid rgba(167, 139, 250, 0.50);
+}
+
+.back_img{
+    width: 24px;
+height: 24px;
+flex-shrink: 0;
+}
+
+.search_img{
+    display: flex;
+width: 30px;
+height: 30px;
+padding: 2px;
+align-items: center;
+gap: 10px;
+
+}
+
+.btn{
+    background-color: white;
+    border: none;
+}
+
+.search_text{
+    width: 250px;
+    margin-left: 10px;
+height: 48px;
+border: none;
+ resize: none;
+background-color: #f6f4fb;
+border-radius: 15px;
+}
+
+
+.search_text::placeholder {
+  color: #5E548E;
+  font-family: "Pretendard Variable";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-left: 10px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center; /* 버튼과 입력창 수직 정렬 */
+  gap: 8px;
+}
+
+.search_result_num{
+    color: #000;
+font-family: "Pretendard Variable";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+padding: 20px;
+padding-bottom: 0px;
+}
+
+.search-list{
+    list-style-type: none; 
+    padding-left: 0px; 
+}
+.search-title{
+    color: black;
+    text-decoration: none;
+font-family: "Pretendard Variable";
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin: 20px;
+}
+.time-ago{
+    color:#5E548E;
+font-family: "Pretendard Variable";
+font-size: 10px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.post-preview{
+font-family: "Pretendard Variable";
+font-size: 10px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-left: 20px;
+}
+
+.search_title{
+    display: flex;
+    align-items: center;
+    gap:200px;
+}
+
+.post-meta-info{
+    display: flex;
+    align-items: center;
+  width: 100%;  
+  margin: 20px;
+}
+
+.search-item{
+    align-items: flex-start;
+}
+
+.chat_img{
+    width: 16px;
+}
+
+.no-results{
+    position: fixed;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
+.no-results-text-1{
+    color:  #5E548E;
+text-align: center;
+font-family: "Pretendard Variable";
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: 200%; /* 32px */
+}
+.no-results-text-2{
+    color: #DDD6F3;
+font-family: "Pretendard Variable";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 200%;
+}
