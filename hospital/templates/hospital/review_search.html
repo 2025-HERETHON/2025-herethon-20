@@ -28,6 +28,7 @@
           </a>
           <!-- action 연결 필요 -->
           <form method="get" action="{% url 'review_search' hospital.id %}">
+              {% csrf_token %}
             <!-- 검색할 리뷰 키워드 입력 받기
          get방식으로 보낼 파라미터명: q-->
             <!-- placeholder에 병원명 추가 -->
