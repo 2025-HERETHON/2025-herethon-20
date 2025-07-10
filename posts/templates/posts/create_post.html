@@ -5,7 +5,9 @@
     <div class="create-post-container">
         <div class="header">
             <a href="#" onclick="history.back()" class="back-arrow">&#8592;</a> {# 이전 페이지로 이동 #}
-            <h1>게시물 작성</h1>
+            <div class="back-link">
+                    {% if is_edit_mode %}게시물 수정{% else %}게시물 작성{% endif %}
+            </div>
             <button type="submit" form="post-form" class="submit-button">완료</button>
         </div>
 
@@ -13,7 +15,13 @@
             <p class="error-message">{{ error_message }}</p>
         {% endif %}
 
-        <form id="post-form" method="POST" action="{% url 'posts:create_post' %}">
+        <form id="post-form" method="POST" action="
+            {% if is_edit_mode %}
+                {% url 'posts:edit_post' post_id=post_id %} {# 수정 모드일 때 #}
+            {% else %}
+                {% url 'posts:create_post' %} {# 생성 모드일 때 #}
+            {% endif %}
+        ">
             {% csrf_token %}
 
             <div class="form-group">

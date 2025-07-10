@@ -93,9 +93,11 @@ def post_detail(request, post_id):
         })
 
     # 사용자 나이 계산
-    today = date.today()
-    birth_date = post.user.date_of_birth
-    age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+    author_age = None
+    if post.user and hasattr(post.user, 'date_of_birth') and post.user.date_of_birth:
+        today = date.today()
+        birth_date = post.user.date_of_birth
+        author_age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
 
     # 댓글 생성 처리 (POST 요청)
     if request.method == 'POST':
@@ -151,7 +153,7 @@ def post_detail(request, post_id):
     context = {
         'post': post,
         'comments': processed_comments,
-        'author_age': age,
+        'author_age': author_age,
         'is_scrapped': is_scrapped,
         'total_comment_count': total_comment_count,
         'is_author': is_author,
@@ -254,6 +256,64 @@ def create_post(request):
             'selected_category': initial_category_name, # 초기 선택 카테고리 설정
         }
         return render(request, 'posts/create_post.html', context)
+
+@login_required
+def edit_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+
+    # 게시글 작성자만 수정 가능하도록 권한 확인
+    if request.user != post.user:
+        return HttpResponse("이 게시글을 수정할 권한이 없습니다.", status=403) # 403 Forbidden 에러
+
+    if request.method == 'POST':
+        category = request.POST.get('category')
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+
+        if not all([title, content]):
+            context = {
+                'error_message': '제목과 내용을 모두 입력해주세요.',
+                'categories': CATEGORIES,
+                'selected_category': category, # 현재 선택된 카테고리
+                'title': title,
+                'content': content,
+                'post_id': post_id, # 수정 모드임을 템플릿에 알림
+                'is_edit_mode': True, # 수정 모드임을 템플릿에 알림
+            }
+            return render(request, 'posts/create_post.html', context)
+
+        # 게시글 업데이트
+        post.category = category
+        post.title = title
+        post.content = content
+        post.save() # 변경사항 저장
+
+        return redirect('posts:post_detail', post_id=post.id) # 수정된 게시글 상세 페이지로 리디렉션
+
+    else: # GET 요청 (수정 폼 불러오기)
+        context = {
+            'categories': CATEGORIES,
+            'selected_category': post.category, # 기존 게시글의 카테고리
+            'title': post.title, # 기존 게시글의 제목
+            'content': post.content, # 기존 게시글의 내용
+            'post_id': post_id, # 수정 모드임을 템플릿에 알림 (폼 액션 URL에 사용)
+            'is_edit_mode': True, # 수정 모드임을 템플릿에 알림
+        }
+        return render(request, 'posts/create_post.html', context)
+
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+
+    if request.user != post.user:
+        return HttpResponse("이 게시글을 삭제할 권한이 없습니다.", status=403)  # 403 Forbidden 에러
+
+    if request.method == 'POST':
+        post.delete()  # 게시글 삭제
+        return redirect('posts:post_list')  # 게시글 목록으로 리디렉션
+
+    return HttpResponse("잘못된 접근입니다.", status=400)
+
 
 @login_required
 def delete_comment(request, post_id, comment_id):
