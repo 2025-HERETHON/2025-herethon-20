@@ -17,7 +17,25 @@
                 <img src="{% static 'posts/css/img/back_img.png' %}" class="back_img">
                 <div class="back-link"> 게시물 보기</div>
             </a>
+
+            {% if is_author %}
+            {# 내가 쓴 글인 경우: 수정 및 삭제 버튼 표시 #}
+            <div class="post-header-actions">
+                <a href="{% url 'posts:edit_post' post.id %}" class="edit-icon">
+                    <img src="{% static 'posts/img/edit_icon.png' %}" alt="수정">
+                </a>
+                <form action="{% url 'posts:delete_post' post.id %}" method="post" onsubmit="return confirm('이 게시글을 삭제하시겠습니까?');" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-icon">
+                        <img src="{% static 'posts/img/delete_icon.png' %}" alt="삭제">
+                    </button>
+                </form>
+            </div>
+            {% else %}
+            {# 내가 쓴 글이 아닌 경우: 신고 버튼 표시 #}
             <img src="{% static 'posts/img/declatation_img.png'%}" class="declatation_img">
+            {% endif %}
+
         </header>
         <div class="post-detail-container">
             <div class="post-detail-header">
@@ -41,8 +59,6 @@
                 <h1 class="content-title">{{ post.title }}</h1>
                 <span class="contnet">{{post.content }} </span> 
             </div>
-
-
 
             {# 스크랩 및 공유 버튼 섹션 추가 #}
             <div class="post-actions">
