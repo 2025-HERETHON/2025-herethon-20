@@ -8,14 +8,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내가 댓글 단 글</title>
-    <link rel="stylesheet" href="{% static 'posts/css/my_answers.css'%}" />
+    <link rel="stylesheet" href="{% static 'my_answers.css'%}" />
 </head>
 <body>
     <div class="wrapper">
         <div class="container">
         <header>
             <a href="{% url 'posts:post_list' %}" class="back-to-list-btn">
-                <img src="{% static 'posts/img/back_img.png' %}" class="back_img" alt="뒤로가기">
+                <img src="{% static 'img/back_img.png' %}" class="back_img" alt="뒤로가기">
             </a> {# 'Q&A 게시판'으로 돌아가는 버튼 #}
         <span class="header_title">내 질문/답변</span>
         </header>
@@ -37,7 +37,7 @@
                         <p class="post-preview">{{ post.content|truncatechars:50 }}</p> {# 본문 한줄 미리보기 #}
                         <div class="post-meta-info">
                             <span class="comment-count">
-                                <img src="{% static 'posts/img/chat_img.png'%}" class="chat_img" alt="답변"> {# 답변 수 옆 이미지 #}
+                                <img src="{% static 'img/chat_img.png'%}" class="chat_img" alt="답변"> {# 답변 수 옆 이미지 #}
                                 <div class="comment_count">{{post.comment_set.count }}</div> {# 해당 게시물에 달린 답변 수 표시 #}
                             </span>
                         </div>
@@ -45,7 +45,7 @@
                 {% endfor %}
             </ul>
         {% else %}
-            <p class="no-posts">아직 댓글을 단 게시글이 없습니다.</p> <!--{# 사용자가 답변 단 게시물 없을 때 #}-->
+            <p class="no-posts">아직 댓글을 단 게시글이 없습니다.</p> {# 사용자가 답변 단 게시물 없을 때 #}
         {% endif %}
         </div>
     </div>
