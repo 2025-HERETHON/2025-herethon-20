@@ -7,14 +7,14 @@
 <head>
     <meta charset="UTF-8">
     <title>게시글 검색</title>
-    <link rel="stylesheet" href="search.css">
+    <link rel="stylesheet" href="{%static 'posts/css/search.css' %}">
 </head>
 <body>
-    <div class="wrapper">
+    <div class="page-container">
         <div class="search-container">
             <header>
                 <a href="{% url 'posts:post_list' %}" class="back-to-list-btn">
-                    <img src="{% static 'img/back_img.png' %}" class="back_img">
+                    <img src="{% static 'posts/img/back_img.png' %}" class="back_img">
                 </a> {# 이전 화면(게시글 목록)으로 이동 #}
                 <form action="{% url 'posts:post_search' %}" method="GET" class="search-form"> {# 검색 키워드 입력받아서 게시글 필터링 #}
                     <input type="text" name="query" placeholder="제목 또는 내용을 검색하세요." value="{{ query|default:'' }}" class="search_text" >
