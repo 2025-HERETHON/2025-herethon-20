@@ -19,5 +19,5 @@ document.addEventListener('DOMContentLoaded', function () {
   titleInput.addEventListener('input', checkInputs);
   contentTextarea.addEventListener('input', checkInputs);
 
-  checkInputs();
+  checkInputs(); // 페이지 로드시 상태 체크
 });
