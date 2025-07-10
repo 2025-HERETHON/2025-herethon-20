@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static '/users/css/doctor_mypage.css' %}"
+    />
+    <title>전문의-마이페이지</title>
+  </head>
+  <body>
+    <!-- 헤더 타이틀 -->
+    <header>
+      <h2>마이페이지</h2>
+    </header>
+
+    <!-- 메인 영역 -->
+    <main class="all-actions">
+      <!-- 버튼 리스트 -->
+      <div id="button-section">
+        <a href="{% url '' %}" class="mypage-button">
+          <span>내 답변</span>
+          <img src="{% static '/hospital/images/arrow-icon.svg' %}" alt=">" />
+        </a>
+        <a href="{% url 'users:my_scraps' %}" class="mypage-button">
+          <span>스크랩한 게시물</span>
+          <img src="{% static '/hospital/images/arrow-icon.svg' %}" alt=">" />
+        </a>
+        <a href="{% url 'users:notification_settings' %}" class="mypage-button">
+          <span>알림 설정</span>
+          <img src="{% static '/hospital/images/arrow-icon.svg' %}" alt=">" />
+        </a>
+        <a href="{% url 'users:customer_service' %}" class="mypage-button">
+          <span>고객센터</span>
+          <img src="{% static '/hospital/images/arrow-icon.svg' %}" alt=">" />
+        </a>
+        <a href="{% url 'users:user_guide' %}" class="mypage-button">
+          <span>사용 가이드</span>
+          <img src="{% static '/hospital/images/arrow-icon.svg' %}" alt=">" />
+        </a>
+      </div>
+
+      <!-- 로그아웃 / 회원탈퇴 -->
+      <div id="user-section">
+        <div class="mypage-actions">
+          <a href="{% url 'users:logout' %}" class="logout">로그아웃</a>
+          <a href="#" class="cancel">회원탈퇴</a>
+        </div>
+      </div>
+    </main>
+
+    <!-- 하단 네비게이션 -->
+    <footer class="bottom-nav">
+      <a href="">
+        <img
+          src="{% static '/hospital/images/qna_unselected.svg' %}"
+          alt="Q&A"
+          id="bottom-icon-qna"
+        />
+        <span>Q&A</span>
+      </a>
+      <a href="">
+        <img
+          src="{% static '/hospital/images/home_selected.svg' %}"
+          alt="홈"
+          id="bottom-icon-home"
+        />
+        <span>홈</span>
+      </a>
+      <a href="">
+        <img
+          src="{% static '/hospital/images/profile_unselected.svg' %}"
+          alt="마이페이지"
+          id="bottom-icon-mypage"
+        />
+        <span>마이페이지</span>
+      </a>
+    </footer>
+
+    <script
+      type="module"
+      src="{% static '/users/js/doctor_mypage.js' %}"
+    ></script>
+  </body>
+</html>
