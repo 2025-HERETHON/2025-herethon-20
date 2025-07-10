@@ -8,19 +8,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내가 댓글 단 글</title>
-    <link rel="stylesheet" href="{% static 'my_answers.css'%}" />
+    <link rel="stylesheet" href="{% static 'posts/css/my_answers.css'%}" />
 </head>
 <body>
     <div class="wrapper">
         <div class="container">
-        <header>
-            <a href="{% url 'posts:post_list' %}" class="back-to-list-btn">
-                <img src="{% static 'img/back_img.png' %}" class="back_img" alt="뒤로가기">
-            </a> {# 'Q&A 게시판'으로 돌아가는 버튼 #}
-        <span class="header_title">내 질문/답변</span>
-        </header>
+            <header>
+                <a href="{% url 'posts:post_list' %}" class="back-to-list-btn">
+                    <img src="{% static 'posts/img/back_img.png'%}" class="back_img">
+                </a> {# 'Q&A 게시판'으로 돌아가는 버튼 #}
+            <span class="header_title">내 질문/답변</span>
+            </header>
 
-        <div class="tab-menu"> <!--{# 내 질문/답변 오가는 버튼 #}-->
+        <div class="tab-menu"> {# 내 질문/답변 오가는 버튼 #}
             <a href="{% url 'posts:my_questions' %}" class="{% if active_tab == 'questions' %}active{% endif %}" id="my_post">내 질문</a>
             <a href="{% url 'posts:my_answers' %}" class="{% if active_tab == 'answers' %}active{% endif %}" id="my_comments">내 답변</a>
         </div>
