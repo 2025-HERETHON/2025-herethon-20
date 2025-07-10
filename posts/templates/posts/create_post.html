@@ -1,15 +1,29 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>게시물 작성</title>
+        <link rel="stylesheet" href="{% static 'posts/css/create_post.css' %}">
+        <script src="{% static 'posts/js/create_post.js' %}"></script>
+
+    </head>
 <body>
-    <div class="create-post-container">
-        <div class="header">
-            <a href="#" onclick="history.back()" class="back-arrow">&#8592;</a> {# 이전 페이지로 이동 #}
-            <div class="back-link">
-                    {% if is_edit_mode %}게시물 수정{% else %}게시물 작성{% endif %}
-            </div>
-            <button type="submit" form="post-form" class="submit-button">완료</button>
-        </div>
+    <div class="page-container">
+        <header>
+            <a href="#" onclick="history.back()" class="back-arrow">
+                <img src="{% static 'posts/img/back_img.png' %}"class="back_img">
+                <div class="back-link">
+                    {% if is_edit_mode %}
+                        <span class="header_title">게시물 수정</span>
+                    {% else %}
+                        <span class="header_title">게시물 작성</span>
+                    {% endif %}
+                </div>
+            </a> {# 이전 페이지로 이동 #}
+            <button type="submit" form="post-form" class="submit-button" id="submit-btn" disabled>완료</button>
+        </header>
 
         {% if error_message %}
             <p class="error-message">{{ error_message }}</p>
