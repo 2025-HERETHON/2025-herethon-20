@@ -10,7 +10,10 @@ from django.db.models import Count, Max, Exists, OuterRef
 # 마이페이지
 @login_required
 def my_page(request):
-    return render(request, 'users/mypage.html')
+    if request.user.is_doctor:
+        return render(request, 'users/mypage_doctor.html')
+    else:
+        return render(request, 'users/mypage.html')
 
 @login_required
 def my_scrap_post(request):
