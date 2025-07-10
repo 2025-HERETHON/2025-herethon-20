@@ -63,15 +63,6 @@
         <!-- js로 병원 리스트 띄우기 -->
       </main>
 
-      <!-- 리뷰 작성 아이콘 -->
-      <a href="{% url 'hospital_search' %}">
-        <img
-          src="{% static '/hospital/images/write_review.svg' %}"
-          alt="리뷰 작성"
-          class="floating-button"
-        />
-      </a>
-
       <!-- 하단 네비게이션 -->
       <footer class="bottom-nav">
         <a href="{% url 'posts:post_list' %}">
@@ -115,6 +106,14 @@
           <span>마이페이지</span>
         </a>
       </footer>
+      <!-- 리뷰 작성 아이콘 -->
+      <a href="{% url 'hospital_search' %}">
+        <img
+          src="{% static '/hospital/images/write_review.svg' %}"
+          alt="리뷰 작성"
+          class="floating-button"
+        />
+      </a>
     </div>
     <script src="{% static '/hospital/js/hospital_list.js' %}"></script>
   </body>

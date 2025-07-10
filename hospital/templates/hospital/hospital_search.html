@@ -13,61 +13,64 @@
     <title>병원 검색</title>
   </head>
   <body>
-    <!-- 검색창: 사용자 입력 병원을 get방식으로 전송 -->
-    <header>
-      <form
-        method="get"
-        action="{% url 'hospital_search' %}"
-        class="search-container"
-      >
-        {% csrf_token %}
-        <!-- 이전으로 버튼 누르면 병원 리스트 페이지로-->
-        <a href="{% url 'hospital_list' %}">
-          <img
-            src="{% static '/hospital/images/back_icon.svg' %}"
-            alt="이전으로"
-            class="back-button"
-          />
-        </a>
-        <!-- 병원명 입력 받기
+    <div class="page-container">
+      <!-- 검색창: 사용자 입력 병원을 get방식으로 전송 -->
+      <header>
+        <form
+          method="get"
+          action="{% url 'hospital_search' %}"
+          class="search-container"
+        >
+          <!-- 이전으로 버튼 누르면 병원 리스트 페이지로-->
+          <a href="{% url 'hospital_list' %}">
+            <img
+              src="{% static '/hospital/images/back_icon.svg' %}"
+              alt="이전으로"
+              class="back-button"
+            />
+          </a>
+          <!-- 병원명 입력 받기
          get방식으로 보낼 파라미터명: q-->
-        <input
-          type="text"
-          name="q"
-          class="search-box"
-          placeholder="리뷰를 작성할 병원을 검색해 선택하세요."
-        />
-        <!-- 검색 버튼 누르면 폼 제출 (get 요청 전송)
-          하단에 해당 병원목록 보이게-->
-        <button type="submit" class="search-button">
-          <img
-            src="{% static '/hospital/images/search_icon.svg' %}"
-            alt="검색 버튼"
+          <input
+            type="text"
+            name="q"
+            class="search-box"
+            placeholder="리뷰를 작성할 병원을 검색해 선택하세요."
           />
-        </button>
-      </form>
-    </header>
-    <!-- 병원 검색 결과: hidden이었다가 검색버튼 누르면 결과 나오게 -->
-    <main>
-      {% if query %}
-      <div class="result">
-        <p class="result-count">
-          검색 결과 <span id="bold-count">{{ hospitals|length }}</span></strong>개
-        </p>
+          <!-- 검색 버튼 누르면 폼 제출 (get 요청 전송)
+          하단에 해당 병원목록 보이게-->
+          <button type="submit" class="search-button">
+            <img
+              src="{% static '/hospital/images/search_icon.svg' %}"
+              alt="검색 버튼"
+            />
+          </button>
+        </form>
+      </header>
+      <!-- 병원 검색 결과: hidden이었다가 검색버튼 누르면 결과 나오게 -->
+      <main>
+        {% if query %}
+        <div class="result">
+          <p class="result-count">
+            검색 결과 <span id="bold-count">{{ hospitals|length }}</span>개
+          </p>
 
-        {% for hospital in hospitals %}
-        <div class="result-item">
-          <div id="result-text">
-          <a href="{% url 'hospital_detail' hospital.id %}"> 
-              <p class="hospital-name"><strong>{{ hospital.name }}</strong></p>
-              <p class="hospital-address">{{ hospital.address }}</p>
+          {% for hospital in hospitals %}
+          <a href="{% url 'hospital_detail' hospital.id %}">
+            <div class="result-item">
+              <div id="result-text">
+                <p class="hospital-name">
+                  <strong>{{ hospital.name }}</strong>
+                </p>
+                <p class="hospital-address">{{ hospital.address }}</p>
+              </div>
             </div>
           </a>
+          {% endfor %}
         </div>
-        {% endfor %}
-      </div>
-      {% endif %}
-    </main>
+        {% endif %}
+      </main>
+    </div>
     <script src="{% static '/hospital/js/hospital_search.js' %}"></script>
   </body>
 </html>
