@@ -50,9 +50,7 @@ body {
 }
 
 .T_name{
-    color: black;
-    font-family: "Pretendard Variable";
-    font-size: 20px;
+        font-size: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -258,25 +256,31 @@ main {
 }
 
 #bottom-icon-qna {
-  width: 40px;
+  width: 34px;
   margin-bottom: 0.5625rem;
 }
 
 #bottom-icon-hospital {
   margin-bottom: 0.4375rem;
+  width: 35px;
 }
 
 #bottom-icon-home {
   padding-bottom: 0.4375rem;
-  width: 40px;
+  width: 37px;
+  height: 44px;;
 }
 
 #bottom-icon-reserve {
   padding-bottom: 0.5625rem;
+  width: 30px;
+  height: 39px;
 }
 
 #bottom-icon-mypage {
   padding-bottom: 0.375rem;
+  width: 36px;
+  height: 42px;
 }
 
 .bottom-nav span {
