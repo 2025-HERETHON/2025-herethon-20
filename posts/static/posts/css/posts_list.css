@@ -282,3 +282,8 @@ main {
 .bottom-nav span {
   margin-bottom: 0.75rem;
 }
+
+.comment-count{
+  font-size: 10px;
+  color: #A78BFA;
+}
