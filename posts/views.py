@@ -33,6 +33,24 @@ def post_list(request, category_slug=None):
     }
     return render(request, 'posts/post_list.html', context)
 
+def doctor_post_list(request, category_slug=None):
+    # 모든 게시글 가져오기
+    posts = Post.objects.all()
+    current_category = None
+
+    if category_slug:
+        matched = next((c for c in CATEGORIES if c['slug'] == category_slug), None)
+        if matched:
+            current_category = matched
+            posts = posts.filter(category=matched['name'])
+
+    context = {
+        'posts': posts,
+        'categories': CATEGORIES,
+        'current_category': current_category,
+    }
+    return render(request, 'posts/post_list_doctor.html', context)
+
 def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id) # 해당 ID의 게시글 가져오기
 
