@@ -109,19 +109,54 @@ document.addEventListener("DOMContentLoaded", function () {
     // 신고하기 팝업
     document.querySelector(".declatation_img")?.addEventListener("click", () => {
         document.querySelector(".warning").style.display = "flex"; // 중앙 정렬 위해 'flex' 사용
+        document.querySelector(".background_gray").style.display = "block";
     });
 
     document.querySelector(".yes")?.addEventListener("click", () => {
         alert("게시글이 신고되었습니다."); // 사용자에게 알림
         document.querySelector(".warning").style.display = "none";
+        document.querySelector(".background_gray").style.display = "none";
+
     });
 
     document.querySelector(".no")?.addEventListener("click", () => {
         document.querySelector(".warning").style.display = "none";
+        document.querySelector(".background_gray").style.display = "none";
+
     });
 
     // 경고창 배경 클릭 시 닫기
     document.querySelector(".warning .background_gray")?.addEventListener("click", () => {
         document.querySelector(".warning").style.display = "none";
+        document.querySelector(".background_gray").style.display = "none";
+    });
+
+    //댓글 신고
+
+
+ // 댓글 신고 버튼들 모두에 이벤트 등록
+document.querySelectorAll(".declatation_comment_img").forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelector(".warning2").style.display = "flex";
+        document.querySelector(".background_gray").style.display = "block";
+    });
+});
+    document.querySelector(".yes2")?.addEventListener("click", () => {
+        alert("게시글이 신고되었습니다."); // 사용자에게 알림
+        document.querySelector(".warning2").style.display = "none";
+        document.querySelector(".background_gray").style.display = "none";
+
+    });
+
+    document.querySelector(".no2")?.addEventListener("click", () => {
+        document.querySelector(".warning2").style.display = "none";
+        document.querySelector(".background_gray").style.display = "none";
+
+    });
+
+    // 경고창 배경 클릭 시 닫기
+    document.querySelector(".warning .background_gray")?.addEventListener("click", () => {
+        document.querySelector(".warning").style.display = "none";
+        document.querySelector(".background_gray").style.display = "none";
     });
 });

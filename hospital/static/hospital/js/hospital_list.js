@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentSggu = null;
   let currentSort = null;
 
+
   // URL에서 선택된 값 가져오기
   const urlParams = new URLSearchParams(window.location.search);
   currentSido = urlParams.get("sidoCd");
@@ -151,6 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (currentSort) queryParams.append("sort", currentSort);
 
     window.location.href = `/hospitals/list/?${queryParams.toString()}`;
+
   });
 
   // 병원 카드 클릭 시 상세 페이지 이동
@@ -161,6 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = `/hospitals/hospital_detail/${hospitalId}/`;
       });
     }
+
   });
 
   // 정렬 버튼 클릭 시 URL 이동
