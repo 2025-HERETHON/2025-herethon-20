@@ -84,7 +84,7 @@ def toggle_review_like(request, review_id):
     })
 
 #내 리뷰 보기
-#@login_required
+@login_required
 def my_reviews(request):
     reviews = Review.objects.filter(user=request.user).select_related('hospital').order_by('-created_at')
     return render(request, 'review/my_reviews.html', {

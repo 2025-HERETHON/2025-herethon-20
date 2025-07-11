@@ -11,6 +11,12 @@
     <a href="{% url 'review:edit_review' review.id %}">수정</a> |
     <a href="{% url 'review:delete_review' review.id %}">삭제</a>
   </div>
+  <div class="review-keywords">
+  <span>✅ 선택한 키워드:</span>
+  {% if review.is_kind %}<span>#친절해요</span>{% endif %}
+  {% if review.cost_reasonable %}<span>#진료비 합리적</span>{% endif %}
+  {% if review.teen_friendly %}<span>#10대 친화</span>{% endif %}
+</div>
 {% empty %}
   <p>아직 작성한 리뷰가 없습니다.</p>
 {% endfor %}
