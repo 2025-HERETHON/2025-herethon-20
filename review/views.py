@@ -5,10 +5,9 @@ from django.http import JsonResponse
 from .models import Review, ReviewLike
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.contrib.auth.models import AnonymousUser
-
 from django.http import HttpResponseRedirect
 
+print("✅ review/views.py loaded!")
 
 def create_review(request, hospital_id):
     hospital = get_object_or_404(Hospital, id=hospital_id)
@@ -63,42 +62,9 @@ def search_reviews(request):
         'star_range': range(1, 6),  # 1부터 5까지 숫자
     })
 
-def view_reviews(request, hospital_id):
-    keyword = request.GET.get('keyword', '')
-    hospital_id = request.GET.get('hospital_id')
-    sort = request.GET.get('sort', 'created')  # 기본값: 최신순
-    hospital = get_object_or_404(Hospital, pk=hospital_id)
-    reviews = Review.objects.all()
-
-    hospital = None
-    if hospital_id:
-        reviews = reviews.filter(hospital_id=hospital_id)
-        hospital = get_object_or_404(Hospital, id=hospital_id)
-
-    if keyword:
-        reviews = reviews.filter(content__icontains=keyword)
-
-    # 정렬
-    if sort == 'rating':
-        reviews = reviews.order_by('-rating')
-    elif sort == 'cost':
-        reviews = reviews.order_by('-cost_reasonable')
-    elif sort == 'teen':
-        reviews = reviews.order_by('-teen_friendly')
-    else:
-        reviews = reviews.order_by('-created_at')  # 최신순
-
-    return render(request, 'review/view_reviews.html', {
-        'hospital': hospital,
-        'reviews': reviews,
-        'hospital': hospital,
-        'keyword': keyword,
-        'sort': sort,
-        'star_range': range(1, 6),  # 1부터 5까지 숫자
-    })
 
 @require_POST
-#@login_required
+@login_required
 def toggle_review_like(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     user = request.user
@@ -115,7 +81,6 @@ def toggle_review_like(request, review_id):
         'liked': liked,
         'like_count': review.likes.count()
     })
-
 
 #내 리뷰 보기
 #@login_required
