@@ -1,6 +1,6 @@
 # hospital/models.py
 from django.db import models
-from users.models import User
+from django.conf import settings
 #from .models import Review
 
 class Hospital(models.Model):
