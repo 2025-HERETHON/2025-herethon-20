@@ -34,34 +34,56 @@ body {
   overflow: hidden;
 }
 
+/* 검색창 */
 header {
   width: 402px;
-  height: 76px;
-  position: fixed;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.875rem 1.5rem 1.375rem 1.375rem;
+  height: 68px;
+  border-bottom: 0.5px solid rgba(167, 139, 250, 0.5);
+  position: fixed; /* 상단 고정 */
   background-color: white;
 }
 
-.left-section {
+.search-container {
+  display: flex;
+  flex-direction: row;
+
+  padding: 16px 0 0 20px;
+}
+
+.head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 15px;
+}
+
+.head a {
+  padding-right: 15px;
+}
+
+.search-box {
+  width: 279px;
+  height: 40px;
+  border-radius: 50px;
+  background: #f6f4fb;
+  border: none;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 12px 20px;
+}
+
+.search-form {
   display: flex;
   flex-direction: row;
 }
 
-header h2 {
-  margin-left: 0.8125rem;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  max-width: 270px;
+.search-button {
+  background: none;
+  border: none;
+  padding-left: 15px;
 }
 
+/* 내비바 */
 nav {
   padding-top: 76px;
 }
@@ -102,6 +124,65 @@ nav {
 .info a {
   text-decoration: none;
   color: #5e548e;
+}
+
+.sort-box {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start; /* → 우측 정렬 */
+}
+
+.custom-select {
+  position: relative;
+  width: 100px;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.select-toggle {
+  width: 100%;
+  padding: 8px;
+  font-size: 12px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+}
+
+.dropdown-icon {
+  font-size: 12px;
+  margin-left: 3px;
+}
+
+.select-options {
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  z-index: 100;
+  list-style: none; /* 땡땡이 제거 */
+  padding: 0; /* 기본 여백 제거 (선택사항) */
+  margin: 0;
+}
+
+.select-options li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.select-options li:hover {
+  background-color: #eee;
 }
 
 main {

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // .review-list 내 모든 리뷰 카드에 대해 좋아요 기능만 활성화
+  // 1. 좋아요 기능
   const reviewCards = document.querySelectorAll(".review-card");
 
   reviewCards.forEach((card) => {
@@ -20,4 +20,33 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
+
+  // 2. 커스텀 정렬 드롭다운 기능
+  const toggle = document.getElementById("sort-toggle");
+  const options = document.getElementById("sort-options");
+  const input = document.getElementById("sort-input");
+  const form = document.getElementById("sort-form");
+
+  if (toggle && options && input && form) {
+    toggle.addEventListener("click", () => {
+      options.hidden = !options.hidden;
+    });
+
+    options.addEventListener("click", (e) => {
+      if (e.target.tagName === "LI") {
+        const value = e.target.dataset.value;
+        input.value = value;
+        toggle.childNodes[0].textContent = e.target.textContent;
+        options.hidden = true;
+        form.submit(); // 자동 제출
+      }
+    });
+
+    // 외부 클릭 시 드롭다운 닫기
+    document.addEventListener("click", (e) => {
+      if (!document.getElementById("sort-select").contains(e.target)) {
+        options.hidden = true;
+      }
+    });
+  }
 });
