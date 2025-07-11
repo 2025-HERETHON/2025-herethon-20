@@ -2,7 +2,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Hospital
 from django.conf import settings
-from rest_framework.generics import ListAPIView
 from .models import Hospital
 from django.db.models import Avg, Count, Q
 from django.http import JsonResponse
