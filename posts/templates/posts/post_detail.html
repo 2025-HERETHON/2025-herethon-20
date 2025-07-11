@@ -25,18 +25,18 @@
             {# 내가 쓴 글인 경우: 수정 및 삭제 버튼 표시 #}
             <div class="post-header-actions">
                 <a href="{% url 'posts:edit_post' post.id %}" class="edit-icon">
-                    <img src="{% static 'posts/img/pen.png' %}" alt="수정" class="header_icon">
+                    <img src="{% static 'posts/img/pen.png' %}" alt="수정" id="header_icon">
                 </a>
                 <form action="{% url 'posts:delete_post' post.id %}" method="post" onsubmit="return confirm('이 게시글을 삭제하시겠습니까?');" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="delete-icon">
-                        <img src="{% static 'posts/img/trash.png' %}" alt="삭제" class="header_icon">
+                        <img src="{% static 'posts/img/trash.png' %}" alt="삭제" id="header_icon">
                     </button>
                 </form>
             </div>
             {% else %}
             {# 내가 쓴 글이 아닌 경우: 신고 버튼 표시 #}
-            <img src="{% static 'posts/img/declatation_img.png'%}"  class="header_icon">
+            <img src="{% static 'posts/img/declatation_img.png'%}"   class="declatation_img" id="header_icon">
             {% endif %}
         </header>
         <div class="post-detail-container">
