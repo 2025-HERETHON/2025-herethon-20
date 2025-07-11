@@ -196,3 +196,9 @@ header h2 {
 .hidden {
   display: none;
 }
+
+#no-review {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+}

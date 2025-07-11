@@ -14,4 +14,3 @@ urlpatterns = [
     path('my_reviews/', views.my_reviews, name='my_reviews'),
     path('my_page/', views.my_page, name='my_page'),
 ]
-
