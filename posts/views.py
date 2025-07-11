@@ -111,6 +111,7 @@ def post_detail(request, post_id):
             'display_name': comment_author_display_name,
             'replies': processed_reply_comments,
             'is_author': is_comment_author,
+            'is_doctor': comment.user.is_doctor,
         })
 
     # 사용자 나이 계산
