@@ -104,6 +104,9 @@ def post_detail(request, post_id):
                 'comment': reply,
                 'display_name': reply_author_display_name,
                 'is_author': is_reply_author,
+                'author_username': reply.user.username if reply.user.is_doctor else "익명",
+                'author_position': reply.user.position if reply.user.is_doctor else "",
+                'author_hospital': str(reply.user.hospital) if reply.user.is_doctor and reply.user.hospital else "",
             })
 
         processed_comments.append({
@@ -112,6 +115,9 @@ def post_detail(request, post_id):
             'replies': processed_reply_comments,
             'is_author': is_comment_author,
             'is_doctor': comment.user.is_doctor,
+            'author_username': comment.user.username if comment.user.is_doctor else "익명",
+            'author_position': comment.user.position if comment.user.is_doctor else "",
+            'author_hospital': comment.user.hospital if comment.user.is_doctor else "",
         })
 
     # 사용자 나이 계산

@@ -324,8 +324,13 @@ aspect-ratio: 1/1;
     border: 1px solid #a78bfa;
     border-radius: 15px;
     background-color:  #f6f4fb;
+    margin-bottom: 10px;
 }
-
+.comment_box{
+    display: flex;
+    gap:5px;
+    align-items: center;
+}
 .no-comments{
     margin-left: 20px;
 text-align: center;

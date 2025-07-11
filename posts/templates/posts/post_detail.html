@@ -91,14 +91,21 @@
                         {% for processed_comment in comments %}
                             <div class="comment-item-wrapper">
                                 {% if processed_comment.is_doctor %}
-                                    <div class="comment-item-1 {% if request.user.is_authenticated %}clickable-comment{% endif %}"
+                                    <div class="comment-item-1   {% if request.user.is_authenticated %}clickable-comment{% endif %}"
                                         data-comment-id="{{ processed_comment.comment.id }}"
                                         data-comment-author="{{ processed_comment.display_name }}">
                                         <div class="comment-meta"> 
                                             <div class="comment_sub">
-                                                <span class="comment-author">{{ processed_comment.display_name }}</span>
-                                                <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
-                                            </div>
+                                                    <div class="comment_title">
+                                                            <div class="comment_box">
+                                                                <div class="comment-author">{{ processed_comment.author_username }}</div>
+                                                                <div class="comment-author">{{ processed_comment.author_position }}</div>
+                                                                <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                                            </div>
+                                                            <div class="comment-author">{{ processed_comment.author_hospital }}</div>
+                                                        </div>
+                                                        
+                                                    </div>
                                             <div class="comment_sub">
                                                 <span class="comment-time">{{ processed_comment.comment.created_at|date:"Y.m.d H:i" }} </span>
                                                 {% if processed_comment.is_author %} {# 본인이 작성한 답변이면 삭제 버튼 표시 #}
@@ -152,8 +159,15 @@
                                             <div class="comment-item reply-item" style="border:none;">
                                                 <div class="comment-meta">
                                                     <div class="comment_sub">
-                                                        <span class="comment-author">{{ processed_reply.display_name }}</span>
-                                                        <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                                        <div class="comment_title">
+                                                            <div class="comment_box">
+                                                                <div class="comment-author">{{ processed_reply.author_username }}</div>
+                                                                <div class="comment-author">{{ processed_reply.author_position }}</div>
+                                                                <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                                            </div>
+                                                            <div class="comment-author">{{ processed_reply.author_hospital }}</div>
+                                                        </div>
+                                                        
                                                     </div>
                                                     <span class="comment-time">{{ processed_reply.comment.created_at|date:"Y.m.d H:i" }}</span>
                                                     {% if processed_reply.is_author %} {# 본인이 작성한 답댓글이면 삭제 버튼 표시 #}
