@@ -1,0 +1,14 @@
+<h2>추천 전문의</h2>
+
+{% for doctor in doctors %}
+  <div class="doctor-card">
+    <img src="{{ doctor.profile_image.url }}" alt="{{ doctor.username }}" width="80">
+    <p><strong>{{ doctor.username }}</strong> | {{ doctor.hospital.name }}</p>
+    <p>📞 {{ doctor.hospital.tel }}
+      <button onclick="navigator.clipboard.writeText('{{ doctor.hospital.tel }}')">복사</button>
+    </p>
+    <p>🔥 최근 일주일 간 답변 수 {{ doctor.recent_comment_count }}개</p>
+  </div>
+{% empty %}
+  <p>전문의가 없습니다.</p>
+{% endfor %}
