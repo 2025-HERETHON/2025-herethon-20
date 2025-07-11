@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
 from posts.models import Post, Comment, Scrap, Notification
 from datetime import date, timedelta
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 from django.utils import timezone
 from users.models import User
 
@@ -18,7 +18,7 @@ CATEGORIES = [
 def post_list(request, category_slug=None):
     # 모든 게시글 가져오기
     posts = Post.objects.annotate(
-        comment_count=Count('comment', filter=Q(comment__is_deleted=False))
+        comment_count=Count('comment', filter=Q(comment__is_deleted=False, comment__parent_comment__isnull=True))
     ).order_by('-created_at')
     current_category = None
 
@@ -38,7 +38,7 @@ def post_list(request, category_slug=None):
 def doctor_post_list(request, category_slug=None):
     # 모든 게시글 가져오기
     posts = Post.objects.annotate(
-        comment_count=Count('comment', filter=Q(comment__is_deleted=False))
+        comment_count=Count('comment', filter=Q(comment__is_deleted=False, comment__parent_comment__isnull=True))
     ).order_by('-created_at')
     current_category = None
 
@@ -58,11 +58,10 @@ def doctor_post_list(request, category_slug=None):
 def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id) # 해당 ID의 게시글 가져오기
 
+    # 해당 게시글의 답변 수 계산 (답댓글 제외)
     comments_queryset = Comment.objects.filter(
         post=post, parent_comment__isnull=True, is_deleted=False
     ).select_related('user').order_by('created_at')
-
-    # 해당 게시글의 답변 수 계산 (답댓글 제외)
     total_comment_count = comments_queryset.count()
 
     # 일반회원-익명/전문의회원-실명 구분

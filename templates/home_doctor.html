@@ -34,6 +34,13 @@
             <li class="question-item">
               <a href="{% url 'posts:post_detail' post.id %}">
                 <span class="title">{{ post.title }}</span>
+                <div class="comment-item">
+                  <img
+                    src="{% static 'users/images/comment_icon.svg' %}"
+                    alt="댓글 아이콘"
+                  />
+                  <span class="comment-count">{{ post.comment_count }}</span>
+                </div>
               </a>
             </li>
             {% empty %}

@@ -16,27 +16,27 @@
     <div class="page-container">
         <div class="container">
             <header>
-            <a href="{% url 'posts:post_list' %}" class="back">
+            <a href="#" id="backButton" class="back">
                 <img src="{% static 'posts/img/back_img.png' %}" class="back_img">
-                <div class="back-link"> 게시물 보기</div>
+                <div class="back-link">게시물 보기</div>
             </a>
 
             {% if is_author %}
             {# 내가 쓴 글인 경우: 수정 및 삭제 버튼 표시 #}
             <div class="post-header-actions">
                 <a href="{% url 'posts:edit_post' post.id %}" class="edit-icon">
-                    <img src="{% static 'posts/img/pen.png' %}" alt="수정" class="header_icon">
+                    <img src="{% static 'posts/img/pen.png' %}" alt="수정" id="header_icon">
                 </a>
                 <form action="{% url 'posts:delete_post' post.id %}" method="post" onsubmit="return confirm('이 게시글을 삭제하시겠습니까?');" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="delete-icon">
-                        <img src="{% static 'posts/img/trash.png' %}" alt="삭제" class="header_icon">
+                        <img src="{% static 'posts/img/trash.png' %}" alt="삭제" id="header_icon">
                     </button>
                 </form>
             </div>
             {% else %}
             {# 내가 쓴 글이 아닌 경우: 신고 버튼 표시 #}
-            <img src="{% static 'posts/img/declatation_img.png'%}"  class="header_icon">
+            <img src="{% static 'posts/img/declatation_img.png'%}"   class="declatation_img" id="header_icon">
             {% endif %}
         </header>
         <div class="post-detail-container">
@@ -94,7 +94,7 @@
                                     data-comment-id="{{ processed_comment.comment.id }}"
                                     data-comment-author="{{ processed_comment.display_name }}">
                                     <div class="comment-meta"> 
-                                        <div class="comment_title">
+                                        <div class="comment_sub">
                                             <span class="comment-author">{{ processed_comment.display_name }}</span>
                                             <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
                                         </div>
@@ -121,10 +121,12 @@
                                 {% if processed_comment.replies %}
                                     <div class="replies-container">
                                         {% for processed_reply in processed_comment.replies %}
-                                            <div class="comment-item reply-item">
+                                            <div class="comment-item reply-item" style="border:none;">
                                                 <div class="comment-meta">
-                                                    <span class="comment-author">{{ processed_reply.display_name }}</span>
-                                                    <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                                    <div class="comment_sub">
+                                                        <span class="comment-author">{{ processed_reply.display_name }}</span>
+                                                        <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                                    </div>
                                                     <span class="comment-time">{{ processed_reply.comment.created_at|date:"Y.m.d H:i" }}</span>
                                                     {% if processed_reply.is_author %} {# 본인이 작성한 답댓글이면 삭제 버튼 표시 #}
                                                         <form action="{% url 'posts:delete_comment' post.id processed_reply.comment.id %}" method="post" class="comment-delete-form" onsubmit="return confirm('이 답변을 삭제하시겠습니까?');">
@@ -196,7 +198,6 @@
             </div>
             <div class="copy">
                 <div class="copy_text">링크를 복사했습니다.</div>
-
             </div>
 </body>
 </html>

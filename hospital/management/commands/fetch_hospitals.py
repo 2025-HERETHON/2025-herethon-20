@@ -6,8 +6,7 @@ from hospital.models import Hospital
 from django.conf import settings
 from requests.adapters import HTTPAdapter
 
-
-# SSL 보안 설정용 Adapter
+# ✅ SSL 보안 설정 낮추는 Adapter
 class TLSAdapter(HTTPAdapter):
     def init_poolmanager(self, *args, **kwargs):
         ctx = ssl.create_default_context()
@@ -15,39 +14,28 @@ class TLSAdapter(HTTPAdapter):
         kwargs['ssl_context'] = ctx
         return super().init_poolmanager(*args, **kwargs)
 
-
-# (일단 사용 안함) 여성 전문의 확인 함수
-# def check_female_doctor(yadmCd):
-#     try:
-#         url = "https://apis.data.go.kr/B551182/spclMdclMdclListInfoService/getSpclMdcList"
-#         params = {
-#             'ServiceKey': settings.PUBLIC_API_KEY,
-#             'yadmCd': yadmCd,
-#         }
-#         response = requests.get(url, params=params, timeout=10)
-#         response.raise_for_status()
-#         root = ET.fromstring(response.content)
-#         items = root.find('.//items')
-#         if items is not None:
-#             for doc in items.findall('item'):
-#                 if doc.findtext('sdrSexCd') == '2':
-#                     return True
-#     except Exception as e:
-#         print(f"[⚠] 여성 전문의 확인 오류 (병원코드: {yadmCd}): {e}")
-#     return False
-
+# ✅ 여성 전문의 여부 판단 함수 (진료과 mdeptGdrCnt 기반)
+def has_female_doctor(item):
+    try:
+        # 'mdeptGdrCnt'는 진료과 소속 여성 전문의 수
+        value = item.findtext('mdeptGdrCnt')
+        if value and int(value) > 0:
+            return True
+    except:
+        pass
+    return False
 
 class Command(BaseCommand):
-    help = "공공 API에서 병원 리스트를 가져와 DB에 저장합니다."
+    help = "공공 API에서 산부인과 병원 리스트를 가져와 DB에 저장하고 XML 응답 출력"
 
     def add_arguments(self, parser):
-        parser.add_argument('--sidoCd', type=str, required=True, help='시도 코드 (예: 110000: 서울)')
-        parser.add_argument('--sgguCd', type=str, required=True, help='시군구 코드 (예: 110001: 강남구)')
+        parser.add_argument('--sidoCd', type=str, required=True, help='시도 코드 (예: 110000)')
+        parser.add_argument('--sgguCd', type=str, required=True, help='시군구 코드 (예: 110001)')
 
     def handle(self, *args, **kwargs):
         sidoCd = kwargs['sidoCd']
         sgguCd = kwargs['sgguCd']
-        self.stdout.write(f"📡 {sidoCd}-{sgguCd} 지역 병원 리스트를 불러오는 중...")
+        self.stdout.write(f"📡 {sidoCd}-{sgguCd} 지역 산부인과 병원 리스트를 불러오는 중...")
 
         url = "https://apis.data.go.kr/B551182/hospInfoServicev2/getHospBasisList"
         params = {
@@ -56,7 +44,7 @@ class Command(BaseCommand):
             'numOfRows': 100,
             'sidoCd': sidoCd,
             'sgguCd': sgguCd,
-            'detyGdrCd': '10',  # 표시과목코드: 산부인과
+            'dgsbjtCd': '10',  # 산부인과 진료과목 코드
         }
 
         try:
@@ -64,7 +52,11 @@ class Command(BaseCommand):
             session.mount("https://", TLSAdapter())
             response = session.get(url, params=params, timeout=30)
             response.raise_for_status()
-            self.stdout.write(f"📦 응답 원문:\n{response.content.decode('utf-8')}")
+            # ✅ XML 원문 출력
+            self.stdout.write("📦 API 응답 원문 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+            self.stdout.write(response.content.decode('utf-8'))
+            self.stdout.write("📦 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+
         except requests.exceptions.RequestException as e:
             self.stderr.write(f"❌ 요청 오류: {e}")
             return
@@ -84,24 +76,35 @@ class Command(BaseCommand):
 
             count = 0
             for item in raw_items:
-                ykiho = item.findtext('ykiho')  # yadmCd 대신 ykiho 사용
-                if not ykiho:
+                ykiho = item.findtext('ykiho')
+                name = item.findtext('yadmNm') or ''
+                yadmCd = item.findtext('yadmCd')
+
+                if not ykiho or not name:
                     continue
+
+                # 키워드 필터링 (정상 동작하는 조건 유지)
+                if not any(word in name for word in ['산부인과', '여성병원', '여성의원', '여성', '부인과']):
+                    continue
+
+                # mdeptGdrCnt 기준 여성 전문의 확인
+                is_female = has_female_doctor(item)
+                print(f"🏥 {name} | 여성 전문의: {is_female}")
 
                 Hospital.objects.update_or_create(
                     yadmCd=ykiho,
                     defaults={
-                        'name': item.findtext('yadmNm'),
+                        'name': name,
                         'address': item.findtext('addr'),
                         'sidoCd': sidoCd,
                         'sgguCd': sgguCd,
                         'tel': item.findtext('telno'),
-                        'is_female_doctor': False,  # 여성 전문의 확인은 일단 생략
+                        'is_female_doctor': is_female,
                     }
                 )
                 count += 1
 
-            self.stdout.write(self.style.SUCCESS(f"✅ {count}개 병원 저장 완료"))
+            self.stdout.write(self.style.SUCCESS(f"✅ {count}개 산부인과 병원 저장 완료"))
 
         except Exception as e:
             self.stderr.write(f"❌ XML 파싱 오류: {e}")
