@@ -6,6 +6,8 @@ from users.models import User
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Count, Max, Exists, OuterRef
+from hospital.models import Hospital
+
 
 # 마이페이지
 @login_required
@@ -49,26 +51,46 @@ def user_selection(request):
 
 def login_as_user(request, user_type):
     user = None
+
     if user_type == 'general':
         user, created = User.objects.get_or_create(
             username='이멋사',
-            password='1234',
-            email='likelion13@naver.com',
-            date_of_birth='2000-01-01',
-            is_doctor=False,
-            phone_number='01011112222'
+            defaults={
+                'password': '1234',
+                'email': 'likelion13@naver.com',
+                'date_of_birth': '2000-01-01',
+                'is_doctor': False,
+                'phone_number': '01011112222'
+            }
         )
+
     elif user_type == 'doctor':
+        hospital = Hospital.objects.filter(name__icontains='여기톤병원').first()  # ✅ 병원 객체로 가져오기
+
+        if not hospital:
+            # 병원 객체 없으면 새로 생성
+            hospital = Hospital.objects.create(
+                name='여기톤병원',
+                address='서울특별시 강남구',
+                sidoCd='110000',
+                sgguCd='110001',
+                tel='02-0000-0000',
+                is_female_doctor=True
+            )
+
         user, created = User.objects.get_or_create(
             username='박의사',
-            password='1234',
-            email='doctor@naver.com',
-            date_of_birth='1985-05-10',
-            is_doctor=True,
-            hospital='여기톤병원',
-            position='전문의',
-            phone_number='01033334444'
+            defaults={
+                'password': '1234',
+                'email': 'doctor@naver.com',
+                'date_of_birth': '1985-05-10',
+                'is_doctor': True,
+                'hospital': hospital,  # ✅ Hospital 객체 할당
+                'position': '전문의',
+                'phone_number': '01033334444'
+            }
         )
+
 
     if user:
         auth_login(request, user)

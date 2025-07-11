@@ -84,7 +84,7 @@ def toggle_review_like(request, review_id):
     })
 
 #내 리뷰 보기
-#@login_required
+@login_required
 def my_reviews(request):
     reviews = Review.objects.filter(user=request.user).select_related('hospital').order_by('-created_at')
     return render(request, 'review/my_reviews.html', {
@@ -93,15 +93,9 @@ def my_reviews(request):
 
 
 #리뷰 수정
-#@login_required
+@login_required
 def edit_review(request, review_id):
-    #review = get_object_or_404(Review, id=review_id, user=request.user)
-    if isinstance(request.user, AnonymousUser):
-        # 로그인 안 했으면 user 필터 제외
-        review = get_object_or_404(Review, id=review_id)
-    else:
-        review = get_object_or_404(Review, id=review_id, user=request.user)
-
+    review = get_object_or_404(Review, id=review_id, user=request.user)
 
     if request.method == 'POST':
         form = ReviewForm(request.POST, instance=review)
@@ -114,23 +108,15 @@ def edit_review(request, review_id):
     return render(request, 'review/edit_review.html', {'form': form})
 
 #리뷰 삭제
-#@login_required
+@login_required
 def delete_review(request, review_id):
-    #review = get_object_or_404(Review, id=review_id, user=request.user)
-    from django.contrib.auth.models import AnonymousUser
-
-    if isinstance(request.user, AnonymousUser):
-        review = get_object_or_404(Review, id=review_id)
-    else:
-        review = get_object_or_404(Review, id=review_id, user=request.user)
-
+    review = get_object_or_404(Review, id=review_id, user=request.user)
 
     if request.method == 'POST':
         review.delete()
         return redirect('review:my_reviews')
 
     return render(request, 'review/delete_review_confirm.html', {'review': review})
-
 
 def hospital_reviews(request, hospital_id):
     hospital = get_object_or_404(Hospital, id=hospital_id)

@@ -26,8 +26,8 @@ def recommended_doctors(request):
                 'tel': doctor.hospital.tel if doctor.hospital else 'N/A'
             },
             'profile_image': {
-                'url': doctor.profile_image.url if doctor.profile_image else '/static/hospital/images/default_doctor.png'
-            },
+    'url': '/static/hospital/images/default_doctor.png'  # 고정 이미지 사용
+},
             'recent_comment_count': recent_comment_count,
         })
 
