@@ -7,6 +7,7 @@ class ReviewForm(forms.ModelForm):
         fields = ['rating',
             'cost_reasonable',
             'teen_friendly',
+            'is_kind',
             'doctor_name',
             'diagnosis',
             'content',]
