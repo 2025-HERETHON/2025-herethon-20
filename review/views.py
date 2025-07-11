@@ -9,7 +9,7 @@ from django.contrib.auth.models import AnonymousUser
 
 from django.http import HttpResponseRedirect
 
-
+@login_required
 def create_review(request, hospital_id):
     hospital = get_object_or_404(Hospital, id=hospital_id)
 
