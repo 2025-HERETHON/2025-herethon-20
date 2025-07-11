@@ -130,3 +130,15 @@ def delete_review(request, review_id):
         return redirect('review:my_reviews')
 
     return render(request, 'review/delete_review_confirm.html', {'review': review})
+
+
+def hospital_reviews(request, hospital_id):
+    hospital = get_object_or_404(Hospital, id=hospital_id)
+    reviews = Review.objects.filter(hospital=hospital).order_by('-created_at')
+
+    return render(request, 'review/hospital_reviews.html', {
+        'hospital': hospital,
+        'reviews': reviews,
+        'star_range': range(1, 6),
+    })
+
