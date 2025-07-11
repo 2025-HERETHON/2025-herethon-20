@@ -1,7 +1,6 @@
 # hospital/views.py
 from django.shortcuts import render, get_object_or_404
 from .models import Hospital
-import requests
 from django.conf import settings
 from rest_framework.generics import ListAPIView
 from .models import Hospital
@@ -10,46 +9,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from review.models import Review
 
-def hospital_list(request):
-    hospitals = Hospital.objects.all().annotate(
-        average_rating=Avg('reviews__rating'),
-        cost_reasonable_count=Count('reviews', filter=Q(reviews__cost_reasonable=True)),
-        teen_friendly_count=Count('reviews', filter=Q(reviews__teen_friendly=True)),
-    )
 
-    return render(request, 'hospital/hospital_list.html', {
-        'hospitals': hospitals,
-    })
-
-
-# 병원 공공 API에서 데이터 받아오기
-def fetch_hospitals_from_api(region_code):
-    SERVICE_KEY = settings.PUBLIC_API_KEY
-    url = "https://apis.data.go.kr/B551182/hospInfoService1/getHospBasisList1"
-
-    params = {
-        'ServiceKey': SERVICE_KEY,
-        'pageNo': 1,
-        'numOfRows': 100,
-        'sidoCd': region_code,
-        '_type': 'json'
-    }
-
-    response = requests.get(url, params=params)
-    if response.status_code == 200:
-        items = response.json().get('response', {}).get('body', {}).get('items', {}).get('item', [])
-        for item in items:
-            Hospital.objects.update_or_create(
-                yadmCd=item.get('yadmCd'),
-                defaults={
-                    'name': item.get('yadmNm'),
-                    'address': item.get('addr'),
-                    'sidoCd': item.get('sidoCd'),
-                    'sgguCd': item.get('sgguCd'),
-                    'tel': item.get('telno'),
-                    'is_female_doctor': False  # 기본값 설정 (추후 업데이트 가능)
-                }
-            )
 def hospital_list(request):
     sido = request.GET.get('sidoCd')
     sggu = request.GET.get('sgguCd')
@@ -80,6 +40,7 @@ def hospital_list(request):
     return render(request, 'hospital/hospital_list.html', {
         'hospitals': hospitals,
     })
+
 
 # 병원 검색 (임시)
 def hospital_search(request):
