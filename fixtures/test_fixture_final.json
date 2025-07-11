@@ -760,47 +760,5 @@
       "is_deleted": false,
       "parent_comment": null
     }
-  },
-  {
-    "model": "hospital.hospital",
-    "pk": 1,
-    "fields": {
-      "yadmCd": "H1000001",
-      "name": "행복 산부인과",
-      "address": "서울시 강남구 역삼동",
-      "sidoCd": "110000",
-      "sgguCd": "110001",
-      "tel": "02-1111-2222",
-      "is_female_doctor": true,
-      "created_at": "2024-01-01T00:00:00Z"
-    }
-  },
-  {
-    "model": "hospital.hospital",
-    "pk": 2,
-    "fields": {
-      "yadmCd": "H1000002",
-      "name": "미래 여성병원",
-      "address": "서울시 강남구 신사동",
-      "sidoCd": "110000",
-      "sgguCd": "110001",
-      "tel": "02-3333-4444",
-      "is_female_doctor": true,
-      "created_at": "2024-01-02T00:00:00Z"
-    }
-  },
-  {
-    "model": "hospital.hospital",
-    "pk": 3,
-    "fields": {
-      "yadmCd": "H1000003",
-      "name": "밝은내일 의원",
-      "address": "서울시 강남구 논현동",
-      "sidoCd": "110000",
-      "sgguCd": "110001",
-      "tel": "02-5555-6666",
-      "is_female_doctor": false,
-      "created_at": "2024-01-03T00:00:00Z"
-    }
   }
 ]
