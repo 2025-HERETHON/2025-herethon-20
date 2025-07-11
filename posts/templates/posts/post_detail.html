@@ -85,7 +85,7 @@
                                 <p class="comment-content"> {{ item.comment.content }} </p>
                             </li>
                             {% for reply_item in item.replies %}
-                                <li class="comment-item reply-comment"
+                                <li class="comment-item-1 reply-comment"
                                     data-comment-id="{{ reply_item.comment.id }}"
                                     data-comment-author="{{ reply_item.display_name }}">
                                     <div class="comment-meta">
@@ -111,7 +111,9 @@
 
                         <div id="reply-to-info" style="display:none; margin-bottom: 10px;">
                             <span id="reply-to-text"></span>
-                            <button type="button" id="cancel-reply-mode" style="margin-left: 10px; cursor: pointer;">취소</button>
+                            <button type="button" id="cancel-reply-mode" style="margin-left: 10px; cursor: pointer;">
+                                <div id="cancel-btn">취소</div>
+                            </button>
                         </div>
 
                         <div class="comment_send">
