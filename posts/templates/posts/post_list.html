@@ -73,9 +73,7 @@
             </div>
           </div>
 
-          {% endfor %} {% if current_category %} {# !! 어느 게시판에서 글쓰기
-          진입하는지에 따라 카테고리 기본값이 달라집니다. 버튼 구현 전이라
-          임시로 여기에 작성해뒀습니다. !! #}
+          {% endfor %} {% if current_category %} 
           <a
             href="{% url 'posts:create_post' %}?from_category_slug={{ current_category.slug }}"
           >
@@ -86,8 +84,7 @@
               />
             </div>
           </a>
-          {% else %} {# 전체보기 상태에서 게시글 작성 버튼 눌렀을 때 기본 선택
-          카테고리 '생리' #}
+          {% else %} 
           <a href="{% url 'posts:create_post' %}?from_category_slug=saengri">
             <div class="pen">
               <img
