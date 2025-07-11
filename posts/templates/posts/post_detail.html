@@ -94,7 +94,7 @@
                                     data-comment-id="{{ processed_comment.comment.id }}"
                                     data-comment-author="{{ processed_comment.display_name }}">
                                     <div class="comment-meta"> 
-                                        <div class="comment_title">
+                                        <div class="comment_sub">
                                             <span class="comment-author">{{ processed_comment.display_name }}</span>
                                             <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
                                         </div>
@@ -121,10 +121,12 @@
                                 {% if processed_comment.replies %}
                                     <div class="replies-container">
                                         {% for processed_reply in processed_comment.replies %}
-                                            <div class="comment-item reply-item">
+                                            <div class="comment-item reply-item" style="border:none;">
                                                 <div class="comment-meta">
-                                                    <span class="comment-author">{{ processed_reply.display_name }}</span>
-                                                    <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                                    <div class="comment_sub">
+                                                        <span class="comment-author">{{ processed_reply.display_name }}</span>
+                                                        <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                                    </div>
                                                     <span class="comment-time">{{ processed_reply.comment.created_at|date:"Y.m.d H:i" }}</span>
                                                     {% if processed_reply.is_author %} {# 본인이 작성한 답댓글이면 삭제 버튼 표시 #}
                                                         <form action="{% url 'posts:delete_comment' post.id processed_reply.comment.id %}" method="post" class="comment-delete-form" onsubmit="return confirm('이 답변을 삭제하시겠습니까?');">
