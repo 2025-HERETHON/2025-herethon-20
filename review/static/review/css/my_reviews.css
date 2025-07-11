@@ -1,0 +1,198 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Pretendard-Regular";
+  box-sizing: border-box;
+}
+
+/* 전체 배경 및 중앙 정렬 */
+html,
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+/* 전체 페이지 고정 너비 박스 */
+.page-container {
+  width: 402px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* 헤더 */
+header {
+  display: flex;
+  flex-direction: row;
+  padding: 25px 0 20px 25px;
+  align-items: center;
+}
+
+header h2 {
+  padding-left: 22px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+/* 내 리뷰 카드*/
+/* 리뷰 카드 */
+.review-list {
+  margin: 1 1 auto;
+  padding: 20px 22px 21px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto; /* 검색 결과가 넘치면 스크롤 */
+}
+
+.review-card {
+  background-color: #f6f4fb;
+  border-radius: 15px;
+  width: 100%;
+  height: auto;
+}
+
+#review-info {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 90%;
+  margin-top: 24px;
+  margin-bottom: 15px;
+  gap: 12px;
+}
+
+#rating,
+#doctor,
+#disease,
+#contents {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.bold-info {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  min-width: 60px;
+}
+
+.normal-info {
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+#rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rating-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+#contents {
+  padding-bottom: 7px;
+}
+
+.keyword-tag {
+  display: inline-block;
+  background-color: #ffffff;
+  padding: 6px 12px;
+  margin-right: 10px;
+  margin-bottom: 8px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #000000;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 삭제 알림창 */
+.alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.alert-content {
+  background: white;
+  padding: 14.25px;
+  border-radius: 15px;
+  text-align: center;
+  width: 80%;
+  max-width: 350px;
+  line-height: 150%;
+}
+
+.alert-content p {
+  padding-top: 5.5px;
+}
+
+.alert-buttons {
+  display: flex;
+  gap: 11.25px; /* 두 버튼 사이 간격 */
+  margin-top: 37px;
+  width: 100%;
+}
+
+.alert-buttons button {
+  flex: 1; /* 각각 50% 너비로 자동 분배 */
+  border-radius: 22.5px;
+  padding: 5.25px 49.5px;
+}
+
+.yes-button {
+  background: #e35d5f;
+  color: white;
+  border: none;
+  font-size: 13.5px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.no-button {
+  background: #000000;
+  color: white;
+  border: none;
+  font-size: 13.5px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.hidden {
+  display: none;
+}

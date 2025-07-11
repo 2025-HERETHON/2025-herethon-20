@@ -1,16 +1,75 @@
-<h2>내가 작성한 리뷰</h2>
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static '/review/css/my_reviews.css' %}"
+    />
+    <title>내 리뷰</title>
+  </head>
+  <body>
+    <div class="page-container">
+      <!-- 최상단 -->
+      <header>
+        <div class="head">
+          <a href="{% url 'hospital_list' %}">
+            <img
+              src="{% static '/hospital/images/back_icon.svg' %}"
+              alt="이전으로"
+              id="back-button"
+            />
+          </a>
+        </div>
+        <h2>내 리뷰</h2>
+      </header>
 
-{% for review in reviews %}
-  <div class="review-card">
-    <p><strong>병원명:</strong> {{ review.hospital.name }}</p>
-    <p><strong>담당의:</strong> {{ review.doctor_name }}</p>
-    <p><strong>진료질환:</strong> {{ review.diagnosis }}</p>
-    <p><strong>별점:</strong> {{ review.rating }}점</p>
-    <p><strong>내용:</strong> {{ review.content }}</p>
-    <p><strong>좋아요 수:</strong> {{ review.likes.count }}</p>
-    <a href="{% url 'review:edit_review' review.id %}">수정</a> |
-    <a href="{% url 'review:delete_review' review.id %}">삭제</a>
-  </div>
-{% empty %}
-  <p>아직 작성한 리뷰가 없습니다.</p>
-{% endfor %}
+      <main class="review-list">
+        {% for review in reviews %}
+        <div class="review-card">
+          <div id="review-info">
+            <div id="rating">
+              <div class="rating-left">
+                <strong class="bold-info">별점:</strong>
+                <p class="normal-info">{{ review.rating }}점</p>
+              </div>
+              <div id="trash-info">
+                <a href="{% url 'review:delete_review' review.id %}">
+                  <img
+                    src="{% static 'hospital/images/trash_icon.svg' %}"
+                    alt="삭제 이미지"
+                    class="trash-icon"
+                    data-review-id="{{ review.id }}"
+                  />
+                </a>
+              </div>
+            </div>
+            <div id="doctor">
+              <strong class="bold-info">담당의</strong>
+              <p class="normal-info">{{ review.doctor_name }}</p>
+            </div>
+            <div id="disease">
+              <strong class="bold-info">진료질환</strong>
+              <p class="normal-info">{{ review.diagnosis }}</p>
+            </div>
+            <div id="contents">
+              <p class="normal-info">{{ review.content }}</p>
+            </div>
+            <div id="keyword">
+              {% for keyword in review.keywords.all %}
+              <span class="keyword-tag">{{ keyword.name }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p>아직 작성한 리뷰가 없습니다.</p>
+        {% endfor %}
+      </main>
+    </div>
+    <script type="module" src="{% static 'review/js/my_reviews.js' %}"></script>
+  </body>
+</html>

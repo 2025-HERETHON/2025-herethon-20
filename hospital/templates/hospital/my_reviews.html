@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -16,7 +15,6 @@
     <div class="page-container">
       <!-- 최상단 -->
       <header>
-        <!-- 페이지 연결 필요 -->
         <div class="head">
           <a href="{% url 'hospital_list' %}">
             <img
@@ -30,8 +28,60 @@
       </header>
 
       <main class="review-list">
-        <!-- 내 리뷰 띄우기 -->
+        {% for review in reviews %}
+        <div class="review-card">
+          <div id="review-info">
+            <div id="rating">
+              <div class="rating-left">
+                <strong class="bold-info">별점</strong>
+                <div class="normal-info">
+                  {% for i in 1|to:5 %} {% if i <= review.rating %}
+                  <img
+                    src="{% static 'hospital/images/star_fill_small.svg' %}"
+                    alt="별점"
+                    class="star-icon"
+                  />
+                  {% else %}
+                  <img
+                    src="{% static 'hospital/images/star_blank_small.svg' %}"
+                    alt="별점"
+                    class="star-icon"
+                  />
+                  {% endif %} {% endfor %}
+                </div>
+              </div>
+              <div id="trash-info">
+                <img
+                  src="{% static 'hospital/images/trash_icon.svg' %}"
+                  alt="삭제 이미지"
+                  class="trash-icon"
+                  data-review-id="{{ review.id }}"
+                />
+              </div>
+            </div>
+            <div id="doctor">
+              <strong class="bold-info">담당의</strong>
+              <p class="normal-info">{{ review.doctor_name }}</p>
+            </div>
+            <div id="disease">
+              <strong class="bold-info">진료질환</strong>
+              <p class="normal-info">{{ review.diagnosis }}</p>
+            </div>
+            <div id="contents">
+              <p class="normal-info">{{ review.content }}</p>
+            </div>
+            <div id="keyword">
+              {% for keyword in review.keywords.all %}
+              <span class="keyword-tag">{{ keyword.name }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p>아직 작성한 리뷰가 없습니다.</p>
+        {% endfor %}
       </main>
+
       <!-- 알림창 -->
       <div id="alert" class="alert hidden">
         <div class="alert-content">
@@ -47,7 +97,7 @@
     </div>
     <script
       type="module"
-      src="{% static '/hospital/js/my_reviews.js' %}"
+      src="{% static 'hospital/js/my_reviews.js' %}"
     ></script>
   </body>
 </html>
