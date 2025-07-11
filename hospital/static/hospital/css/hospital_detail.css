@@ -107,12 +107,14 @@ main {
 }
 
 .main-content {
+  display: flex;
+  flex-direction: column;
   width: 86%;
   padding-top: 40px;
   height: 100%;
-
   margin-bottom: 2rem;
 }
+
 #hospital-img {
   width: 100%;
 }
@@ -130,6 +132,12 @@ section {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+#map {
+  width: 311px;
+  height: 136px;
+  border-radius: 10px;
 }
 
 section p,
@@ -159,6 +167,7 @@ section p,
   flex-direction: row;
   flex-wrap: wrap;
   gap: 12px;
+  margin-bottom: 20px;
 }
 
 .keyword-name {
@@ -172,7 +181,6 @@ section p,
   line-height: 1.1875rem;
 }
 
-/* 리뷰 작성*/
 .floating-button {
   position: absolute;
   bottom: 29px;
