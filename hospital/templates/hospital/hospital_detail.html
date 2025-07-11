@@ -48,55 +48,59 @@
             />
           </section>
           <div class="hospital-info">
-          <!-- 병원 주소 -->
-          <section>
-            <img src="{% static '/hospital/images/location_icon.svg' %}" alt="위치 아이콘" />
-            <p>{{ hospital.address }}</p>
-          </section>
-          <!-- 지도를 표시할 실제 DOM 요소 -->
-          <section>
-            <div id="map"></div>
-          </section>
+            <!-- 병원 주소 -->
+            <section>
+              <img
+                src="{% static '/hospital/images/location_icon.svg' %}"
+                alt="위치 아이콘"
+              />
+              <p>{{ hospital.address }}</p>
+            </section>
+            <!-- 지도를 표시할 실제 DOM 요소 -->
+            <section>
+              <div id="map"></div>
+            </section>
 
-          
-          <!-- 수정된: Kakao 지도 SDK 비자동 로딩 -->
-          <script
-            type="text/javascript"
-            src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=cbbbbec68e1f17939da3946461fa5cf5&autoload=false&libraries=services">
-          </script>
+            <!-- 수정된: Kakao 지도 SDK 비자동 로딩 -->
+            <script
+              type="text/javascript"
+              src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=cbbbbec68e1f17939da3946461fa5cf5&autoload=false&libraries=services"
+            ></script>
 
-          <!-- 수정된: SDK 로딩 후 지도 생성 -->
-          <script>
-            kakao.maps.load(function () {
-              const address = "{{ hospital.address|escapejs }}";
-              const mapContainer = document.getElementById("map");
+            <!-- 수정된: SDK 로딩 후 지도 생성 -->
+            <script>
+              kakao.maps.load(function () {
+                const address = "{{ hospital.address|escapejs }}";
+                const mapContainer = document.getElementById("map");
 
-              const mapOption = {
-                center: new kakao.maps.LatLng(37.499, 127.033),
-                level: 3,
-              };
+                const mapOption = {
+                  center: new kakao.maps.LatLng(37.499, 127.033),
+                  level: 3,
+                };
 
-              const map = new kakao.maps.Map(mapContainer, mapOption);
-              const geocoder = new kakao.maps.services.Geocoder();
+                const map = new kakao.maps.Map(mapContainer, mapOption);
+                const geocoder = new kakao.maps.services.Geocoder();
 
-              geocoder.addressSearch(address, function (result, status) {
-                if (status === kakao.maps.services.Status.OK) {
-                  const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                geocoder.addressSearch(address, function (result, status) {
+                  if (status === kakao.maps.services.Status.OK) {
+                    const coords = new kakao.maps.LatLng(
+                      result[0].y,
+                      result[0].x
+                    );
 
-                  new kakao.maps.Marker({
-                    map: map,
-                    position: coords,
-                  });
+                    new kakao.maps.Marker({
+                      map: map,
+                      position: coords,
+                    });
 
-                  map.setCenter(coords);
-                } else {
-                  mapContainer.innerHTML = "<p style='color:gray;'>주소를 찾을 수 없습니다.</p>";
-                }
+                    map.setCenter(coords);
+                  } else {
+                    mapContainer.innerHTML =
+                      "<p style='color:gray;'>주소를 찾을 수 없습니다.</p>";
+                  }
+                });
               });
-            });
-          </script>
-
-
+            </script>
 
             <!-- 폰 번호-->
             <section>
@@ -133,9 +137,9 @@
                 <span class="keyword-name">PMS</span>
               </div>
             </section>
-            </div>
           </div>
         </div>
+
         <!-- 리뷰 작성 버튼-->
         <a href="{% url 'review:create_review' hospital.id %}">
           <img
