@@ -11,6 +11,7 @@ class Review(models.Model):
     teen_friendly = models.BooleanField()
     doctor_name = models.CharField(max_length=100, blank=True)  # 담당의
     diagnosis = models.CharField(max_length=100, blank=True)    # 진료질환
+    is_kind = models.BooleanField(default=False)  # ✅ 친절해요 키워드
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

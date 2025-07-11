@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Q&A - 전문의 </title>
+    <link rel="stylesheet" href="Q&A 게시판/Q&A.css">
+  </head>
+  <body>
+    <div class="page-container">
+      <header class="header">
+        <div class = "T_name">주제별 게시판</div>
+            <div class="header-buttons">
+                <a href="{% url 'posts:post_search' %}" class="icon_box">
+                    <img src="img/search_img.png" class="icon_img" />
+                    <div class="icon_text">검색</div>
+                </a>
+                
+            </div> 
+      </header>
+
+
+    <main>
+        <nav>
+            <a href="" class="select_menu {% if not current_category %}active{% endif %}">
+                <span class="text-padding">전체</span>
+            </a>
+
+                <a href="" class="select_menu ">
+                    <span class="text-padding">{{ category.name }}</span>
+                </a>
+        </nav>
+
+        <ul>
+                <div class="post-item">
+                    <div class="post-content">
+                        <a href="{% url 'posts:post_detail' post.id %}" class="post-title-link"> 
+                        <h3 class="post-title">제목</h3> 
+                        <p class ="time">시간</p> 
+                        </a>
+                        <p class="post-content-preview">내용</p> 
+                        <div class="chatbox">
+                            <img src="{% static 'posts/img/chat_img.png' %} " class="chat_img">
+                            <div class="chat_count">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                    <a href="{% url 'posts:create_post' %}?from_category_slug={{ current_category.slug }}">
+                        <div class="pen">
+                            <img src="{% static 'posts/img/pen_img.png' %}" class="pen-img" />
+                        </div>
+                    </a>
+                    <a href="{% url 'posts:create_post' %}?from_category_slug=saengri">
+                        <div class="pen">
+                            <img src="{% static 'posts/img/pen_img.png' %}" class="pen-img" />
+                        </div>
+                    </a>
+        </ul>
+      </main>
+      <footer class="bottom-nav">
+        <a href="{% url 'posts:post_list' %}">
+          <img
+            src="img/QnA.png'"
+            alt="Q&A"
+            id="bottom-icon-qna"
+          />
+          <span>Q&A</span>
+        </a>
+        <a href="">
+          <img
+            src="img/home_img.png"
+            alt="홈"
+            id="bottom-icon-home"
+          />
+          <span>홈</span>
+        </a>
+        
+        <a href=>
+          <img
+            src="images/profile_unselected.svg"
+            alt="마이페이지"
+            id="bottom-icon-mypage"
+          />
+          <span>마이페이지</span>
+        </a>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -5,17 +5,21 @@ import requests
 from django.conf import settings
 from rest_framework.generics import ListAPIView
 from .models import Hospital
-from .serializers import HospitalSerializer
 from django.db.models import Avg, Count, Q
 from django.http import JsonResponse
+from django.shortcuts import render
+from review.models import Review
 
 def hospital_list(request):
-    region = request.GET.get('region')
-    hospitals = Hospital.objects.all()
-    if region:
-        hospitals = hospitals.filter(sidoCd=region)
+    hospitals = Hospital.objects.all().annotate(
+        average_rating=Avg('reviews__rating'),
+        cost_reasonable_count=Count('reviews', filter=Q(reviews__cost_reasonable=True)),
+        teen_friendly_count=Count('reviews', filter=Q(reviews__teen_friendly=True)),
+    )
 
-    return render(request, 'hospital/hospital_list.html', {'hospitals': hospitals})
+    return render(request, 'hospital/hospital_list.html', {
+        'hospitals': hospitals,
+    })
 
 
 # 병원 공공 API에서 데이터 받아오기
@@ -46,38 +50,37 @@ def fetch_hospitals_from_api(region_code):
                     'is_female_doctor': False  # 기본값 설정 (추후 업데이트 가능)
                 }
             )
-class HospitalListAPIView(ListAPIView):
-    serializer_class = HospitalSerializer
+def hospital_list(request):
+    sido = request.GET.get('sidoCd')
+    sggu = request.GET.get('sgguCd')
+    sort = request.GET.get('sort')
 
-    def get_queryset(self):
-        sido = self.request.query_params.get('sidoCd')
-        sggu = self.request.query_params.get('sgguCd')
-        sort = self.request.query_params.get('sort')
+    hospitals = Hospital.objects.all()
 
-        queryset = Hospital.objects.all()
+    if sido:
+        hospitals = hospitals.filter(sidoCd=sido)
+    if sggu:
+        hospitals = hospitals.filter(sgguCd=sggu)
 
-        if sido:
-            queryset = queryset.filter(sidoCd=sido)
-        if sggu:
-            queryset = queryset.filter(sgguCd=sggu)
+    hospitals = hospitals.annotate(
+        average_rating=Avg('reviews__rating'),
+        cost_reasonable_count=Count('reviews', filter=Q(reviews__cost_reasonable=True)),
+        teen_friendly_count=Count('reviews', filter=Q(reviews__teen_friendly=True)),
+    )
 
-        queryset = queryset.annotate(
-            average_rating=Avg('reviews__rating'),
-            cost_reasonable_count=Count('reviews', filter=Q(reviews__cost_reasonable=True)),
-            teen_friendly_count=Count('reviews', filter=Q(reviews__teen_friendly=True)),
-        )
+    if sort == 'rating':
+        hospitals = hospitals.order_by('-average_rating')
+    elif sort == 'cost':
+        hospitals = hospitals.order_by('-cost_reasonable_count')
+    elif sort == 'teen':
+        hospitals = hospitals.order_by('-teen_friendly_count')
+    elif sort == 'female':
+        hospitals = hospitals.order_by('-is_female_doctor')
 
-        if sort == 'rating':
-            queryset = queryset.order_by('-average_rating')
-        elif sort == 'cost':
-            queryset = queryset.order_by('-cost_reasonable_count')
-        elif sort == 'teen':
-            queryset = queryset.order_by('-teen_friendly_count')
-        elif sort == 'female':
-            queryset = queryset.order_by('-is_female_doctor')
+    return render(request, 'hospital/hospital_list.html', {
+        'hospitals': hospitals,
+    })
 
-        return queryset
-    
 # 병원 검색 (임시)
 def hospital_search(request):
     #html에서 보낸 input의 name 속성
