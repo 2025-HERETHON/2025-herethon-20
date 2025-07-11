@@ -96,7 +96,6 @@ def hospital_search(request):
     })
 
 
-# 병원 상세 정보 (임시)
 def hospital_detail(request, hospital_id):
     hospital = get_object_or_404(Hospital, id=hospital_id)
     return render(request, 'hospital/hospital_detail.html', {'hospital': hospital})

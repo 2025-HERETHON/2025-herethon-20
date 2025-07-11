@@ -4,7 +4,7 @@ from . import views
 from .views import hospital_list
 
 urlpatterns = [
-    path('hospital_list/', views.hospital_list, name='hospital_list'),
+        path('list/', views.hospital_list, name='hospital_list'),  # ✅ 이 줄이 반드시 필요!
     # 임시 작성
     path('hospital_search/', views.hospital_search, name='hospital_search'),
     path('hospital_detail/<int:hospital_id>/', views.hospital_detail, name='hospital_detail'),

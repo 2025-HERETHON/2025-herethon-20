@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetchHospitals(); // 초기 접속 시, 모든 병원 뜨게
-
   const sidoNames = {
     110000: "서울특별시",
     410000: "경기도",
@@ -54,6 +52,47 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentSido = null;
   let currentSggu = null;
   let currentSort = null;
+
+
+  // URL에서 선택된 값 가져오기
+  const urlParams = new URLSearchParams(window.location.search);
+  currentSido = urlParams.get("sidoCd");
+  currentSggu = urlParams.get("sgguCd");
+  currentSort = urlParams.get("sort");
+
+  // 선택된 시도 텍스트 표시
+  if (currentSido && sidoNames[currentSido]) {
+    sidoToggle.textContent = sidoNames[currentSido];
+    sgguToggle.disabled = false;
+
+    // 시군구 옵션도 렌더링
+    sgguOptions.innerHTML = "";
+    sgguData[currentSido]?.forEach((sgguCd) => {
+      const li = document.createElement("li");
+      li.textContent = sgguNames[sgguCd];
+      li.dataset.value = sgguCd;
+      sgguOptions.appendChild(li);
+    });
+  }
+
+  // 선택된 시군구 텍스트 표시
+  if (currentSggu && sgguNames[currentSggu]) {
+    sgguToggle.textContent = sgguNames[currentSggu];
+  }
+
+  // 선택된 정렬 버튼 표시
+  if (currentSort) {
+    filterButtons.forEach((btn) => {
+      const text = btn.textContent;
+      if (
+        (currentSort === "female" && text.includes("여성")) ||
+        (currentSort === "rating" && text.includes("별점")) ||
+        (currentSort === "teen" && text.includes("10대"))
+      ) {
+        btn.classList.add("active");
+      }
+    });
+  }
 
   // 시도 렌더링
   for (const sidoCd in sgguData) {
@@ -113,6 +152,18 @@ document.addEventListener("DOMContentLoaded", function () {
     if (currentSort) queryParams.append("sort", currentSort);
 
     window.location.href = `/hospitals/list/?${queryParams.toString()}`;
+
+  });
+
+  // 병원 카드 클릭 시 상세 페이지 이동
+  document.querySelectorAll(".hospital-card").forEach((card) => {
+    const hospitalId = card.dataset.id;
+    if (hospitalId) {
+      card.addEventListener("click", () => {
+        window.location.href = `/hospitals/hospital_detail/${hospitalId}/`;
+      });
+    }
+
   });
 
   // 정렬 버튼 클릭 시 URL 이동
