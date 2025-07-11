@@ -20,7 +20,24 @@
                 <img src="{% static 'posts/img/back_img.png' %}" class="back_img">
                 <div class="back-link"> 게시물 보기</div>
             </a>
+
+            {% if is_author %}
+            {# 내가 쓴 글인 경우: 수정 및 삭제 버튼 표시 #}
+            <div class="post-header-actions">
+                <a href="{% url 'posts:edit_post' post.id %}" class="edit-icon">
+                    <img src="{% static 'posts/img/edit_icon.png' %}" alt="수정">
+                </a>
+                <form action="{% url 'posts:delete_post' post.id %}" method="post" onsubmit="return confirm('이 게시글을 삭제하시겠습니까?');" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-icon">
+                        <img src="{% static 'posts/img/delete_icon.png' %}" alt="삭제">
+                    </button>
+                </form>
+            </div>
+            {% else %}
+            {# 내가 쓴 글이 아닌 경우: 신고 버튼 표시 #}
             <img src="{% static 'posts/img/declatation_img.png'%}" class="declatation_img">
+            {% endif %}
         </header>
         <div class="post-detail-container">
             <div class="post-detail-header">
@@ -70,54 +87,72 @@
             <div class="comments-section">
                 <h2 class="commnet-text">답변 {{ total_comment_count }}개</h2>
                 {% if comments %}
-                    <ul class="comment-list">
-                        {% for item in comments %}
-                            <li class="comment-item {% if item.comment.parent_comment %}reply-comment{% else %}clickable-comment{% endif %}"
-                                data-comment-id="{{ item.comment.id }}"
-                                data-comment-author="{{ item.display_name }}">
-                                <div class="comment-meta">
-                                    <span class="comment-title">
-                                        <div class="none">{{ item.display_name }}</div>
-                                        <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
-                                    </span>
-                                    <span class="comment-time">{{ item.comment.created_at|date:"Y.m.d H:i" }} </span>
-                                </div>
-                                <p class="comment-content"> {{ item.comment.content }} </p>
-                            </li>
-                            {% for reply_item in item.replies %}
-                                <li class="comment-item-1 reply-comment"
-                                    data-comment-id="{{ reply_item.comment.id }}"
-                                    data-comment-author="{{ reply_item.display_name }}">
+                    <div class="comment-list-container">
+                        {% for processed_comment in comments %}
+                            <div class="comment-item-wrapper">
+                                <div class="comment-item {% if request.user.is_authenticated %}clickable-comment{% endif %}"
+                                     data-comment-id="{{ processed_comment.comment.id }}"
+                                     data-comment-author="{{ processed_comment.display_name }}">
                                     <div class="comment-meta">
-                                        <span class="comment-title">
-                                            <div class="none">↳ {{ reply_item.display_name }}</div>
-                                            <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
-                                        </span>
-                                        <span class="comment-time">{{ reply_item.comment.created_at|date:"Y.m.d H:i" }}</span>
+                                        <span class="comment-author">{{ processed_comment.display_name }}</span>
+                                        <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                        <span class="comment-time">{{ processed_comment.comment.created_at|date:"Y.m.d H:i" }} </span>
+                                        {% if processed_comment.is_author %} {# 본인이 작성한 답변이면 삭제 버튼 표시 #}
+                                            <form action="{% url 'posts:delete_comment' post.id processed_comment.comment.id %}" method="post" class="comment-delete-form" onsubmit="return confirm('이 답변을 삭제하시겠습니까?');">
+                                                {% csrf_token %}
+                                                <button type="submit" class="delete-comment-btn">삭제</button>
+                                            </form>
+                                        {% endif %}
                                     </div>
-                                    <p class="comment-content"> {{ reply_item.comment.content }}</p>
-                                </li>
-                            {% endfor %}
+                                    {% if processed_comment.comment.is_deleted %}
+                                        <p class="comment-content deleted-content">{{ processed_comment.comment.content }} </p>
+                                    {% else %}
+                                        <p class="comment-content"> {{ processed_comment.comment.content }} </p>
+                                    {% endif %}
+                                </div>
+
+                                {# 대댓글 목록 #}
+                                {% if processed_comment.replies %}
+                                    <div class="replies-container">
+                                        {% for processed_reply in processed_comment.replies %}
+                                            <div class="comment-item reply-item">
+                                                <div class="comment-meta">
+                                                    <span class="comment-author">{{ processed_reply.display_name }}</span>
+                                                    <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                                    <span class="comment-time">{{ processed_reply.comment.created_at|date:"Y.m.d H:i" }}</span>
+                                                    {% if processed_reply.is_author %} {# 본인이 작성한 답댓글이면 삭제 버튼 표시 #}
+                                                        <form action="{% url 'posts:delete_comment' post.id processed_reply.comment.id %}" method="post" class="comment-delete-form" onsubmit="return confirm('이 답변을 삭제하시겠습니까?');">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="delete-comment-btn">삭제</button>
+                                                        </form>
+                                                    {% endif %}
+                                                </div>
+                                                {% if processed_reply.comment.is_deleted %}
+                                                    <p class="comment-content deleted-content">{{ processed_reply.comment.content }}</p> {# 삭제된 댓글 표시 스타일 #}
+                                                {% else %}
+                                                    <p class="comment-content"> {{ processed_reply.comment.content }}</p>
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
                         {% endfor %}
-                    </ul>
+                    </div>
                 {% else %}
-                    <p class="no-comments">아직 댓글이 없습니다.</p>
+                    <p class="no-comments">아직 답변이 없습니다.</p>
                 {% endif %}
 
                 <div class="comment-form">
                     <form method="POST">
                         {% csrf_token %} {# 보안을 위한 CSRF 토큰 #}
-                        <input type="hidden" id="parent_comment_id" name="parent_comment_id" value=""> {# 대댓글을 위한 숨겨진 필드 #}
-
-                        <div id="reply-to-info" style="display:none; margin-bottom: 10px;">
-                            <span id="reply-to-text"></span>
-                            <button type="button" id="cancel-reply-mode" style="margin-left: 10px; cursor: pointer;">
-                                <div id="cancel-btn">취소</div>
-                            </button>
-                        </div>
-
                         <div class="comment_send">
-                            <textarea name="comment_content" class="comment_content" placeholder="댓글을 입력하세요." required></textarea>
+                            <input type="hidden" name="parent_comment_id" id="parent_comment_id" value="">
+                            <div id="reply-to-info" style="display: none; padding: 5px; background-color: #f0f0f0; border-radius: 5px; margin-bottom: 5px;">
+                                <span id="reply-to-text"></span>
+                                <button type="button" id="cancel-reply-mode" style="background: none; border: none; color: #dc3545; cursor: pointer; float: right;">X</button>
+                            </div>
+                            <textarea name="comment_content" class="comment_content"placeholder="댓글을 입력하세요." required></textarea>
                             <button type="submit" class="submit_btn">
                                 <img src="{% static 'posts/img/send_img.png' %}">
                             </button>
@@ -147,7 +182,7 @@
                     </div>
                 </div>
                 <div class="copy">
-                    <div class="copy_text">링크를복사했습니다.</div>
+                    <div class="copy_text">링크를 복사했습니다.</div>
                 </div>
                 <div class="background_gray"></div>
             </div>
