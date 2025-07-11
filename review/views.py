@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from .models import Review, ReviewLike
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.http import HttpResponseRedirect
 
 print("✅ review/views.py loaded!")
 
@@ -16,8 +17,9 @@ def create_review(request, hospital_id):
         if form.is_valid():
             review = form.save(commit=False)
             review.hospital = hospital
+            review.user = request.user
             review.save()
-            return redirect('review:search_reviews') + f'?hospital_id={hospital.id}'
+            return HttpResponseRedirect(f'/reviews/search/?hospital_id={hospital.id}')
     else:
         form = ReviewForm()
 
@@ -56,7 +58,8 @@ def search_reviews(request):
         'reviews': reviews,
         'hospital': hospital,
         'keyword': keyword,
-        'sort': sort
+        'sort': sort,
+        'star_range': range(1, 6),  # 1부터 5까지 숫자
     })
 
 @require_POST

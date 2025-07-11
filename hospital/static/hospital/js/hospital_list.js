@@ -50,10 +50,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const sgguToggle = document.getElementById("sggu-toggle");
   const sgguOptions = document.getElementById("sggu-options");
   const hospitalList = document.getElementById("hospital-list");
+  const filterButtons = document.querySelectorAll(".filter-btn");
+
   let currentSido = null;
   let currentSggu = null;
+  let currentSort = null; // ⭐ 현재 정렬 상태 저장
 
-  // 시도 옵션 렌더링
+  // 시도 렌더링
   for (const sidoCd in sgguData) {
     const li = document.createElement("li");
     li.textContent = sidoNames[sidoCd];
@@ -61,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     sidoOptions.appendChild(li);
   }
 
-  // 드롭다운 열기/닫기
+  // 드롭다운 토글
   sidoToggle.addEventListener("click", () => {
     sidoOptions.style.display =
       sidoOptions.style.display === "block" ? "none" : "block";
@@ -74,12 +77,13 @@ document.addEventListener("DOMContentLoaded", function () {
     sidoOptions.style.display = "none";
   });
 
-  // 시도 선택 시
+  // 시도 선택
   sidoOptions.addEventListener("click", (e) => {
     if (e.target.tagName !== "LI") return;
 
     const sidoCd = e.target.dataset.value;
     currentSido = sidoCd;
+    currentSggu = null;
     sidoToggle.textContent = sidoNames[sidoCd];
     sidoOptions.style.display = "none";
 
@@ -95,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // 시군구 선택 시
+  // 시군구 선택
   sgguOptions.addEventListener("click", (e) => {
     if (e.target.tagName !== "LI") return;
 
@@ -104,11 +108,10 @@ document.addEventListener("DOMContentLoaded", function () {
     sgguToggle.textContent = sgguNames[sgguCd];
     sgguOptions.style.display = "none";
 
-    fetchHospitals(currentSido, currentSggu);
+    fetchHospitals(currentSido, currentSggu, currentSort); // 현재 정렬 상태 반영
   });
 
-  // 필터 버튼 처리
-  const filterButtons = document.querySelectorAll(".filter-btn");
+  // 필터 버튼 이벤트
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", function () {
       filterButtons.forEach((b) => b.classList.remove("active"));
@@ -120,13 +123,12 @@ document.addEventListener("DOMContentLoaded", function () {
       else if (text.includes("별점")) sortParam = "rating";
       else if (text.includes("10대")) sortParam = "teen";
 
-      if (currentSido && currentSggu) {
-        fetchHospitals(currentSido, currentSggu, sortParam);
-      }
+      currentSort = sortParam; // 정렬 상태 저장
+      fetchHospitals(currentSido, currentSggu, currentSort);
     });
   });
 
-  // 병원 목록 불러오기
+  // 병원 리스트 불러오기
   function fetchHospitals(sidoCd = null, sgguCd = null, sort = null) {
     let url = `/hospitals/api/hospitals/`;
     const params = [];
@@ -134,10 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (sidoCd) params.push(`sidoCd=${sidoCd}`);
     if (sgguCd) params.push(`sgguCd=${sgguCd}`);
     if (sort) params.push(`sort=${sort}`);
-
-    if (params.length > 0) {
-      url += "?" + params.join("&");
-    }
+    if (params.length > 0) url += "?" + params.join("&");
 
     fetch(url)
       .then((res) => res.json())
@@ -151,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
         data.forEach((hospital, idx) => {
           const card = document.createElement("div");
           card.className = "hospital-card";
-          card.dataset.id = hospital.id; // 병원 아이디 지정
+          card.dataset.id = hospital.id;
 
           if (idx === data.length - 1) card.style.marginBottom = "1.5rem";
 
@@ -168,11 +167,10 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
           `;
 
-          // 병원 카드 클릭시, 상세 페이지로 이동
           card.addEventListener("click", () => {
-            const hospitalId = card.dataset.id;
-            window.location.href = `/hospitals/hospital_detail/${hospitalId}/`;
+            window.location.href = `/hospitals/hospital_detail/${hospital.id}/`;
           });
+
           hospitalList.appendChild(card);
         });
       })
@@ -182,4 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("병원 목록 API 오류:", err);
       });
   }
+
+  // 초기 병원 전체 리스트 불러오기
+  fetchHospitals();
 });

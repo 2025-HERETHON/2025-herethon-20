@@ -61,11 +61,11 @@ class HospitalListAPIView(ListAPIView):
         if sggu:
             queryset = queryset.filter(sgguCd=sggu)
 
-        #queryset = queryset.annotate(
-        #    average_rating=Avg('reviews__rating'),
-        #    cost_reasonable_count=Count('reviews', filter=Q(reviews__cost_reasonable=True)),
-        #    teen_friendly_count=Count('reviews', filter=Q(reviews__teen_friendly=True)),
-        #)
+        queryset = queryset.annotate(
+            average_rating=Avg('reviews__rating'),
+            cost_reasonable_count=Count('reviews', filter=Q(reviews__cost_reasonable=True)),
+            teen_friendly_count=Count('reviews', filter=Q(reviews__teen_friendly=True)),
+        )
 
         if sort == 'rating':
             queryset = queryset.order_by('-average_rating')
@@ -92,10 +92,6 @@ def hospital_search(request):
         'hospitals': hospitals
     })
 
-# 리뷰 작성 (임시)
-def review_create(request, hospital_id):
-    hospital = get_object_or_404(Hospital, id=hospital_id)
-    return render(request, 'hospital/review_create.html', {'hospital': hospital})
 
 # 병원 상세 정보 (임시)
 def hospital_detail(request, hospital_id):
