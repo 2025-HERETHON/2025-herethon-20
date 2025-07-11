@@ -3,11 +3,11 @@
     "model": "users.user",
     "pk": 1,
     "fields": {
-      "username": "ci",
+      "username": "김민서",
       "email": "seonghyeon45@ju.net",
-      "name": "김민서",
-      "is_expert": false,
-      "age": 19,
+      "is_doctor": false,
+      "date_of_birth": "2006-01-01",
+      "phone_number": "010-1234-5678",
       "password": "pbkdf2_sha256$260000$test$hash"
     }
   },
@@ -15,23 +15,23 @@
     "model": "users.user",
     "pk": 2,
     "fields": {
-      "username": "yejin27",
+      "username": "박서연",
       "email": "eunyeongju@dreamwiz.com",
-      "name": "박서연",
-      "is_expert": false,
-      "age": 25,
-      "password": "pbkdf2_sha256$260000$test$hash"
+      "is_doctor": false,
+      "date_of_birth": "2000-01-01",
+      "phone_number": "010-2345-6789",
+      "password": "pbkdf2_sha260000$test$hash"
     }
   },
   {
     "model": "users.user",
     "pk": 3,
     "fields": {
-      "username": "coeareum",
+      "username": "이지은",
       "email": "gimjeongung@live.com",
-      "name": "이지은",
-      "is_expert": false,
-      "age": 28,
+      "is_doctor": false,
+      "date_of_birth": "1997-01-01",
+      "phone_number": "010-3456-7890",
       "password": "pbkdf2_sha256$260000$test$hash"
     }
   },
@@ -39,11 +39,11 @@
     "model": "users.user",
     "pk": 4,
     "fields": {
-      "username": "yeonghwancoe",
+      "username": "최유진",
       "email": "jinho03@yuhanhoesa.net",
-      "name": "최유진",
-      "is_expert": false,
-      "age": 17,
+      "is_doctor": false,
+      "date_of_birth": "2008-01-01",
+      "phone_number": "010-4567-8901",
       "password": "pbkdf2_sha256$260000$test$hash"
     }
   },
@@ -51,11 +51,11 @@
     "model": "users.user",
     "pk": 5,
     "fields": {
-      "username": "sunjagim",
+      "username": "정소민",
       "email": "gangyeeun@naver.com",
-      "name": "정소민",
-      "is_expert": false,
-      "age": 30,
+      "is_doctor": false,
+      "date_of_birth": "1995-01-01",
+      "phone_number": "010-5678-9012",
       "password": "pbkdf2_sha256$260000$test$hash"
     }
   },
@@ -63,11 +63,11 @@
     "model": "users.user",
     "pk": 6,
     "fields": {
-      "username": "seongjingo",
+      "username": "한지영",
       "email": "xan@live.com",
-      "name": "한지영",
-      "is_expert": false,
-      "age": 21,
+      "is_doctor": false,
+      "date_of_birth": "2004-01-01",
+      "phone_number": "010-6789-0123",
       "password": "pbkdf2_sha256$260000$test$hash"
     }
   },
@@ -75,11 +75,13 @@
     "model": "users.user",
     "pk": 7,
     "fields": {
-      "username": "sumineom",
+      "username": "김미숙",
       "email": "gyeongsugu@jinbaggim.org",
-      "name": "김미숙",
-      "is_expert": true,
-      "age": 55,
+      "is_doctor": true,
+      "date_of_birth": "1970-01-01",
+      "hospital": "행복 산부인과",
+      "position": "전문의",
+      "phone_number": "010-7890-1234",
       "password": "pbkdf2_sha256$260000$test$hash"
     }
   },
@@ -87,11 +89,13 @@
     "model": "users.user",
     "pk": 8,
     "fields": {
-      "username": "gimsanghun",
+      "username": "이정선",
       "email": "jaeho57@simgim.org",
-      "name": "이정선",
-      "is_expert": true,
-      "age": 48,
+      "is_doctor": true,
+      "date_of_birth": "1977-01-01",
+      "hospital": "미래 여성병원",
+      "position": "전문의",
+      "phone_number": "010-8901-2345",
       "password": "pbkdf2_sha256$260000$test$hash"
     }
   },
@@ -99,13 +103,15 @@
     "model": "users.user",
     "pk": 9,
     "fields": {
-      "username": "ijeongho",
+      "username": "박선영",
       "email": "gangmigyeong@heogim.net",
-      "name": "박선영",
-      "is_expert": true,
-      "age": 36,
+      "is_doctor": true,
+      "date_of_birth": "1989-01-01",
+      "hospital": "밝은내일 의원",
+      "position": "전문의",
+      "phone_number": "010-9012-3456",
       "password": "pbkdf2_sha256$260000$test$hash"
-    }
+        }
   },
   {
     "model": "posts.post",
