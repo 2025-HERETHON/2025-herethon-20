@@ -13,6 +13,14 @@
     />
   </head>
   <body>
+    <div class="splash-screen" id="splashScreen">
+      <img
+        src="{% static 'users/images/splash_logo.svg' %}"
+        alt="Splash Logo"
+        width="250"
+      />
+    </div>
+
     <div class="page-container">
       <!-- 중앙 문구 -->
       <div class="intro-text">
@@ -47,5 +55,6 @@
       <p class="error-message">{{ error_message }}</p>
       {% endif %}
     </div>
+    <script src="{% static 'users/js/users.js' %}"></script>
   </body>
 </html>
