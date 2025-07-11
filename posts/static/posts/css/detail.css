@@ -217,13 +217,12 @@ margin-bottom: 10px;
 
 .comment-meta{
     margin: 10px;
-        display: flex
-;
+        display: flex;
     align-items: center;
     padding: 10px;
     width: 100%;
     box-sizing: border-box;
-    gap: 150px;
+    justify-content: space-between;
 }
 .comment-item{
     display: flex;
@@ -236,14 +235,10 @@ height: 148px;
 }
 
 .comment-title{
-        display: flex
-;
+        display: flex;
     gap: 5px;
     align-items: center;
     text-decoration: none;
-
-
-
 }
 
 .comment-time{
@@ -253,17 +248,19 @@ font-size: 10px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
+margin-right: 10px;
 }
 
 .comment-content{
     color:  #000;
 font-family: "Pretendard Variable";
-font-size: 11px;
+font-size: 12px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
 padding:10px;
-margin: 10px;
+margin: 5px;
+margin-left: 30px;
 
 }
 .none{
@@ -287,7 +284,7 @@ aspect-ratio: 1/1;
 height: 148px;
     flex-direction: column;
     align-items: flex-start;
-    border: 1px solid black;
+    border: 1px solid #a78bfa;
     border-radius: 15px;
     background-color:  #f6f4fb;
 }
@@ -337,16 +334,16 @@ background-color: #f6f4fb;         /* 가운데 정렬 */
     border-radius: 15px;
 }
 
-.warning{
+.warning, .warning2{
     position: fixed;
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%);
     background-color: white;
-    border: 1.3px solid black;
     border-radius: 15px;
     flex-direction: column;
     display: none;
+      z-index: 10;
 }
 
 .warning_textbox{
@@ -373,7 +370,7 @@ font-weight: 700;
     align-items: center;
     justify-content: center;
 }
-.yes,.no{
+.yes,.no, .yes2, .no2{
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -389,10 +386,10 @@ border: none;
 border-radius: 15px;
 }
 
-.yes{
+.yes, .yes2 {
     background-color: #E35D5F;
 }
-.no{
+.no, .no2{
     background-color:black ;
 }
 .copy{
@@ -412,4 +409,29 @@ font-size: 13.5px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;
+}
+
+.background_gray {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 9;
+  display: none;
+}
+
+#reply-to-info{
+    margin: 10px;
+    margin-left: 30px;
+}
+
+#cancel-reply-mode{
+    background-color: #f6f4fb;
+    border:none;
+    border-radius: 5px;
+}
+
+#cancel-btn{
+    margin: 5px;
 }

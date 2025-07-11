@@ -59,8 +59,32 @@
       </header>
 
       <!-- 지역 드롭다운 선택 시, 병원 리스트 띄우기 -->
+      <!-- 병원 리스트 -->
       <main class="hospital-list" id="hospital-list">
-        <!-- js로 병원 리스트 띄우기 -->
+        {% for hospital in hospitals %}
+        <div class="hospital-card">
+          <div class="hospital-sample-image">
+            <img
+              src="{% static 'hospital/images/hospital_image_card.svg' %}"
+              alt="병원 샘플 이미지"
+              id="hospital-image"
+            />
+            <div class="hospital-info">
+              <strong id="hospital-name">{{ hospital.name }}</strong>
+              <div class="hospital-address">
+                <img
+                  src="{% static 'hospital/images/location_icon.svg' %}"
+                  alt="위치 아이콘"
+                  id="address-picture"
+                />
+                <p id="address-text">{{ hospital.address }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p>병원이 없습니다.</p>
+        {% endfor %}
       </main>
 
       <!-- 하단 네비게이션 -->
