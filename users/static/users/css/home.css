@@ -124,7 +124,8 @@ section h2 {
 }
 
 /* 질문 리스트 공통 */
-.question-list {
+.question-list,
+.review-list {
   list-style: none;
   border-radius: 10px;
   background: #fff;
@@ -132,7 +133,8 @@ section h2 {
   overflow: hidden;
 }
 
-.question-item {
+.question-item,
+.review-item {
   display: flex;
   flex-direction: row;
   padding: 12px 15px;
@@ -143,11 +145,13 @@ section h2 {
   border-bottom: 1px solid #f1f1f1;
 }
 
-.question-item:last-child {
+.question-item:last-child,
+.review-item:last-child {
   border-bottom: none;
 }
 
-.question-item a {
+.question-item a,
+.review-item a {
   text-decoration: none;
   color: inherit;
   display: flex;

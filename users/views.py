@@ -155,6 +155,7 @@ def user_home(request):
         'recently_registered_questions': recently_registered_questions,
         'unanswered_doctor_questions': unanswered_doctor_questions,
         'latest_reviews': latest_reviews
+        ,'star_range': range(1, 6), 
     }
 
     if request.user.is_authenticated and request.user.is_doctor:

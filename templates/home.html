@@ -111,25 +111,24 @@
           <ul class="review-list">
           {% for review in latest_reviews %}
           <li class="review-item">
-          <a href="{% url 'review:hospital_reviews' review.hospital.id %}">
-          <div class="review-header">
-          <strong class="hospital-name">{{ review.hospital.name }}</strong>
-          <span class="rating">⭐ {{ review.rating }}</span>
-        </div>
-        <div class="review-content">
-          {{ review.content|truncatechars:50 }}
-        </div>
-        <div class="review-footer">
-          <span class="review-user">by {{ review.user.username }}</span>
-          <span class="review-date">{{ review.created_at|date:"Y-m-d H:i" }}</span>
-        </div>
-      </a>
-    </li>
-    {% empty %}
-    <li class="review-item">최근 등록된 리뷰가 없습니다.</li>
-    {% endfor %}
-  </ul>
-</section>
+            <a href="{% url 'review:hospital_reviews' review.hospital.id %}">
+              <span class="hospital-name">{{ review.hospital.name }}</span>
+<span class="rating">
+  {% for i in star_range %}
+    {% if i <= review.rating %}
+      <img src="{% static 'hospital/images/star_fill_small.svg' %}" alt="별점" class="star-icon" />
+    {% else %}
+      <img src="{% static 'hospital/images/star_blank_small.svg' %}" alt="빈 별점" class="star-icon" />
+    {% endif %}
+  {% endfor %}
+</span>
+            </a>
+          </li>
+          {% empty %}
+          <li class="review-item">최근 등록된 리뷰가 없습니다.</li>
+          {% endfor %}
+          </ul>
+        </section>
 
         </section>
       </main>
