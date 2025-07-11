@@ -1,3 +1,4 @@
+/*create_review.css*/
 @font-face {
   font-family: "Pretendard-Regular";
   src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
@@ -61,15 +62,16 @@ main {
 }
 
 main h3 {
-  padding: 28px 0 0 40px;
-  font-size: 20px;
+  padding: 0;
+  font-size: 18px;
   font-weight: 700;
+  margin-top: 28px;
 }
 
 .stars {
   display: flex;
   flex-direction: row;
-  padding: 21px 0px 18px 40px;
+  padding: 0;
 }
 
 .stars p {
@@ -89,20 +91,30 @@ main h3 {
 form {
   display: flex;
   flex-direction: column;
-  width: 289px;
-  height: 528px;
-  gap: 37px;
+  width: 343px;
+  height: 616px;
+  gap: 14px;
   align-self: stretch;
-  padding: 34px 27px;
-  border-radius: 15px;
-  border: 1px solid #ddd6f3;
-  background: #fff;
+  padding: 0;
+  background: none;
+  border: none;
+  margin: 0 auto;
 }
 
+.form-box {
+  border: 1px solid #ddd6f3;
+  border-radius: 20px;
+  padding: 24px 20px;
+}
 section {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+section:last-of-type {
+  margin-bottom: 0;
 }
 
 form span {
@@ -115,12 +127,17 @@ form input,
 textarea,
 .custom-select {
   width: 219px;
+  height: 13px;
   border-radius: 10px;
   background: #f6f4fb;
   padding-top: 9.5px;
   padding-bottom: 9.5px;
   padding-left: 16px;
   border: none;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 #required-text {
@@ -128,7 +145,7 @@ textarea,
 }
 
 #details {
-  width: 289px;
+  width: 301px;
   height: 295px;
   margin-top: 14px;
   padding: 16px;
@@ -186,23 +203,6 @@ textarea,
   font-size: 13.5px;
 }
 
-#submit-button {
-  width: 343px;
-  height: 54px;
-  margin: 25px 30px 23px 29px;
-  padding: 15px 136px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  border-radius: 15px;
-  background: var(--50, rgba(167, 139, 250, 0.5));
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--white, #fff);
-  border: none;
-  transition: background-color 0.3s ease;
-}
-
 /* 드롭다운 */
 .custom-select-wrapper {
   position: relative;
@@ -258,4 +258,21 @@ textarea,
   white-space: nowrap;
   overflow: hidden; /* 박스 넘어가면 hidden 처리*/
   text-overflow: ellipsis; /* 넘친 텍스트 ... 처리*/
+}
+
+#submit-button {
+  width: 343px;
+  height: 54px;
+
+  padding: 15px 136px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 15px;
+  background: var(--50, rgba(167, 139, 250, 0.5));
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white, #fff);
+  border: none;
+  transition: background-color 0.3s ease;
 }

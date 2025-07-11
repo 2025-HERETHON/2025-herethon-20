@@ -1,25 +1,53 @@
-body{
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Pretendard-Regular";
+}
+
+/* 전체 배경 및 중앙 정렬 */
+html,
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+/* 전체 페이지 고정 너비 박스 */
 .wrapper {
-    width: 402px;
-    height: 874px;
-    border: 1px solid black;
-    overflow-y: auto;
+  width: 402px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
 }
 
+/* 고정된 헤더 */
 header {
+    height: 60px;
+    padding: 20px 21px 0 25px;
     display: flex;
-    align-items: center;            
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
-    gap: 16px;
+    align-items: center;
+    top: 0;
+    width: 402px;
+    z-index: 10;
 }
 
+a{
+    text-decoration: none;
+}
 
 .back_img{
     width: 24px;
@@ -77,13 +105,15 @@ font-style: normal;
 font-weight: 400;
 line-height: normal;
 padding: 30px;
+border-bottom: 1.5px solid #A788fa;
 }
 
 .post-list{
-    display: flex
-;
+    display: flex;
+    align-items: center;
     gap: 20px;
     flex-direction: column;
+    margin: 20px;
 }
 .post-title{
             color: #5E548E;
@@ -144,7 +174,7 @@ padding: 30px;
     height: 148px;
     flex-direction: column;
     align-items: flex-start;
-    border: 1px solid #5E548E;
+    border: 1px solid #A788fa;
     border-radius: 15px;
 
 }
@@ -157,4 +187,4 @@ padding: 30px;
     font-style: normal;
     font-weight: 700;
     line-height: 200%;
-}
+}   

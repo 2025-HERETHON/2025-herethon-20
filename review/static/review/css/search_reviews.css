@@ -92,14 +92,39 @@ header {
   line-height: normal;
 }
 
-/* 리뷰 카드 */
 .review-list {
-  margin: 1 1 auto;
-  padding: 21px 22px;
+  padding: 68px 22px 0 22px;
   display: flex;
   flex-direction: column;
   gap: 15px;
   overflow-y: auto;
+}
+
+label {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.sort-form {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.sort-select {
+  border-radius: 20px;
+  border: 0.5px solid rgba(167, 139, 250, 0.5);
+  color: #5e548e;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 5px;
+  padding: 5px 0;
 }
 
 .review-card {
@@ -107,78 +132,24 @@ header {
   border-radius: 15px;
   width: 100%;
   height: auto;
+  padding: 20px 30px 13px 30px;
 }
 
-#review-info {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  width: 90%;
-  margin-top: 24px;
-  margin-bottom: 15px;
-  gap: 12px;
-}
-
-#rating,
-#doctor,
-#disease,
-#contents {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 5px;
-}
-
-.bold-info {
+.contents {
   font-size: 12px;
   font-style: normal;
-  font-weight: 700;
-  min-width: 60px;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 7px;
 }
 
-.normal-info {
-  color: #000;
+.review-card:last-child {
+  margin-bottom: 20px; /* 원하는 여백값으로 수정 */
+}
+
+.no-review {
+  text-align: center;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-}
-
-#rating {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.rating-left {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-}
-
-#like-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 700;
-  padding-right: 5px;
-}
-
-#contents {
-  padding-bottom: 7px;
-}
-
-.keyword-tag {
-  display: inline-block;
-  background-color: #ffffff;
-  padding: 6px 12px;
-  margin-right: 10px;
-  margin-bottom: 8px;
-  border-radius: 30px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #000000;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
 }

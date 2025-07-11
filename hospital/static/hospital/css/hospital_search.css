@@ -127,4 +127,15 @@ a {
 .hospital-name {
   font-size: 14px;
   padding-bottom: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 360px;
+}
+
+.hospital-address {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 350px;
 }

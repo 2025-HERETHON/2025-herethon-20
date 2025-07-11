@@ -8,7 +8,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{% static '/hospital/css/hospital_reserve.css' %}"
+      href="{% static '/reserve/css/recommended_doctors.css' %}"
     />
     <title>간편 상담 예약</title>
   </head>
@@ -30,7 +30,48 @@
       <section id="list-title"><h2>추천 전문의</h2></section>
       <!-- 의사 리스트 띄우기-->
       <main class="doctor-list" id="doctor-list">
-        <!-- js로 병원 리스트 띄우기 -->
+        {% for doctor in doctors %}
+        <div class="doctor-info">
+          <div class="doctor-ranking">{{ forloop.counter }}</div>
+          <!-- 의사 이미지 -->
+          <div class="doctor-image">
+            <img
+              src="{{ doctor.profile_image.url }}"
+              alt="{{ doctor.username }}"
+              width="110"
+              height="110"
+            />
+          </div>
+          <!-- 의사명, 병원명 -->
+          <div class="doctor-details">
+            <div class="doctor-name-row">
+              <p class="doctor-name">
+                {{ doctor.username }}
+                <span class="doctor-hospital-name"
+                  >{{ doctor.hospital.name }}</span
+                >
+              </p>
+            </div>
+            <!-- 전화 -->
+            <div class="doctor-tel-row">
+              <img
+                src="{% static 'hospital/images/call_icon.svg' %}"
+                alt="전화 아이콘"
+              />
+              <p class="phone-text">{{ doctor.hospital.tel }}</p>
+              <a href="#" class="copy-phone">복사</a>
+            </div>
+            <!-- 답변 수 -->
+            <div class="doctor-answer-row">
+              <p class="answer-count">
+                🔥 최근 일주일 간 답변 수 {{ doctor.recent_comment_count }}개
+              </p>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p>전문의가 없습니다.</p>
+        {% endfor %}
       </main>
       <!-- 팝업창 display:none; 처리-->
       <div id="popup-message">
@@ -90,6 +131,6 @@
         </div>
       </footer>
     </div>
-    <script src="{% static '/hospital/js/hospital_reserve.js' %}"></script>
+    <script src="{% static '/reserve/css/recommended_doctors.js' %}"></script>
   </body>
 </html>

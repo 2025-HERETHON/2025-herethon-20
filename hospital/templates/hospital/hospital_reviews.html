@@ -49,7 +49,7 @@
 
       <!-- 해당 병원 리뷰 카드들 띄우기-->
       <!-- 리뷰 작성 버튼-->
-      <a href="{% url 'review_create' hospital.id %}">
+      <a href="{% url 'review:create_review' hospital.id %}">
         <img
           src="{% static '/hospital/images/write_review.svg' %}"
           alt="리뷰 작성"

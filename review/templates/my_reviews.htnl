@@ -1,0 +1,16 @@
+<h2>내가 작성한 리뷰</h2>
+
+{% for review in reviews %}
+  <div class="review-card">
+    <p><strong>병원명:</strong> {{ review.hospital.name }}</p>
+    <p><strong>담당의:</strong> {{ review.doctor_name }}</p>
+    <p><strong>진료질환:</strong> {{ review.diagnosis }}</p>
+    <p><strong>별점:</strong> {{ review.rating }}점</p>
+    <p><strong>내용:</strong> {{ review.content }}</p>
+    <p><strong>좋아요 수:</strong> {{ review.likes.count }}</p>
+    <a href="{% url 'review:edit_review' review.id %}">수정</a> |
+    <a href="{% url 'review:delete_review' review.id %}">삭제</a>
+  </div>
+{% empty %}
+  <p>아직 작성한 리뷰가 없습니다.</p>
+{% endfor %}

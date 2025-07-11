@@ -40,6 +40,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const postId = this.dataset.postId;
         const button = this;
         const textDiv = button.querySelector(".button_text");
+        const scrappedImgSrc = button.dataset.scrappedImg;
+        const unscrappedImgSrc = button.dataset.unscrappedImg;
 
         fetch(`/posts/${postId}/toggle_scrap/`, {
             method: 'POST',
@@ -53,16 +55,15 @@ document.addEventListener("DOMContentLoaded", function () {
             return response.json();
         })
         .then(data => {
+            const imgElement = button.querySelector(".img"); // 이미지 요소 선택
             if (data.scrapped) {
                 textDiv.textContent = "스크랩 취소";
+                imgElement.src = unscrappedImgSrc;
             } else {
                 textDiv.textContent = "스크랩";
+                imgElement.src = unscrappedImgSrc;
             }
         })
-        .catch(error => {
-            console.error('스크랩 요청 중 오류 발생:', error);
-            alert("스크랩 처리 중 오류가 발생했습니다. 로그인 상태를 확인해주세요.");
-        });
     });
 
     // 대댓글 기능 관련 코드 시작
