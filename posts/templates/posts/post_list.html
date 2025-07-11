@@ -58,8 +58,8 @@
                 {# 제목 클릭하면 해당 글 상세 페이지로 이동 #}
                 <h3 class="post-title">{{ post.title }}</h3>
                 {# 글 제목 표시 #}
-                <p class="time">{{ post.content|truncatechars:100 }}</p>
-                {# 본문 미리보기 #}
+                <p class="time"> 3분전{# {{ post.content|truncatechars:100 }} #}</p>
+                {# 시간 #}
               </a>
               <p class="post-content-preview">
                 {{ post.content|truncatechars:100 }}
