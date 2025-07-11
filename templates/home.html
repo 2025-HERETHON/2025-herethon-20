@@ -108,7 +108,29 @@
         <!-- 방금 등록된 리뷰 -->
         <section class="recent-reviews-section">
           <h2>방금 등록된 리뷰</h2>
-          {# 방금 등록 리뷰 #}
+          <ul class="review-list">
+          {% for review in latest_reviews %}
+          <li class="review-item">
+          <a href="{% url 'review:hospital_reviews' review.hospital.id %}">
+          <div class="review-header">
+          <strong class="hospital-name">{{ review.hospital.name }}</strong>
+          <span class="rating">⭐ {{ review.rating }}</span>
+        </div>
+        <div class="review-content">
+          {{ review.content|truncatechars:50 }}
+        </div>
+        <div class="review-footer">
+          <span class="review-user">by {{ review.user.username }}</span>
+          <span class="review-date">{{ review.created_at|date:"Y-m-d H:i" }}</span>
+        </div>
+      </a>
+    </li>
+    {% empty %}
+    <li class="review-item">최근 등록된 리뷰가 없습니다.</li>
+    {% endfor %}
+  </ul>
+</section>
+
         </section>
       </main>
       <!-- 하단 네비게이션 -->

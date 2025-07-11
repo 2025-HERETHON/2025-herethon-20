@@ -7,6 +7,7 @@ from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Count, Max, Exists, OuterRef
 from hospital.models import Hospital
+from review.models import Review
 
 
 # 마이페이지
@@ -147,12 +148,13 @@ def user_home(request):
     ).order_by(
         '-created_at'  # 최신순으로 정렬
     )[:4]  # 상위 4개만 가져오기
-
+    latest_reviews = Review.objects.select_related('hospital', 'user').order_by('-created_at')[:4]  # ✅ 최근 리뷰 4개 가져오기
     context = {
         'hot_questions': hot_questions,  # 템플릿으로 전달할 데이터
         'recently_commented_questions': recently_commented_questions,
         'recently_registered_questions': recently_registered_questions,
         'unanswered_doctor_questions': unanswered_doctor_questions,
+        'latest_reviews': latest_reviews
     }
 
     if request.user.is_authenticated and request.user.is_doctor:
