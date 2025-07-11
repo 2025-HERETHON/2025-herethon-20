@@ -70,7 +70,7 @@
             </div>
           </div>
 
-          {% endfor %} {% if current_category %} {# !! 어느 게시판에서 글쓰기 진입하는지에 따라 카테고리 기본값이 달라집니다. 버튼 구현 전이라 임시로 여기에 작성해뒀습니다. !! #}
+          {% endfor %} {% if current_category %} 
           <a
             href="{% url 'posts:create_post' %}?from_category_slug={{ current_category.slug }}"
           >
