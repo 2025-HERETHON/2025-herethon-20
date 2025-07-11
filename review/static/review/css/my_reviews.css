@@ -85,7 +85,6 @@ header h2 {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 5px;
 }
 
 .bold-info {
@@ -112,7 +111,6 @@ header h2 {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
 }
 
 #contents {

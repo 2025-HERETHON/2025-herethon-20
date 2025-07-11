@@ -33,7 +33,21 @@
             <div id="rating">
               <div class="rating-left">
                 <strong class="bold-info">별점</strong>
-                <p class="normal-info">{{ review.rating }}점</p>
+                <div class="normal-info">
+                  {% for i in star_range %} {% if i <= review.rating %}
+                  <img
+                    src="{% static 'hospital/images/star_fill_small.svg' %}"
+                    alt="별점"
+                    class="star-icon"
+                  />
+                  {% else %}
+                  <img
+                    src="{% static 'hospital/images/star_blank_small.svg' %}"
+                    alt="빈 별점"
+                    class="star-icon"
+                  />
+                  {% endif %} {% endfor %}
+                </div>
               </div>
               <div id="trash-info">
                 <a href="{% url 'review:delete_review' review.id %}">

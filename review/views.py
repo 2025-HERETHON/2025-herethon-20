@@ -53,7 +53,8 @@ def toggle_review_like(request, review_id):
 def my_reviews(request):
     reviews = Review.objects.filter(user=request.user).select_related('hospital').order_by('-created_at')
     return render(request, 'review/my_reviews.html', {
-        'reviews': reviews
+        'reviews': reviews,
+        'star_range': range(1, 6),
     })
 
 
