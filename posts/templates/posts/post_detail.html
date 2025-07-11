@@ -46,12 +46,12 @@
                 <span class="contnet">{{post.content }} </span> 
             </div>
 
-
-
             {# 스크랩 및 공유 버튼 섹션 추가 #}
             <div class="post-actions">
-                {% if user.is_authenticated %} {# 로그인된 사용자에게만 스크랩 버튼 표시 #}
-                <button id="scrap-button" data-post-id="{{ post.id }}">
+                {% if user.is_authenticated %}
+                <button id="scrap-button"
+                        data-post-id="{{ post.id }}"
+                        data-unscrapped-img="{% static 'posts/img/scrap_img.png' %}">
                     {% if is_scrapped %}
                         <img src="{% static 'posts/img/scrap_img.png' %}" class="img">
                         <div class="button_text">스크랩 취소</div>
@@ -65,13 +65,16 @@
                     <img src="{% static 'posts/img/share_img.png' %}" class="img">
                     <div class="button_text">공유하기</div>
                 </button>
-            </div>  
+            </div>
+
             <div class="comments-section">
                 <h2 class="commnet-text">답변 {{ total_comment_count }}개</h2>
                 {% if comments %}
                     <ul class="comment-list">
                         {% for item in comments %}
-                            <li class="comment-item">
+                            <li class="comment-item {% if item.comment.parent_comment %}reply-comment{% else %}clickable-comment{% endif %}"
+                                data-comment-id="{{ item.comment.id }}"
+                                data-comment-author="{{ item.display_name }}">
                                 <div class="comment-meta">
                                     <span class="comment-title">
                                         <div class="none">{{ item.display_name }}</div>
@@ -81,16 +84,20 @@
                                 </div>
                                 <p class="comment-content"> {{ item.comment.content }} </p>
                             </li>
-                            <li class="comment-item-1">
-                                <div class="comment-meta">
-                                    <span class="comment-title">
-                                        <div class="none"> {{ item.display_name }}</div>
-                                        <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
-                                    </span>
-                                    <span class="comment-time"> {{ item.comment.created_at|date:"Y.m.d H:i" }}</span>
-                                </div>
-                                <p class="comment-content"> {{ item.comment.content }}</p>
-                            </li>
+                            {% for reply_item in item.replies %}
+                                <li class="comment-item reply-comment"
+                                    data-comment-id="{{ reply_item.comment.id }}"
+                                    data-comment-author="{{ reply_item.display_name }}">
+                                    <div class="comment-meta">
+                                        <span class="comment-title">
+                                            <div class="none">↳ {{ reply_item.display_name }}</div>
+                                            <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                        </span>
+                                        <span class="comment-time">{{ reply_item.comment.created_at|date:"Y.m.d H:i" }}</span>
+                                    </div>
+                                    <p class="comment-content"> {{ reply_item.comment.content }}</p>
+                                </li>
+                            {% endfor %}
                         {% endfor %}
                     </ul>
                 {% else %}
@@ -100,8 +107,15 @@
                 <div class="comment-form">
                     <form method="POST">
                         {% csrf_token %} {# 보안을 위한 CSRF 토큰 #}
+                        <input type="hidden" id="parent_comment_id" name="parent_comment_id" value=""> {# 대댓글을 위한 숨겨진 필드 #}
+
+                        <div id="reply-to-info" style="display:none; margin-bottom: 10px;">
+                            <span id="reply-to-text"></span>
+                            <button type="button" id="cancel-reply-mode" style="margin-left: 10px; cursor: pointer;">취소</button>
+                        </div>
+
                         <div class="comment_send">
-                            <textarea name="comment_content" class="comment_content"placeholder="댓글을 입력하세요." required></textarea>
+                            <textarea name="comment_content" class="comment_content" placeholder="댓글을 입력하세요." required></textarea>
                             <button type="submit" class="submit_btn">
                                 <img src="{% static 'posts/img/send_img.png' %}">
                             </button>
@@ -122,7 +136,7 @@
                 <div class="background_gray"></div>
             </div>
             <div class="copy">
-                <div class="copy_text">링크를복사했습니다.</div>
+                <div class="copy_text">링크를 복사했습니다.</div>
             </div>
         </div>
 </body>
