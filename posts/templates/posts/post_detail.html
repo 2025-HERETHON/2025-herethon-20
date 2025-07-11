@@ -93,18 +93,22 @@
                                 <div class="comment-item {% if request.user.is_authenticated %}clickable-comment{% endif %}"
                                     data-comment-id="{{ processed_comment.comment.id }}"
                                     data-comment-author="{{ processed_comment.display_name }}">
-                                    <div class="comment-meta">  
-                                        <span class="comment-author">{{ processed_comment.display_name }}</span>
-                                        <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
-                                        <span class="comment-time">{{ processed_comment.comment.created_at|date:"Y.m.d H:i" }} </span>
-                                        {% if processed_comment.is_author %} {# 본인이 작성한 답변이면 삭제 버튼 표시 #}
-                                            <form action="{% url 'posts:delete_comment' post.id processed_comment.comment.id %}" method="post" class="comment-delete-form" onsubmit="return confirm('이 답변을 삭제하시겠습니까?');">
-                                                {% csrf_token %}
-                                                <button type="submit" class="delete-comment-btn">
-                                                    <img src ="{% static 'posts/img/trash.png' %}" class="trash_img.">
-                                                </button>
-                                            </form>
-                                        {% endif %}
+                                    <div class="comment-meta"> 
+                                        <div class="comment_title">
+                                            <span class="comment-author">{{ processed_comment.display_name }}</span>
+                                            <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
+                                        </div>
+                                        <div class="comment_sub">
+                                            <span class="comment-time">{{ processed_comment.comment.created_at|date:"Y.m.d H:i" }} </span>
+                                            {% if processed_comment.is_author %} {# 본인이 작성한 답변이면 삭제 버튼 표시 #}
+                                                <form action="{% url 'posts:delete_comment' post.id processed_comment.comment.id %}" method="post" class="comment-delete-form" onsubmit="return confirm('이 답변을 삭제하시겠습니까?');">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="delete-comment-btn">
+                                                        <img src ="{% static 'posts/img/trash.png' %}" class="trash_img">
+                                                    </button>
+                                                </form>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                     {% if processed_comment.comment.is_deleted %}
                                         <p class="comment-content deleted-content">{{ processed_comment.comment.content }} </p>
@@ -125,7 +129,9 @@
                                                     {% if processed_reply.is_author %} {# 본인이 작성한 답댓글이면 삭제 버튼 표시 #}
                                                         <form action="{% url 'posts:delete_comment' post.id processed_reply.comment.id %}" method="post" class="comment-delete-form" onsubmit="return confirm('이 답변을 삭제하시겠습니까?');">
                                                             {% csrf_token %}
-                                                            <button type="submit" class="delete-comment-btn">{# 여기 이미지!!!!! #}</button>
+                                                            <button type="submit" class="delete-comment-btn">
+                                                                <img src ="{% static 'posts/img/trash.png' %}" class="trash_img">
+                                                            </button>
                                                         </form>
                                                     {% endif %}
                                                 </div>
@@ -148,12 +154,12 @@
                 <div class="comment-form">
                     <form method="POST">
                         {% csrf_token %} {# 보안을 위한 CSRF 토큰 #}
-                        <div class="comment_send">
-                            <input type="hidden" name="parent_comment_id" id="parent_comment_id" value="">
-                            <div id="reply-to-info" style="display: none; padding: 5px; background-color: #f0f0f0; border-radius: 5px; margin-bottom: 5px;">
+                        <div id="reply-to-info">
                                 <span id="reply-to-text"></span>
                                 <button type="button" id="cancel-reply-mode" style="background: none; border: none; color: #dc3545; cursor: pointer; float: right;">X</button>
                             </div>
+                        <div class="comment_send">
+                            <input type="hidden" name="parent_comment_id" id="parent_comment_id" value="">
                             <textarea name="comment_content" class="comment_content"placeholder="댓글을 입력하세요." required></textarea>
                             <button type="submit" class="submit_btn">
                                 <img src="{% static 'posts/img/send_img.png' %}">
