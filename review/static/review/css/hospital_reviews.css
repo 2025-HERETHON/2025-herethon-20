@@ -138,17 +138,19 @@ main {
   width: 90%;
   margin-top: 24px;
   margin-bottom: 15px;
-  gap: 12px;
 }
 
-#rating,
+#rating {
+  margin-bottom: 6px;
+}
+
 #doctor,
 #disease,
 #contents {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 5px;
+  margin-bottom: 12px;
 }
 
 .bold-info {
@@ -175,7 +177,6 @@ main {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px; /* 별점 텍스트와 아이콘 사이 간격 */
 }
 
 #like-info {
@@ -190,6 +191,7 @@ main {
 }
 
 #contents {
+  margin-top: 5px;
   padding-bottom: 7px;
 }
 
@@ -212,4 +214,11 @@ main {
   bottom: 29px;
   right: 31px;
   z-index: 10;
+}
+
+#no-review {
+  margin-top: 20px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
 }

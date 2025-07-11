@@ -93,7 +93,7 @@ form {
   flex-direction: column;
   width: 343px;
   height: 616px;
-  gap: 14px;
+  gap: 36px;
   align-self: stretch;
   padding: 0;
   background: none;
@@ -134,7 +134,7 @@ textarea,
   padding-bottom: 9.5px;
   padding-left: 16px;
   border: none;
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

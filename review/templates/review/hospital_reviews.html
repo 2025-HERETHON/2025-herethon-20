@@ -8,7 +8,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{% static '/hospital/css/hospital_reviews.css' %}"
+      href="{% static '/review/css/hospital_reviews.css' %}"
     />
     <title>병원 리뷰 확인</title>
   </head>
@@ -56,6 +56,20 @@
                 <strong class="bold-info">별점</strong>
                 <div class="normal-info">
                   <!-- 별점 이미지 채우기-->
+
+                  {% for i in star_range %} {% if i <= review.rating %}
+                  <img
+                    src="{% static 'hospital/images/star_fill_small.svg' %}"
+                    alt="별점"
+                    class="star-icon"
+                  />
+                  {% else %}
+                  <img
+                    src="{% static 'hospital/images/star_blank_small.svg' %}"
+                    alt="빈 별점"
+                    class="star-icon"
+                  />
+                  {% endif %} {% endfor %}
                 </div>
               </div>
               <div id="like-info">
@@ -98,7 +112,7 @@
           </div>
         </div>
         {% empty %}
-        <p>아직 리뷰가 없습니다.</p>
+        <p id="no-review">아직 리뷰가 없습니다.</p>
         {% endfor %}
       </main>
 
@@ -115,7 +129,7 @@
     <!-- 더미데이터 불러오기 -->
     <script
       type="module"
-      src="{% static 'hospital/js/hospital_reviews.js' %}"
+      src="{% static 'review/js/hospital_reviews.js' %}"
     ></script>
   </body>
 </html>
