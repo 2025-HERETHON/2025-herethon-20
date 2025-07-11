@@ -1,3 +1,5 @@
+<!-- search_reviews.html -->
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -19,7 +21,7 @@
         <div class="search-container">
           <div class="head">
             <!-- 이전으로 버튼 -->
-            <a href="{% url 'hospital_reviews' hospital.id %}">
+            <a href="{% url 'review:hospital_reviews' hospital.id %}">
               <img
                 src="{% static '/hospital/images/back_icon.svg' %}"
                 alt="이전으로"

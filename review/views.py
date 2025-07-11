@@ -18,7 +18,7 @@ def create_review(request, hospital_id):
             review.hospital = hospital
             review.user = request.user
             review.save()
-            return HttpResponseRedirect(f'/reviews/search/?hospital_id={hospital.id}')
+            return redirect('review:hospital_reviews', hospital_id=hospital.id)
     else:
         form = ReviewForm()
 
@@ -27,39 +27,6 @@ def create_review(request, hospital_id):
         'hospital': hospital
     })
 
-
-def search_reviews(request):
-    keyword = request.GET.get('keyword', '')
-    hospital_id = request.GET.get('hospital_id')
-    sort = request.GET.get('sort', 'created')  # 기본값: 최신순
-
-    reviews = Review.objects.all()
-
-    hospital = None
-    if hospital_id:
-        reviews = reviews.filter(hospital_id=hospital_id)
-        hospital = get_object_or_404(Hospital, id=hospital_id)
-
-    if keyword:
-        reviews = reviews.filter(content__icontains=keyword)
-
-    # 정렬
-    if sort == 'rating':
-        reviews = reviews.order_by('-rating')
-    elif sort == 'cost':
-        reviews = reviews.order_by('-cost_reasonable')
-    elif sort == 'teen':
-        reviews = reviews.order_by('-teen_friendly')
-    else:
-        reviews = reviews.order_by('-created_at')  # 최신순
-
-    return render(request, 'review/search_reviews.html', {
-        'reviews': reviews,
-        'hospital': hospital,
-        'keyword': keyword,
-        'sort': sort,
-        'star_range': range(1, 6),  # 1부터 5까지 숫자
-    })
 
 
 @require_POST
@@ -116,13 +83,69 @@ def delete_review(request, review_id):
 
     return render(request, 'review/delete_review_confirm.html', {'review': review})
 
+
+
+# def search_reviews(request):
+    keyword = request.GET.get('keyword', '')
+    hospital_id = request.GET.get('hospital_id')
+    sort = request.GET.get('sort', 'created')  # 기본값: 최신순
+
+    reviews = Review.objects.all()
+
+    hospital = None
+    if hospital_id:
+        reviews = reviews.filter(hospital_id=hospital_id)
+        hospital = get_object_or_404(Hospital, id=hospital_id)
+
+    if keyword:
+        reviews = reviews.filter(content__icontains=keyword)
+
+    # 정렬
+    if sort == 'rating':
+        reviews = reviews.order_by('-rating')
+    elif sort == 'cost':
+        reviews = reviews.order_by('-cost_reasonable')
+    elif sort == 'teen':
+        reviews = reviews.order_by('-teen_friendly')
+    else:
+        reviews = reviews.order_by('-created_at')  # 최신순
+
+    return render(request, 'review/search_reviews.html', {
+        'reviews': reviews,
+        'hospital': hospital,
+        'keyword': keyword,
+        'sort': sort,
+        'star_range': range(1, 6),  # 1부터 5까지 숫자
+    })
+
+
+
 def hospital_reviews(request, hospital_id):
     hospital = get_object_or_404(Hospital, id=hospital_id)
-    reviews = Review.objects.filter(hospital=hospital).order_by('-created_at')
+
+    # 기본 queryset: 해당 병원의 모든 리뷰
+    reviews = Review.objects.filter(hospital=hospital)
+
+    # 검색 키워드
+    keyword = request.GET.get('keyword', '')
+    if keyword:
+        reviews = reviews.filter(content__icontains=keyword)
+
+    # 정렬 파라미터
+    sort = request.GET.get('sort', 'created')  # 기본값: 최신순
+    if sort == 'rating':
+        reviews = reviews.order_by('-rating')
+    elif sort == 'cost':
+        reviews = reviews.order_by('-cost_reasonable')
+    elif sort == 'teen':
+        reviews = reviews.order_by('-teen_friendly')
+    else:
+        reviews = reviews.order_by('-created_at')  # 최신순
 
     return render(request, 'review/hospital_reviews.html', {
         'hospital': hospital,
         'reviews': reviews,
+        'keyword': keyword,
+        'sort': sort,
         'star_range': range(1, 6),
     })
-

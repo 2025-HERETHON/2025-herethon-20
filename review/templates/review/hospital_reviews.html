@@ -1,3 +1,5 @@
+<!-- hospital-reviews -->
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -15,25 +17,40 @@
   <body>
     <div class="page-container">
       <!-- 헤더 -->
+     <!-- 검색창 -->
       <header>
-        <div class="left-section">
-          <a href="{% url 'hospital_list' %}">
-            <img
-              src="{% static '/hospital/images/back_icon.svg' %}"
-              alt="이전으로"
-              class="back-button"
-            />
-          </a>
-          <h2>{{hospital.name}}</h2>
+        <div class="search-container">
+          <div class="head">
+            <!-- 이전으로 버튼 -->
+            <a href="{% url 'hospital_detail' hospital.id %}">
+              <img
+                src="{% static '/hospital/images/back_icon.svg' %}"
+                alt="이전으로"
+                class="back-button"
+              />
+            </a>
+            <!-- 검색 폼 -->
+            <form method="get" class="search-form">
+              <input
+                type="hidden"
+                name="hospital_id"
+                value="{{ hospital.id }}"
+              />
+              <input
+                type="text"
+                name="keyword"
+                class="search-box"
+                placeholder="{{ hospital.name }} 내 리뷰를 검색하세요"
+                value="{{ keyword }}"
+              />
+              <button type="submit" class="search-button">
+                <img
+                  src="{% static '/hospital/images/search_icon.svg' %}"
+                  alt="검색 버튼"
+                />
+              </button>
+            </form>
         </div>
-        <!-- 병원 리뷰 검색 페이지 연결 -->
-        <a href="">
-          <img
-            src="{% static '/hospital/images/search_icon.svg' %}"
-            alt="검색 아이콘"
-            class="search-button"
-          />
-        </a>
       </header>
       <!-- 내비 탭 -->
       <nav>
@@ -45,8 +62,41 @@
           <div class="review">리뷰</div>
         </div>
       </nav>
-      <!-- 해당 병원 리뷰 카드들 띄우기-->
+            <!-- 해당 병원 리뷰 카드들 띄우기-->
       <main class="review-list">
+
+      <!-- 정렬 기준 커스텀 드롭다운 -->
+      <div class="sort-box">
+        <form method="get" action="" id="sort-form">
+          <input type="hidden" name="hospital_id" value="{{ hospital.id }}">
+          <input type="hidden" name="keyword" value="{{ keyword }}">
+          <input type="hidden" name="sort" id="sort-input" value="{{ sort }}">
+
+          <div class="custom-select" id="sort-select">
+            <button type="button" class="select-toggle" id="sort-toggle">
+              {% if sort == 'rating' %}
+                별점순
+              {% elif sort == 'cost' %}
+                진료비 만족순
+              {% elif sort == 'teen' %}
+                10대 친화순
+              {% else %}
+                최신순
+              {% endif %}
+              <div class="dropdown-icon">&#9662;</div>
+            </button>
+            <ul class="select-options" id="sort-options" hidden>
+              <li data-value="created">최신순</li>
+              <li data-value="rating">별점순</li>
+              <li data-value="cost">진료비 만족순</li>
+              <li data-value="teen">10대 친화순</li>
+            </ul>
+          </div>
+        </form>
+      </div>
+
+
+
         {% for review in reviews %}
         <div class="review-card">
           <div id="review-info">
