@@ -25,24 +25,24 @@
             {# 내가 쓴 글인 경우: 수정 및 삭제 버튼 표시 #}
             <div class="post-header-actions">
                 <a href="{% url 'posts:edit_post' post.id %}" class="edit-icon">
-                    <img src="{% static 'posts/img/edit_icon.png' %}" alt="수정">
+                    <img src="{% static 'posts/img/pen.png' %}" alt="수정" class="header_icon">
                 </a>
                 <form action="{% url 'posts:delete_post' post.id %}" method="post" onsubmit="return confirm('이 게시글을 삭제하시겠습니까?');" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="delete-icon">
-                        <img src="{% static 'posts/img/delete_icon.png' %}" alt="삭제">
+                        <img src="{% static 'posts/img/trash.png' %}" alt="삭제" class="header_icon">
                     </button>
                 </form>
             </div>
             {% else %}
             {# 내가 쓴 글이 아닌 경우: 신고 버튼 표시 #}
-            <img src="{% static 'posts/img/declatation_img.png'%}" class="declatation_img">
+            <img src="{% static 'posts/img/declatation_img.png'%}"  class="header_icon">
             {% endif %}
         </header>
         <div class="post-detail-container">
             <div class="post-detail-header">
                 <div class="post-meta">
-                    <img     src="{% static 'posts/img/my_profile_img.png' %}" class="profile_img">
+                    <img src="{% static 'posts/img/my_profile_img.png' %}" class="profile_img">
                     <div class="profile_text">
                         <span>익명의</span> 
                         <span>{{ author_age }}세 사용자</span>
@@ -60,7 +60,7 @@
 
             <div class="post-content">
                 <h1 class="content-title">{{ post.title }}</h1>
-                <span class="contnet">{{ post.content|linebreaks }} </span> 
+                <span class="contnet">{{ post.content| linebreaks }} </span> 
             </div>
 
             {# 스크랩 및 공유 버튼 섹션 추가 #}
@@ -125,7 +125,7 @@
                                                     {% if processed_reply.is_author %} {# 본인이 작성한 답댓글이면 삭제 버튼 표시 #}
                                                         <form action="{% url 'posts:delete_comment' post.id processed_reply.comment.id %}" method="post" class="comment-delete-form" onsubmit="return confirm('이 답변을 삭제하시겠습니까?');">
                                                             {% csrf_token %}
-                                                            <button type="submit" class="delete-comment-btn">삭제</button>
+                                                            <button type="submit" class="delete-comment-btn">{# 여기 이미지!!!!! #}</button>
                                                         </form>
                                                     {% endif %}
                                                 </div>
