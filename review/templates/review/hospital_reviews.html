@@ -152,8 +152,12 @@
             <!-- 키워드 태그 -->
             <div id="keyword">
               {% if review.cost_reasonable %}
-              <span class="keyword-tag">😊 친절해요</span>
-              {% endif %} {% if review.teen_friendly %}
+              <span class="keyword-tag">🤗 과잉진료하지 않아요</span>
+              {% endif %} 
+              {% if not review.is_kind %}
+              <span class="keyword-tag">🤩 친절해요</span>
+              {% endif %}
+              {% if review.teen_friendly %}
               <span class="keyword-tag"
                 >😊 10대 친화적이에요 (가격, 환경 등)</span
               >
