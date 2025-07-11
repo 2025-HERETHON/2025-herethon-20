@@ -127,8 +127,9 @@
                   src="{% static 'hospital/images/like_blank.svg' %}"
                   alt="좋아요"
                   class="like-icon"
+                  data-review-id="{{ review.id }}"
                 />
-                <span class="like-count">0</span>
+                <span class="like-count">{{ review.likes.count }}</span>
               </div>
             </div>
 
@@ -154,7 +155,7 @@
               {% if review.cost_reasonable %}
               <span class="keyword-tag">🤗 과잉진료하지 않아요</span>
               {% endif %} 
-              {% if not review.is_kind %}
+              {% if review.is_kind %}
               <span class="keyword-tag">🤩 친절해요</span>
               {% endif %}
               {% if review.teen_friendly %}
