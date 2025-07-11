@@ -32,8 +32,12 @@ body {
   position: relative;
   background-color: #fff;
   overflow: hidden;
-}
+overflow-y: auto;
 
+}
+.wrapper::-webkit-scrollbar {
+	display:none /* Chrome , Safari , Opera */
+}
 /* 고정된 헤더 */
 header {
     height: 60px;
@@ -43,8 +47,8 @@ header {
     top: 0;
     width: 402px;
     z-index: 10;
-      background-color: #ffff;
-
+    background-color: #ffff;
+    
 }
 
 a{
@@ -128,24 +132,24 @@ border-bottom: 1.5px solid #A788fa;
 }
 
 .time-ago{
-            color: #5E548E;
+    color: #5E548E;
     font-family: "Pretendard Variable";
     font-size: 10px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    margin-right: 15px;
 }
 
 .post_header{
-         margin: 10px;
-    display: flex
-;
+    margin: 10px;
+    display: flex;
     align-items: center;
     padding: 10px;
     width: 100%;
     box-sizing: border-box;
-    gap: 150px; 
-}
+    justify-content: space-between
+    ;}
 
 .post-preview{
     font-family: "Pretendard Variable";
@@ -157,18 +161,21 @@ border-bottom: 1.5px solid #A788fa;
 }
 
 .chat_img{
-    width: 16px;
+    width: 13px;
 }
 
 .comment-count{
-        display: flex
-;
+        display: flex;
     align-items: center;
     width: 100%;
     margin: 20px;
     gap:10px
 }
 
+.comment_count{
+    font-size: 13px;
+    color:#A788fa
+}
 .post-item{
     display: flex
 ;

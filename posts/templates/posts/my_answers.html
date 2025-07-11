@@ -37,10 +37,10 @@
                 {% for post in posts_with_my_comments %} {# 사용자가 답변 단 게시물 보여주기 #}
                     <li class="post-item">
                         <div class="post_header">
-                            <a href="{% url 'posts:post_detail' post.id %}" class="post-title">{{ post.title }}</a></h2> {# 제목 #}
+                            <a href="{% url 'posts:post_detail' post.id %}" class="post-title">{{ post.title|truncatechars:15 }}</a></h2> {# 제목 #}
                             <span class="time-ago">{{ post.created_at|naturaltime }}</span> {# 게시물 작성된 뒤 지난 시간 #}
                         </div>
-                        <p class="post-preview">{{ post.content|truncatechars:50 }}</p> {# 본문 한줄 미리보기 #}
+                        <p class="post-preview">{{ post.content|truncatechars:40 }}</p> {# 본문 한줄 미리보기 #}
                         <div class="post-meta-info">
                             <span class="comment-count">
                                 <img src="{% static 'posts/img/chat_img.png'%}" class="chat_img" alt="답변"> {# 답변 수 옆 이미지 #}
