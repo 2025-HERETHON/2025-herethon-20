@@ -60,7 +60,7 @@
 
             <div class="post-content">
                 <h1 class="content-title">{{ post.title }}</h1>
-                <span class="contnet">{{post.content }} </span> 
+                <span class="contnet">{{ post.content|linebreaks }} </span> 
             </div>
 
             {# 스크랩 및 공유 버튼 섹션 추가 #}
@@ -91,16 +91,18 @@
                         {% for processed_comment in comments %}
                             <div class="comment-item-wrapper">
                                 <div class="comment-item {% if request.user.is_authenticated %}clickable-comment{% endif %}"
-                                     data-comment-id="{{ processed_comment.comment.id }}"
-                                     data-comment-author="{{ processed_comment.display_name }}">
-                                    <div class="comment-meta">
+                                    data-comment-id="{{ processed_comment.comment.id }}"
+                                    data-comment-author="{{ processed_comment.display_name }}">
+                                    <div class="comment-meta">  
                                         <span class="comment-author">{{ processed_comment.display_name }}</span>
                                         <img src="{% static 'posts/img/declatation_img.png' %}" class="declatation_comment_img">
                                         <span class="comment-time">{{ processed_comment.comment.created_at|date:"Y.m.d H:i" }} </span>
                                         {% if processed_comment.is_author %} {# 본인이 작성한 답변이면 삭제 버튼 표시 #}
                                             <form action="{% url 'posts:delete_comment' post.id processed_comment.comment.id %}" method="post" class="comment-delete-form" onsubmit="return confirm('이 답변을 삭제하시겠습니까?');">
                                                 {% csrf_token %}
-                                                <button type="submit" class="delete-comment-btn">삭제</button>
+                                                <button type="submit" class="delete-comment-btn">
+                                                    <img src ="{% static 'posts/img/trash.png' %}" class="trash_img.">
+                                                </button>
                                             </form>
                                         {% endif %}
                                     </div>
