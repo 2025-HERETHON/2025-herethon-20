@@ -25,9 +25,8 @@
             <div class="icon_text">내 질문/답변</div>
           </a>
         </div>
-      </header>
-
-      <main>
+        
+    </header>
         <nav>
           <a
             href="{% url 'posts:post_list' %}"
@@ -46,6 +45,8 @@
           {% endfor %}
         </nav>
 
+      <main>
+        
         <ul>
           {% for post in posts %}
           <div class="post-item">
