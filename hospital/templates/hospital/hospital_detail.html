@@ -56,13 +56,38 @@
               />
               <p>{{ hospital.address }}</p>
             </section>
-            <!-- 임시 지도-->
+            <!-- 카카오 지도 연동-->
             <section>
-              <img
-                src="{% static '/hospital/images/sample_map.svg' %}"
-                alt="샘플 지도 이미지"
-              />
+              <div id="map" style="width:100%; height:300px; border-radius: 10px; margin: 10px 0;"></div>
             </section>
+            <!-- 병원 주소 기반 지도 표시 -->
+              <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cbbbbec68e1f17939da3946461fa5cf5&libraries=services"></script>
+            <script>
+              const address = "{{ hospital.address|escapejs }}"; // Django 템플릿에서 병원 주소 받아옴
+
+              const mapContainer = document.getElementById('map');
+              const mapOption = {
+              center: new kakao.maps.LatLng(37.499, 127.033), // 초기값
+              level: 3
+    };
+  const map = new kakao.maps.Map(mapContainer, mapOption);
+  const geocoder = new kakao.maps.services.Geocoder();
+
+  geocoder.addressSearch(address, function(result, status) {
+    if (status === kakao.maps.services.Status.OK) {
+      const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+      const marker = new kakao.maps.Marker({
+        map: map,
+        position: coords
+      });
+      map.setCenter(coords);
+    } else {
+      mapContainer.innerHTML = "<p style='color:gray;'>주소를 찾을 수 없습니다.</p>";
+    }
+  });
+</script>
+
+
             <!-- 폰 번호-->
             <section>
               <img
