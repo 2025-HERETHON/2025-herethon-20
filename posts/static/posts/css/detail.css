@@ -337,16 +337,16 @@ background-color: #f6f4fb;         /* 가운데 정렬 */
     border-radius: 15px;
 }
 
-.warning{
+.warning, .warning2{
     position: fixed;
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%);
     background-color: white;
-    border: 1.3px solid black;
     border-radius: 15px;
     flex-direction: column;
     display: none;
+      z-index: 10;
 }
 
 .warning_textbox{
@@ -373,7 +373,7 @@ font-weight: 700;
     align-items: center;
     justify-content: center;
 }
-.yes,.no{
+.yes,.no, .yes2, .no2{
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -389,10 +389,10 @@ border: none;
 border-radius: 15px;
 }
 
-.yes{
+.yes, .yes2 {
     background-color: #E35D5F;
 }
-.no{
+.no, .no2{
     background-color:black ;
 }
 .copy{
@@ -412,4 +412,14 @@ font-size: 13.5px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;
+}
+
+.background_gray {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 9;
+  display: none;
 }
