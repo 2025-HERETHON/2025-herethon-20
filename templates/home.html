@@ -11,7 +11,14 @@
     <div class="page-container">
       <!-- 상단 로고 및 알림 -->
       <header class="header">
-        <div class="logo">(로고)</div>
+        <div class="logo">
+          <img
+            src="{% static '/hospital/images/took_logo.svg' %}"
+            alt="로고 이미지"
+            class="logo-img"
+            height="55"
+          />
+        </div>
         <a
           href="{% url 'users:my_notifications' %}"
           class="notification-icon-link"

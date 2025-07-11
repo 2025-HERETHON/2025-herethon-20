@@ -34,26 +34,11 @@ body {
   overflow: hidden;
 }
 
-/* 중앙 문구 */
 .intro-text {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  text-align: center;
-  height: 43%;
-}
-
-.intro-text p {
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-}
-
-/* 로고 추후 수정*/
-.logo-text {
-  margin-top: 16px;
-  font-weight: 700;
-  font-size: 18px;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 /* 선택 버튼 영역 */
@@ -63,7 +48,7 @@ body {
   flex: 1;
   gap: 18px;
   align-items: center;
-  margin-top: 331px;
+  margin-bottom: 50px;
 }
 
 .selection-buttons button {

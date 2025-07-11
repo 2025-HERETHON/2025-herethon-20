@@ -32,6 +32,7 @@ body {
   position: relative;
   background-color: #fff;
   overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 /* 헤더 */
@@ -139,7 +140,6 @@ header h2 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -147,52 +147,47 @@ header h2 {
 }
 
 .alert-content {
-  background: white;
+  display: flex;
+  flex-direction: column;
+  width: 351px;
+  height: 149px;
   padding: 14.25px;
   border-radius: 15px;
+  background: #fff;
   text-align: center;
-  width: 80%;
-  max-width: 350px;
-  line-height: 150%;
 }
-
-.alert-content p {
-  padding-top: 5.5px;
-}
-
 .alert-buttons {
   display: flex;
-  gap: 11.25px; /* 두 버튼 사이 간격 */
+  justify-content: center;
+  gap: 10px;
   margin-top: 37px;
-  width: 100%;
 }
 
-.alert-buttons button {
-  flex: 1; /* 각각 50% 너비로 자동 분배 */
-  border-radius: 22.5px;
-  padding: 5.25px 49.5px;
+.alert-buttons button,
+.alert-buttons a {
+  flex: 1;
+  max-width: 130px;
+  height: 45px;
+  border-radius: 999px; /* pill shape */
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 45px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
 }
 
+/* 예 버튼 */
 .yes-button {
-  background: #e35d5f;
+  background-color: #e35d5f;
   color: white;
   border: none;
-  font-size: 13.5px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%;
 }
 
+/* 아니오 버튼 (a 태그용) */
 .no-button {
-  background: #000000;
+  background-color: #000000;
   color: white;
   border: none;
-  font-size: 13.5px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%;
-}
-
-.hidden {
-  display: none;
 }

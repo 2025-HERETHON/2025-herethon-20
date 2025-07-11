@@ -36,10 +36,9 @@
           <!-- 의사 이미지 -->
           <div class="doctor-image">
             <img
-              src="{{ doctor.profile_image.url }}"
-              alt="{{ doctor.username }}"
-              width="110"
-              height="110"
+              src="{% static '/hospital/images/sample_doctor.svg' %}"
+              alt="의사 샘플 이미지"
+              class="search-button"
             />
           </div>
           <!-- 의사명, 병원명 -->
