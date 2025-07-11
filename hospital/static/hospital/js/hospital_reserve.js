@@ -1,42 +1,42 @@
-// 더미 데이터
-const doctorData = [
-  {
-    id: 1,
-    name: "정예진",
-    hospital: "OO병원",
-    phone: "02-1234-5678",
+// // 더미 데이터
+// const doctorData = [
+//   {
+//     id: 1,
+//     name: "정예진",
+//     hospital: "OO병원",
+//     phone: "02-1234-5678",
 
-    weeklyAnswers: 20,
-  },
-  {
-    id: 2,
-    name: "이다은",
-    hospital: "OO병원",
-    phone: "02-1234-5678",
-    weeklyAnswers: 20,
-  },
-  {
-    id: 3,
-    name: "박다영",
-    hospital: "OO병원",
-    phone: "02-1234-5678",
-    weeklyAnswers: 20,
-  },
-  {
-    id: 4,
-    name: "김나영",
-    hospital: "OO병원",
-    phone: "02-1234-5678",
-    weeklyAnswers: 20,
-  },
-  {
-    id: 5,
-    name: "김가영",
-    hospital: "OO병원",
-    phone: "02-1234-5678",
-    weeklyAnswers: 20,
-  },
-];
+//     weeklyAnswers: 20,
+//   },
+//   {
+//     id: 2,
+//     name: "이다은",
+//     hospital: "OO병원",
+//     phone: "02-1234-5678",
+//     weeklyAnswers: 20,
+//   },
+//   {
+//     id: 3,
+//     name: "박다영",
+//     hospital: "OO병원",
+//     phone: "02-1234-5678",
+//     weeklyAnswers: 20,
+//   },
+//   {
+//     id: 4,
+//     name: "김나영",
+//     hospital: "OO병원",
+//     phone: "02-1234-5678",
+//     weeklyAnswers: 20,
+//   },
+//   {
+//     id: 5,
+//     name: "김가영",
+//     hospital: "OO병원",
+//     phone: "02-1234-5678",
+//     weeklyAnswers: 20,
+//   },
+// ];
 // 본격 js 코드
 document.addEventListener("DOMContentLoaded", () => {
   const listContainer = document.getElementById("doctor-list");
