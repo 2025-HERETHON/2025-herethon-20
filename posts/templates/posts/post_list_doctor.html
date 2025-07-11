@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>홈 - 일반 회원</title>
+    <title>홈 - 전문의 회원</title>
     <link rel="stylesheet" href="{% static 'posts/css/posts_list.css' %}" />
   </head>
   <body>
@@ -56,9 +56,9 @@
                 class="post-title-link"
               >
                 {# 제목 클릭하면 해당 글 상세 페이지로 이동 #}
-                <h3 class="post-title">{{ post.title|truncatechars:18 }}</h3>
+                <h3 class="post-title">{{ post.title|truncatechars:15 }}</h3>
                 {# 글 제목 표시 #}
-                <p class="time"> 3분전{# {{ post.content|truncatechars:100 }} #}</p>
+                <p class="time">{{ post.created_at|timesince }} 전</p>
                 {# 시간 #}
               </a>
               <p class="post-content-preview">
