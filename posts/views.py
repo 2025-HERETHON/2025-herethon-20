@@ -17,7 +17,9 @@ CATEGORIES = [
 
 def post_list(request, category_slug=None):
     # 모든 게시글 가져오기
-    posts = Post.objects.all().order_by('-created_at')
+    posts = Post.objects.annotate(
+        comment_count=Count('comment', filter=Q(comment__is_deleted=False))
+    ).order_by('-created_at')
     current_category = None
 
     if category_slug:
@@ -35,7 +37,9 @@ def post_list(request, category_slug=None):
 
 def doctor_post_list(request, category_slug=None):
     # 모든 게시글 가져오기
-    posts = Post.objects.all().order_by('-created_at')
+    posts = Post.objects.annotate(
+        comment_count=Count('comment', filter=Q(comment__is_deleted=False))
+    ).order_by('-created_at')
     current_category = None
 
     if category_slug:
