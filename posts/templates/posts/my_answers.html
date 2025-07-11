@@ -21,10 +21,15 @@
         </header>
 
 
-        <div class="tab-menu"> {# 내 질문/답변 오가는 버튼 #}
+                <div class="tab-menu"> {# 내 질문/답변 오가는 버튼 #}
+            {% if user.is_doctor %}
+                <a href="{% url 'posts:my_answers' %}" class="{% if active_tab == 'answers' %}active{% endif %}" id="my_comments">내 답변</a>
+            {% else %}
                 <a href="{% url 'posts:my_questions' %}" class="{% if active_tab == 'questions' %}active{% endif %}" id="my_post">내 질문</a>
                 <a href="{% url 'posts:my_answers' %}" class="{% if active_tab == 'answers' %}active{% endif %}" id="my_comments">내 답변</a>
+            {% endif %}
         </div>
+
 
         <h2 class="my_answers_title">내 답변 {{ my_comments_count }}개</h2> {# 현재 로그인된 사용자가 작성한 답변 갯수 보여주는 코드(형태 바꾸면 안됨, 그대로 사용) #}
         {% if posts_with_my_comments %}
