@@ -159,4 +159,13 @@ document.querySelectorAll(".declatation_comment_img").forEach(btn => {
         document.querySelector(".warning").style.display = "none";
         document.querySelector(".background_gray").style.display = "none";
     });
+
+    document.getElementById('backButton')?.addEventListener('click', function(event) {
+        event.preventDefault()
+        if (history.length > 1) {
+            history.back();
+        } else {
+            window.location.href = "{% url 'posts:post_list' %}";
+        }
+    });
 });

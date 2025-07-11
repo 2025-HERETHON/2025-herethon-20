@@ -5,7 +5,7 @@ from posts.models import Scrap, Comment, Post, Notification
 from users.models import User
 from datetime import timedelta
 from django.utils import timezone
-from django.db.models import Count, Max, Exists, OuterRef
+from django.db.models import Count, Max, Exists, OuterRef, Sum, Q
 from hospital.models import Hospital
 from review.models import Review
 
@@ -112,7 +112,7 @@ def user_home(request):
     hot_questions = Post.objects.filter(
         created_at__gte=three_days_ago  # 3일 이내에 작성된 글 필터링
     ).annotate(
-        comment_count=Count('comment')  # 각 게시글의 댓글 수 계산
+        comment_count=Count('comment', filter=Q(comment__is_deleted=False, comment__parent_comment__isnull=True))  # 각 게시글의 댓글 수 계산
     ).order_by(
         '-comment_count', '-created_at'  # 댓글 수 내림차순, 그 다음 최신순으로 정렬
     )[:4]  # 상위 4개만 가져오기
@@ -120,7 +120,7 @@ def user_home(request):
     # 일반 홈 - 방금 답변된 질문: 가장 최근에 댓글이 달린 질문 4개
     recently_commented_questions = Post.objects.annotate(
         latest_comment_time=Max('comment__created_at'),  # 각 포스트의 가장 최근 댓글 시간
-        comment_count = Count('comment')
+        comment_count = Count('comment', filter=Q(comment__is_deleted=False, comment__parent_comment__isnull=True))
     ).filter(
         latest_comment_time__isnull=False  # 댓글이 없는 게시글 제외
     ).order_by(
@@ -129,7 +129,7 @@ def user_home(request):
 
     # 전문의 홈 - 방금 등록된 질문: 가장 최근에 작성된 질문 4개
     recently_registered_questions = Post.objects.annotate(
-        comment_count=Count('comment')
+        comment_count=Count('comment', filter=Q(comment__is_deleted=False, comment__parent_comment__isnull=True))
     ).order_by(
         '-created_at'  # 생성 시간 기준으로 내림차순 정렬
     )[:4]  # 상위 4개만 가져오기
@@ -144,7 +144,7 @@ def user_home(request):
     ).filter(
         has_doctor_comment=False  # 전문의 댓글이 없는 게시글만 필터링
     ).annotate(
-        comment_count=Count('comment')
+        comment_count=Count('comment', filter=Q(comment__is_deleted=False, comment__parent_comment__isnull=True))
     ).order_by(
         '-created_at'  # 최신순으로 정렬
     )[:4]  # 상위 4개만 가져오기

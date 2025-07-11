@@ -16,9 +16,9 @@
     <div class="page-container">
         <div class="container">
             <header>
-            <a href="{% url 'posts:post_list' %}" class="back">
+            <a href="#" id="backButton" class="back">
                 <img src="{% static 'posts/img/back_img.png' %}" class="back_img">
-                <div class="back-link"> 게시물 보기</div>
+                <div class="back-link">게시물 보기</div>
             </a>
 
             {% if is_author %}
@@ -198,7 +198,6 @@
             </div>
             <div class="copy">
                 <div class="copy_text">링크를 복사했습니다.</div>
-
             </div>
 </body>
 </html>
