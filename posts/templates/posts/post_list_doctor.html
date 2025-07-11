@@ -20,10 +20,6 @@
             />
             <div class="icon_text">검색</div>
           </a>
-          <a href="{% url 'posts:my_questions' %}" class="icon_box">
-            <img src="{% static 'posts/img/list_img.png' %}" class="icon_img" />
-            <div class="icon_text">내 질문/답변</div>
-          </a>
         </div>
 
     </header>
@@ -62,7 +58,7 @@
                 {# 시간 #}
               </a>
               <p class="post-content-preview">
-                {{ post.content|truncatechars:100 }}
+                {{ post.content|truncatechars:20 }}
               </p>
               {# 본문 미리보기 #}
               <div class="chatbox">
