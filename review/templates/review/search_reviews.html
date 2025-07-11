@@ -1,0 +1,103 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static '/review/css/search_reviews.css' %}"
+    />
+    <title>리뷰 검색</title>
+  </head>
+  <body>
+    <div class="page-container">
+      <!-- 검색창 -->
+      <header>
+        <div class="search-container">
+          <div class="head">
+            <!-- 이전으로 버튼 -->
+            <a href="{% url 'hospital_reviews' hospital.id %}">
+              <img
+                src="{% static '/hospital/images/back_icon.svg' %}"
+                alt="이전으로"
+                class="back-button"
+              />
+            </a>
+            <!-- 검색 폼 -->
+            <form method="get" action="">
+              <input
+                type="hidden"
+                name="hospital_id"
+                value="{{ hospital.id }}"
+              />
+              <input
+                type="text"
+                name="keyword"
+                class="search-box"
+                placeholder="{{ hospital.name }} 내 리뷰를 검색하세요"
+                value="{{ keyword }}"
+              />
+              </div>
+              <button type="submit" class="search-button">
+                <img
+                  src="{% static '/hospital/images/search_icon.svg' %}"
+                  alt="검색 버튼"
+                />
+              </button>
+            </form>
+
+        </div>
+      </header>
+
+      <!-- 리뷰 검색 결과 -->
+      <main class="review-list">
+        <!-- 🔽 정렬 폼 (GET 방식, keyword는 hidden으로 유지) -->
+        <form method="get" action="" class="sort-form">
+          <input type="hidden" name="hospital_id" value="{{ hospital.id }}">
+          <input type="hidden" name="keyword" value="{{ keyword }}">
+          <select name="sort" id="sort" onchange="this.form.submit()" class="sort-select">
+            <option value="created" {% if sort == 'created' %}selected{% endif %}>최신순</option>
+            <option value="rating" {% if sort == 'rating' %}selected{% endif %}>별점순</option>
+            <option value="cost" {% if sort == 'cost' %}selected{% endif %}>진료비 만족순</option>
+            <option value="teen" {% if sort == 'teen' %}selected{% endif %}>10대 친화순</option>
+          </select>
+        </form>
+
+
+
+
+        {% for review in reviews %}
+        <div class="review-card">
+          <div class="contents" id="star-content">
+            <div class="stars">
+              {% for i in star_range %}
+                {% if i <= review.rating %}
+                  <img src="{% static 'hospital/images/star_fill_small.svg' %}" alt="별점" class="star-icon" />
+                {% else %}
+                  <img src="{% static 'hospital/images/star_blank_small.svg' %}" alt="빈 별점" class="star-icon" />
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="contents" id="cost-content">
+          <p>· 진료비: {{ review.cost_reasonable|yesno:"만족,불만족" }}</p>
+          </div>
+          <div class="contents" id="teen-content">
+          {% if review.teen_friendly %}
+          <p>· 10대 친화적</p>
+          {% endif %}
+          </div>
+          <div class="contents" id="content">
+          <p>· {{ review.content }}</p>
+          </div>
+        </div>
+        {% empty %}
+        <p class="no-review">리뷰가 없습니다.</p>
+        {% endfor %}
+      </main>
+    </div>
+  </body>
+</html>

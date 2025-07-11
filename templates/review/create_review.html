@@ -1,8 +1,0 @@
-<h2>{{ hospital.name }} 리뷰 작성</h2>
-
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="hidden" name="hospital" value="{{ hospital.id }}">
-  <button type="submit">제출하기</button>
-</form>

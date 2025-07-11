@@ -6,5 +6,5 @@ from . import views
 app_name = 'reserve'
 
 urlpatterns = [
-    path('', views.recommended_doctors, name='recommended_doctors'),
+    path('list/', views.recommended_doctors, name='recommended_doctors'),
 ]

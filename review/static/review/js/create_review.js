@@ -1,3 +1,5 @@
+//create_review.js
+
 document.addEventListener("DOMContentLoaded", function () {
   // 별점 등록
   const stars = document.querySelectorAll(".star");

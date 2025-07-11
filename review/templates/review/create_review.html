@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static '/review/css/create_review.css' %}"
+    />
+    <title>리뷰 작성</title>
+  </head>
+  <body>
+    <div class="page-container">
+      <!-- 최상단 -->
+      <header>
+        <a href="{% url 'hospital_detail' hospital.id %}">
+          <img
+            src="{% static '/hospital/images/back_icon.svg' %}"
+            alt="이전으로"
+            id="back-button"
+          />
+        </a>
+        <h2>리뷰 작성</h2>
+      </header>
+
+      <main>
+        <form
+          method="post"
+          id="reviewForm"
+          action="{% url 'review:create_review' hospital.id %}"
+          data-hospital-id="{{ hospital.id }}"
+        >
+          {% csrf_token %}
+
+          <!-- 병원 이름 -->
+          <h3><strong>{{ hospital.name }}</strong></h3>
+
+          <!-- 별점 -->
+          <div class="stars">
+            <p>별점</p>
+            <input type="hidden" name="rating" id="rating-value" />
+            {% for i in "12345" %}
+            <img
+              src="{% static 'hospital/images/star_blank.svg' %}"
+              alt="별점"
+              class="star"
+              data-index="{{ forloop.counter }}"
+            />
+            {% endfor %}
+          </div>
+          <div class="form-box">
+            <!-- 담당의 -->
+            <section class="review">
+              <span>담당의</span>
+              <input
+                id="doctor"
+                name="doctor_name"
+                type="text"
+                placeholder="담당의를 입력해주세요"
+              />
+            </section>
+
+            <!-- 진료질환 -->
+            <section class="review">
+              <span>진료질환</span>
+              <input
+                id="disease"
+                name="diagnosis"
+                type="text"
+                placeholder="진료질환을 입력해주세요"
+              />
+            </section>
+
+            <!-- 키워드 -->
+            <section class="review">
+              <span>키워드</span>
+              <div class="custom-select-wrapper">
+                <div class="custom-select" id="keywordSelect">
+                  <div class="selected-keywords" id="selectedKeywords">
+                    키워드를 선택해주세요 (복수선택 가능)
+                  </div>
+                  <div class="dropdown-icon">&#9662;</div>
+                </div>
+                <div class="keyword-options" id="keywordOptions">
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="🤗 과잉진료하지 않아요"
+                      name="cost_reasonable"
+                    />
+                    🤗과잉진료하지 않아요
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="😄 10대 친화적이에요 (가격, 환경 등)"
+                      name="teen_friendly"
+                    />
+                    😄10대 친화적이에요 (가격, 환경 등)
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="🤩 친절해요"
+                      name="teen_friendly"
+                    />
+                    🤩친절해요
+                  </label>
+                </div>
+              </div>
+            </section>
+
+            <input type="hidden" name="keywords" id="keywordsInput" />
+
+            <!-- 상세리뷰 -->
+            <section class="review">
+              <div id="review-detail">
+                <span>상세 리뷰 <span id="required-text">*</span></span>
+                <textarea
+                  id="details"
+                  name="content"
+                  placeholder="상세 리뷰를 입력해주세요
+(최소 8자 이상)"
+                  required
+                ></textarea>
+                <div id="error-message">
+                  <p>
+                    <span id="bold-error">제출 불가:</span>
+                    너무 짧은 텍스트를 입력했습니다.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+          <!-- 제출 버튼 -->
+          <button type="submit" id="submit-button">제출하기</button>
+        </form>
+      </main>
+    </div>
+
+    <script src="{% static '/review/js/create_review.js' %}"></script>
+  </body>
+</html>
