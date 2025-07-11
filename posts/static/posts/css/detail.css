@@ -56,13 +56,30 @@ height: 24px;
 flex-shrink: 0;
 }
 
-.declatation_img{
+.header_icon{
     width: 25px;
 height: 25px;
 flex-shrink: 0;
 aspect-ratio: 1/1;
 }
+.post-header-actions{
+    display: flex;
+    gap: 20px;
+}
 
+.delete-icon{
+    background-color: #FFF;
+    border: none;
+}
+
+.delete-comment-btn{
+    background-color: #FFF;
+    border: none;
+}
+
+.trash_img{
+    width: 13px;
+}
 .back{
     display: flex;        
     gap: 20px;           
