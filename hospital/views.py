@@ -8,14 +8,19 @@ from .models import Hospital
 from .serializers import HospitalSerializer
 from django.db.models import Avg, Count, Q
 from django.http import JsonResponse
+from django.shortcuts import render
+from review.models import Review
 
 def hospital_list(request):
-    region = request.GET.get('region')
-    hospitals = Hospital.objects.all()
-    if region:
-        hospitals = hospitals.filter(sidoCd=region)
+    hospitals = Hospital.objects.all().annotate(
+        average_rating=Avg('reviews__rating'),
+        cost_reasonable_count=Count('reviews', filter=Q(reviews__cost_reasonable=True)),
+        teen_friendly_count=Count('reviews', filter=Q(reviews__teen_friendly=True)),
+    )
 
-    return render(request, 'hospital/hospital_list.html', {'hospitals': hospitals})
+    return render(request, 'hospital/hospital_list.html', {
+        'hospitals': hospitals,
+    })
 
 
 # 병원 공공 API에서 데이터 받아오기
