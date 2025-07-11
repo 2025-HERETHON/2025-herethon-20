@@ -136,7 +136,34 @@ python manage.py loaddata fixtures/test_fixture_final.json
 ```
 
 -----
+### 5.1 테스트 데이터 세팅 
 
+강남구 산부인과 병원 불러오기
+공공 API를 통해 실제 병원 데이터를 수집합니다:
+
+```bash
+python manage.py fetch_hospitals --sidoCd=110000 --sgguCd=110001
+```
+👩‍⚕️ 전문의 → 병원 연결 (1:1 매칭)
+```bash
+python manage.py shell
+from users.models import User
+from hospital.models import Hospital
+```
+
+### 강남구 병원 리스트
+```python
+gangnam_hospitals = list(Hospital.objects.filter(sgguCd='110001'))
+doctor_users = list(User.objects.filter(is_doctor=True))
+
+for i, doctor in enumerate(doctor_users):
+    if i < len(gangnam_hospitals):
+        doctor.hospital = gangnam_hospitals[i]
+        doctor.save()
+        print(f"👨‍⚕️ {doctor.username} → 🏥 {gangnam_hospitals[i].name}")
+    else:
+        print(f"❗ 남은 병원이 없습니다 (총 병원 수: {len(gangnam_hospitals)})")
+```
 ### 6\. Django 개발 서버 실행 🚀
 
 모든 설정이 완료되었다면, **Django 개발 서버**를 시작하여 프로젝트를 실행합니다.
